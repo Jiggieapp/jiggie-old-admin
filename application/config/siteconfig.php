@@ -49,7 +49,7 @@ $config['smtp_from_name']      	 				= 'Partyhost Admin';
 $config['smtp_from']            				= 'smtpuser@societyfirst.com';
 $config['smtp_user']            				= 'smtpuser@societyfirst.com';
 $config['smtp_password']       					= 'tm55ZefHsk';
-$config['mailtype']						= 'html';
+$config['mailtype']								= 'html';
 $config['admin_email']            				= 'perumal.m@rainconcert.in';
 $config['smtp_timeout']							= 30;
 $config['smtp_port']         					= 25;
@@ -60,4 +60,20 @@ $config['mailtype']								= 'html';
 $config['smtp_timeout']							= 30;
 
 
-$config['unblock_url']                                          = "http://192.168.0.134:3000/unblock_user";
+$config['unblock_url']							= "http://api-dev.partyhostapp.com/unblock_user";
+$config['site_title']        					= 'Party Host- Administrator pages';
+$config['start_date']        					= '2014-04-01';
+$config['metrics']								=  array(
+													'returning_users'=>'Returning users',
+													'new_users'=>'New Users',													
+													'active_hostings'=>'Total New Hostings',
+													'nonrec_hostings'=>'New Non-Recurring Hostings',
+													'rec_hostings'=>'New Recurring Hostings',
+													'total_chat'=>'Total active Chats',
+													'new_chat'=>'New Chats',													
+													'updated_chat'=>'Updated Chats',
+													'unique_chatter' =>'Total Unique Chatter',
+													'guest_chat'=>'Unique Guest Chatter',
+													'host_chat'=>'Unique Host Chatter',
+												);
+ 

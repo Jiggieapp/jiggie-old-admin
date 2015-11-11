@@ -1,0 +1,243 @@
+<div class="order-details">
+    <form class="form-horizontal form-bordered" role="form" id="order-details" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Order Details</h4>
+            </div>
+            <div class="panel-body" id="section_create_event">        
+
+                 
+				 
+                <div class="form-group">
+                    <label class="control-label col-xs-3  ">Profile pic</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">
+                      <a target="_blank" class="user_image"  data-user_id="<%= data.fb_id %>"  href="<%= '/admin/user/users/#/details='+ data.fb_id %>">                          
+                             
+                             <img   alt="image"  src="https://graph.facebook.com/<%=  data.fb_id %>/picture?width=200&height=150" />
+                            
+                        </a> 
+                    </p>
+                   </div>
+                </div> 
+                
+                 
+                <div class="form-group">
+                    <label class="control-label col-xs-3  ">Name</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">
+                      <a target="_blank"  data-user_id="<%= data.fb_id %>"  href="<%= '/admin/user/users/#/details='+ data.fb_id %>" style="color:blue"  >
+                          <%= data.customer.first_name%> 
+                      </a>                                             
+                        <span id="p_userselect"></span>
+                    </p>
+                   </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-xs-3  ">Event</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">                        
+                        
+                         <a  style="color:blue" target="_blank"  class="" href="<%='/admin/events/#/event-special='+ data.event._id%>"  ><%= data.event.title %></a>                       
+                        <span id="p_venue"></span>
+                    </p>                      
+                   </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-xs-3  ">Venue</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">                        
+                        <a style="color:blue" target="_blank" href="<%= '/admin/venue/venues/#/venue-details='+data.event.venue._id %>" >  
+                            <%=  data.event.venue.name %>
+                        </a>                       
+                        <span id="p_venue"></span>
+                    </p>                      
+                   </div>
+                </div>
+
+
+
+                <div class="form-group" id="">
+                    <label class="control-label col-sm-3">Date</label>
+                    <div class="controls col-sm-4" id ="">  
+                     <%=  convertToServerDate(data.event.start_datetime,'mm/dd/yy hh:MM TT')%>                 
+                    </div>
+                </div>
+               
+				<div class="form-group" id="">
+                    <label class="control-label col-sm-3">Ticket Name</label>
+                    <div class="controls col-sm-4" id ="">  
+                      <%=data.tickettype.name%>            
+                    </div>
+                </div>
+				<div class="form-group" id="">
+                    <label class="control-label col-sm-3">Ticket Type</label>
+                    <div class="controls col-sm-4" id ="">    
+                     <%=data.tickettype.ticket_type%>               
+                    </div>
+                </div>
+                <div class="form-group" id="">
+                    <label class="control-label col-sm-3">Order #</label>
+                    <div class="controls col-sm-4" id =""><%=data.order_id%>              
+                    </div>
+                </div>
+                <div class="form-group" id="">
+                    <label class="control-label col-sm-3">Order Date</label>
+                    <div class="controls col-sm-4" id ="">  
+                    <%= convertToServerDate(data.created_at,'mm/dd/yy hh:MM TT')%>              
+                    </div>
+                </div>
+                <div class="form-group" id="">
+                    <label class="control-label col-sm-3">Price</label>
+                    <div class="controls col-sm-4" id ="">
+                     <%=data.tickettype.price%>              
+                    </div>
+                </div>
+                <div class="form-group" id="">
+                    <label class="control-label col-sm-3">Paid</label>
+                    <div class="controls col-sm-4" id ="">
+                     <%=data.tickettype.total%>                    
+                    </div>
+                </div>
+                <div class="form-group" id="">
+                    <label class="control-label col-sm-3">Guests</label>
+                    <div class="controls col-sm-4" id ="">  
+                     <%=data.tickettype.guest%>          
+                    </div>
+                </div>                
+                
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Price per additional guest</label>
+                     <div class="controls col-sm-4">
+                     	<span class="">$ <%=data.tickettype.add_guest%></span>    
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"> Description	</label>              	
+                    
+                    <div class="controls col-sm-6">
+                       <%=data.tickettype.description%>
+                    </div>
+                </div>
+  
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Total Table</label>
+                     <div class="controls col-sm-4">
+                     	<span class="">$ 0</span>    
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Additional Fees</label>
+                     <div class="controls col-sm-4">
+                       	<span class="col-sm-6 nplr"> Admin Fee</span>
+						<span class="col-sm-6 nplr">
+						     <% if (typeof(data.tickettype.admin_fee) == "undefined" ||data.tickettype.admin_fee==''){
+	                    	 	obj_adminfee= 0;
+	                    	  }else{
+	                    	 	 obj_adminfee= data.tickettype.admin_fee;
+	                    	  } %> 
+							<span class="">$<%=obj_adminfee%></span>    							
+						</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"></label>
+                     <div class="controls col-sm-4">
+                       	<span class="col-sm-6 nplr">  Tax</span>
+                       	 <% if (typeof(data.tickettype.tax) == "undefined" ||data.tickettype.tax==''){
+	                    	 	obj_tax= 0;
+	                    	  }else{
+	                    	 	 obj_tax= data.tickettype.tax;
+	                    	  } %> 
+						<span class="col-sm-6 nplr">
+							<span class=""><%=obj_tax%>%</span>    							
+						</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"></label>
+                     <div class="controls col-sm-4">
+                       	<span class="col-sm-6 nplr">  Tip</span>
+						<span class="col-sm-6 nplr">
+						
+						<% if (typeof(data.tickettype.tip) == "undefined" ||data.tickettype.tip=='' ){
+	                    	 	obj_tip= 0;
+	                    	  }else{
+	                    	 	 obj_tip= data.tickettype.tip;
+	                    	  } %> 
+							<span class=""><%=obj_tip%>%</span>    
+						</span>						
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Estimated Total</label>
+                     <div class="controls col-sm-4">
+                      <%=data.tickettype.total%>
+                    </div>
+                </div>
+
+
+
+
+                 <div class="form-group">
+                    <label class="control-label col-sm-3">Status </label>
+                    <% 
+                    if(data.tickettype.ticket_type=='reservation'){
+                          if (typeof(data.order_status) == "undefined"){
+	                	 	orderstatus = 'New'
+	                	  }else{
+	                	 	orderstatus = data.order_status
+	                	  } 
+                    	
+                    }else{
+                    	if (typeof(data.order_status) == "undefined"){
+	                	 	orderstatus = 'Paid'
+	                	  }else{
+	                	 	orderstatus = data.order_status
+	                	 }   
+                    }
+                    
+                    %>
+                    <div class="controls col-sm-4">
+                         <p class="form-control-static">
+                          <a id="order_status" data-name="order_status" data-type="select" data-value="<%= orderstatus %>"class="editable editable-click"><%= orderstatus%></a> 
+                         </p>
+                    </div>
+                </div>
+                 
+                 <%  if(data.tickettype.purchase_confirmations.length){  %> 
+                <div id="termsandcond">
+               		<div class="form-group">
+	                    <label class="control-label col-sm-3">Purchace Confirmations 
+	                    	<p>(I understand that ...) </p>	
+	                    </label>
+	                    <div class="controls col-sm-4">
+	                   
+	                
+	 				<% for(var i=0; i<data.tickettype.purchase_confirmations.length; i++) {%>
+		                    
+		                     <div class="controls">                     
+		                         
+                       	 		<span><i style="color:blue" class="fa fa-sm fa-fw fa-check-square-o"></i></span>
+		                        <%= data.tickettype.purchase_confirmations[i].label%>									
+		                     </div>
+		                     <div>
+		                     	<%= data.tickettype.purchase_confirmations[i].body%>
+		                     </div> <br/>
+		                
+	                 <% } %>
+	                    </div>
+	                </div>
+	                 
+               </div>
+                <% } %>
+            </div>
+        </div>
+       
+    </form>
+    
+</div> 

@@ -1,0 +1,168 @@
+<div class="">
+    <form class="form-horizontal form-bordered" role="form" id="ticket-form" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Ticket Details</h4>
+                <div class="panel-options">       
+                   <% recurring = is_recurring?1:0%>
+                    <a href="<%=siteurl+'admin/tickets/#event-id='+event_id+'/is_recurring='+recurring%>" class="" data-rel="close">
+                        <i class="fa fa-fw fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body " id="selected_ticket" ticket_id="<%= _id  %>" is_recurring="<%= is_recurring  %>">    
+ 
+                <div class="form-group" id="hosting_name_div">
+                    <label class="control-label col-sm-3">Name</label>
+
+                    <div class="controls col-sm-4" id ="">
+                       <a id="name" class="edit_ticket"><%= name%></a></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Type</label>
+                    <div class="controls col-sm-4">
+                         <%= ticket_type%>
+                    </div>
+                </div>
+				
+				 <div class="form-group">
+                    <label class="control-label col-sm-3"># of Tickets Available</label>
+                    <div class="controls col-sm-4">
+                         <a id="quantity" class="edit_ticket"><%= quantity%></a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Allowed # of Guests</label>
+
+                    <div class="controls col-sm-4">
+                       <%= guest%>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label class="control-label col-sm-3">Price</label>
+                     <div class="controls col-sm-4">                     	 
+                     		<span class="">$<%= (price=='false'||price=='')?0:price%></span>                        	 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Deposit</label>
+                     <div class="controls col-sm-4">
+                     	<span class=""><%= (deposit=='false'||deposit=='')?0: deposit %>%</span>    
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Price per additional guest</label>
+                     <div class="controls col-sm-4">
+                     	<span class="">$<%= (add_guest =='false'||add_guest=='')?0: add_guest%></span>    
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Additional Fees</label>
+                     <div class="controls col-sm-4">
+                       <% ch_admin_fee = chk_adminfee?'fa-check-square-o':'fa-square-o'%> 
+                       	<span class="col-sm-6 nplr"> <i style="color:blue" class="fa fa-sm fa-fw <%=ch_admin_fee%>"></i> Admin Fee</span>
+						<span class="col-sm-6 nplr">
+							<span class="">$ <%=admin_fee=='false'?0:admin_fee%></span>    							
+						</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"></label>
+                     <div class="controls col-sm-4">
+                       <% admin_tax = chk_tax?'fa-check-square-o':'fa-square-o'%> 
+                       	<span class="col-sm-6 nplr"> <i style="color:blue" class="fa fa-sm fa-fw <%=admin_tax%>"></i> Tax</span>
+						<span class="col-sm-6 nplr">
+							<span class=""><%= tax=='false'?0: tax%>%</span>    							
+						</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"></label>
+                     <div class="controls col-sm-4">
+                     <% admin_tip = chk_tip?'fa-check-square-o':'fa-square-o'%> 
+                       	<span class="col-sm-6 nplr"> <i style="color:blue" class="fa fa-sm fa-fw <%=admin_tip%>"></i> Tip</span>
+						<span class="col-sm-6 nplr">
+							<span class=""><%=tip=='false'?0:tip%>%</span>    
+						</span>						
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Estimated Total</label>
+                     <div class="controls col-sm-4">
+                      <%=total%>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"> Description	</label>
+                    	
+                    
+                    <div class="controls col-sm-6">
+                    	<a id="description" class="edit_ticket"><%= description%></a>
+                        
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="control-label col-sm-3">Active </label>
+                    <div class="controls col-sm-4">
+                     
+                      <% 
+	                	   if (typeof(visible) == "undefined"){
+	                	 	obj_active= true;
+	                	  }else{
+	                	 	 obj_active= visible;
+	                	  } 
+	                	  
+	                	   if (typeof(status) == "undefined"||status ==''){
+	                	 	obj_status= 'Active';
+	                	  }else{
+	                	 	 obj_status= status;
+	                	  } 
+	                	  console.log(obj_status,status,'obj_status')
+	                   %> 
+	                    <!--input type="checkbox"id="ticket_status" name="ticket_status" data-name="visible"  data-pk="<%=_id %>"  data-off-text="INACTIVE"  data-on-text="ACTIVE" data-size="small"  data-off-color="success" data-on-color="primary" value ="1" <%= obj_active == true ? "checked" : "" %> class="boot-switch"/-->
+	                    <a id="ticket_status" data-name="status" data-value="<%= obj_status %>"class=""><%= obj_status%></a> 
+                    </div>
+                </div>
+                
+               <div id="termsandcond">
+                    <% if(purchase_confirmations.length){  %>
+               		<div class="form-group">
+	                    <label class="control-label col-sm-3">Purchase confirmations 
+	                    	<p>(I understand that ...) </p>	
+	                    </label>
+	                    <div class="controls col-sm-4">
+	                    <%
+	                
+	 				 for(var i=0; i<purchase_confirmations.length; i++) {%>
+		                    
+		                     <div class="controls">                     
+		                         
+                       	 		<span><input type="checkbox"  checked name="chk_tax"/></span>
+		                        <%= purchase_confirmations[i].label%>									
+		                     </div>
+		                     <div>
+		                     	<%= purchase_confirmations[i].body%>
+		                     </div> <br/>
+		                
+	                 <% }  %>
+     					  
+     				
+	                    </div>
+	                     <% }  %>
+	                </div>
+	                 
+               </div>
+               <% //if(orders_count>0){ %>
+                <div class="form-group">
+               	 <label class="control-label col-xs-12 ">
+                	<a id="delete_ticket_details" data-ticket_id="<%= _id  %>" data-event_id=<%= event_id  %> data-type="false" class=" btn btn-danger" href="#"   title="Delete">Delete Ticket</a>		                
+           		 </label>	
+            	</div> 
+				<% //}%>
+            </div>
+        </div>
+       
+    </form>
+    
+</div> 

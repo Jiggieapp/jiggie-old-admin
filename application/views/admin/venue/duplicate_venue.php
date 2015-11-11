@@ -1,26 +1,27 @@
-<div class="container-fluid-md">
-    <form class="form-horizontal form-bordered" role="form" id="loginForm" method="post" enctype="multipart/form-data">
+<div class="">
+    <form class="form-horizontal form-bordered" role="form" id="VenueForm" method="post" enctype="multipart/form-data">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">Create Venue</h4>
             </div>
             <div class="panel-body">
                 <?php echo showMessage() ?>
+                <p class='f11'>All <span class="asterisk">*</span> marked fields are mandatory</p>
                 <div class="form-group" id="venue_name_div">
-                    <label class="control-label col-sm-3">Name</label>
+                    <label class="control-label col-sm-3">Name <span class="asterisk">*</span></label>
 
                     <div class="controls col-sm-4">
                         <input name="name" id="venue_name_create" type="text" class="form-control" placeholder="Name" value="<?php  ?>"  required/></div>
                 </div>
                 
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Grade</label>
+                    <label class="control-label col-sm-3">Grade <span class="asterisk">*</span></label>
 
                     <div class="controls col-sm-2">
                         <select name="grade" class="form-control" required>
                             <option value="">Select Grade</option>
                             <?php for($i = 1; $i<=100; $i++) { ?>
-                                <option value="<?php echo $i;?>" <?php echo $this->input->post("grade") == $i ? "selected" : ""; ?>><?php echo $i;?></option>
+                                <option value="<?php echo $i;?>" <?php echo set_post_value('grade',$venue->grade) == $i ? "selected" : ""; ?>><?php echo $i;?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -52,14 +53,14 @@
                  </div>
                 
                  <div class="form-group">
-                    <label class="control-label col-sm-3">City</label>
+                    <label class="control-label col-sm-3">City <span class="asterisk">*</span></label>
 
                     <div class="controls col-sm-4">
                         <!--<input name="city" type="text" class="form-control" placeholder="City" value="<?php //echo $this->input->post('city'); ?>" />-->
                         <select name="city" class="form-control" required>
                             <option value="">Select City</option>
                             <?php foreach($cities as $city) { ?>
-                                <option value="<?php echo $city["venue_city_id"];?>" <?php echo $city["venue_city_id"] == $venue->city ? "selected" : "";  ?>><?php echo $city["venue_city_name"];?></option>
+                                <option value="<?php echo $city["venue_city_id"];?>" <?php echo $city["venue_city_id"] == $venue->venue_city_id ? "selected" : "";  ?>><?php echo $city["venue_city_name"];?></option>
                             <?php } ?>
                         </select>
 
@@ -97,7 +98,7 @@
                     <label class="control-label col-sm-3">Phone</label>
 
                     <div class="controls col-sm-4">
-                        <input name="phone" type="text" class="form-control" placeholder="Phone" value="<?php echo $venue->phone; ?>" />
+                        <input name="phone" type="text" class="form-control" placeholder="Phone" value="<?php echo $venue->phone?$venue->phone:'' ?>" />
 
                     </div>
                  </div>
@@ -157,76 +158,44 @@
                 <div class="qq-upload-extra-drop-area">Drop files here too</div-->
                 
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Venue images</label>
+                    <label class="control-label col-sm-3">Profile images
+                    <p class="f11">Max allowed size:2MB <br/> Allowed file types :png,jpg</p>
+                    </label>
 
                     <div class="controls col-sm-4">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                          <div>
-                            <span class="btn btn-default btn-file"><span class="fileinput-new">Upload image</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="image1" /></span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                          </div>
-                        </div>
+                          <input type="file" name="image1" class="" id="file1" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                          <div>
-                            <span class="btn btn-default btn-file"><span class="fileinput-new">Upload image</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="image2" /></span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                          </div>
-                        </div>
+                          <input type="file" name="image2" class="" id="file2" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                          <div>
-                            <span class="btn btn-default btn-file"><span class="fileinput-new">Upload image</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="image3" /></span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                          </div>
-                        </div>
+                          <input type="file" name="image3" class="" id="file3" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                          <div>
-                            <span class="btn btn-default btn-file"><span class="fileinput-new">Upload image</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="image4" /></span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                          </div>
-                        </div>
+                          <input type="file" name="image4" class="" id="file4" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                          <div>
-                            <span class="btn btn-default btn-file"><span class="fileinput-new">Upload image</span>
-                                <span class="fileinput-exists">Change</span>
-                                <input type="file" name="image5" /></span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                          </div>
-                        </div>
+                          <input type="file" name="image5" class="file1" id="file5" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
-                </div>
+                </div>    
+                
                 
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
                     <div class="controls col-sm-4"><button type="submit" class="btn btn-primary">Duplicate Venue</button>
-                    <a class="btn btn-default" href="<?php echo base_url().'/admin/venue'; ?>">Cancel</a>
+                    <a class="btn btn-default" href="<?php echo base_url().'admin/venue/venues/'; ?>">Cancel</a>
                     </div>
                 </div>
                 
@@ -235,33 +204,10 @@
         <input type="hidden" value="" name="email_verified" id="email_verified" />
     </form>
 </div>    
-<script>        
-function createUploader(){            
-    var uploader = new qq.FileUploader({
-        element: document.getElementById('file-uploader-demo1'),
-        action: "<?php echo base_url();?>admin/venue/upload",
-        debug: true,
-        extraDropzones: [qq.getByClass(document, 'qq-upload-extra-drop-area')[0]],
-        onComplete : function(id,fileName,responseJSON){
-            var img = $('<img width="100" height="100">'); 
-            img.attr('src', base_url+"uploads/venues/"+fileName);
-            img.appendTo('ul.qq-upload-list  li:last-child');
-            var cur_val = $('#profile_image').val();
-            if(cur_val)
-              $('#profile_image').val(cur_val + "," + base_url+"uploads/venues/"+fileName);
-            else
-              $('#profile_image').val(base_url+"uploads/venues/"+fileName);
-
-            var uploaded_image = $('#uploaded_image').val();
-            var update_uploaded_image = parseInt(uploaded_image)+1;
-            $('#uploaded_image').val(update_uploaded_image)
-            if(update_uploaded_image == 5) $(".qq-upload-button").hide();
-        }
-    });   
-
-}
-
-// in your app create uploader as soon as the DOM is ready
-// don't wait for the window to load  
-window.onload = createUploader;   
+<script>
+	var venue_img_1 = "<?php echo $venue->img_1 ?>";
+	var venue_img_2 = "<?php echo $venue->img_2 ?>";
+	var venue_img_3 = "<?php echo $venue->img_3 ?>";
+	var venue_img_4 = "<?php echo $venue->img_4 ?>";
+	var venue_img_5 = "<?php echo $venue->img_5;?>";
 </script>

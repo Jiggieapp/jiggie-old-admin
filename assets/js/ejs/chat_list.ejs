@@ -1,0 +1,93 @@
+ 
+<div class="table-responsive">
+<table  class="table table-striped dataTable" id="chat_sec_api" >
+<thead>   
+    <tr>
+    	<th class="sorting" data-field="last_updated">Last Updated</th>
+    	<th class="sorting" data-field="guest">Guest</th>
+        <th class="sorting" data-field="host">Host</th>
+        <th class="sorting" data-field="topic_event">Event</th>
+        <!--th class="sorting" data-field="ct.hosting_time">Hosting Date</th-->
+        <th class="sorting" data-field="count">Count</th>
+        <th class="" data-field="last_message.message" width="20%">Last Message</th>
+        <th class="sorting sorting_desc" data-field="created_at">Created</th>
+    </tr>
+</thead>
+<tbody >
+	  
+	 <% 
+	 if(conversations.length){  
+	 for(var i=0; i<conversations.length; i++) {%>
+  		<tr data-backdrop="static" data-id="chatpop" data-from="<%= conversations[i].host_id %>"  data-fromname="<%= conversations[i].host %>" data-to="<%=conversations[i].guest_id %>" data-toname="<%=conversations[i].guest %>" class="chatrow" style='cursor: pointer' >
+				<td>
+				 
+				<% var updated = new TimeShift.OriginalDate(conversations[i].last_updated );	%>
+	                   <%=  dateFormats(updated, "mmm dd h:MM tt")  %>         
+	            </td>
+				<td>
+					 <%= conversations[i].guest %> 			
+	                               	
+				</td>
+				<td>
+				   <%= conversations[i].host %> 
+					 
+				</td>
+				<td> 
+				    <%
+				    	url = siteurl+'admin/events/#/event-special='+conversations[i].topic_event_id
+				    %>
+					 <a href="<%=url%>"   ><%= conversations[i].topic_event %></a> 
+				</td>
+				<!--td>
+				   <%= conversations[i].chathosting_time %> 
+					 
+				</td-->
+				<td>
+				    <%= conversations[i].count %> 
+					 
+				</td>
+				<td>
+				 <%= conversations[i].last_message.message.split("\n").join("<br>") %> 
+					 
+				</td>
+				<td> 
+				<% var created = new TimeShift.OriginalDate(conversations[i].created_at );	%>
+				 <%= dateFormats(created, "mmm dd h:MM tt") %> 
+				 </td>
+			</tr>
+	 <% } 
+	 }else{	
+	 %>
+	 <tr class="odd gradeA noresult"><td colspan="8 alert alert-warning">No data matching your search.</td></tr>
+	  <% } %>		
+		 
+		 
+ </tbody>
+</table>
+</div>
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id="paginate_count"><%=i%></span> out of <%=  total_count%> results</span>
+</div>
+
+
+
+
+
+
+
+<div class="modal chatpop" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="chatpop" aria-hidden="true">
+  <div class="modal-dialog chat-box">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Chat Details</h4>
+      </div>
+      <div class="modal-body">
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>        
+      </div>
+    </div>
+  </div>
+</div>

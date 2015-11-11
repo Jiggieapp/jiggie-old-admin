@@ -8,17 +8,17 @@ class Adminuser extends CI_Controller {
     var $gen_contents = array();
 
     public function __construct() {
-
+		
         parent::__construct();
         $this->merror['error'] = '';
         $this->msuccess['msg'] = '';
-        
+        $this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->load->model(array('admin/admin_model', 'common_model', 'admin/user_model', 'master_model', 'admin/permission_model'));
         $this->load->helper(array('security','path'));
-        
+        presetpastdaterange();
         $this->gen_contents['title'] = '';
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
-        
+        $this->config->set_item('site_title', 'Party Host  Admin - Admin Users');
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
         $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
         $this->access_permissions = $this->permission_model->get_all_permission();
@@ -26,57 +26,55 @@ class Adminuser extends CI_Controller {
     }
     
      public function index() {
-         if(!$this->master_model->checkAccess('view', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-            return FALSE;
-        } else {
-            $this->users();
-        }
+         $this->users();
      }
      
-     public function users() {
-        $this->ajax_list();
+     public function users($init='') {
+     	if(!$this->master_model->checkAccess('create', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            return FALSE;
+        }
+		
       
         $this->gen_contents['p_title'] = 'Admin Users List';
         $this->gen_contents['ci_view'] = 'admin/admin_user/listing';
         $this->gen_contents['add_link'] = base_url() . 'admin/adminuser/create';
         $this->gen_contents['export_link'] = base_url() . 'admin/adminuser/export';
-        $this->gen_contents['current_controller'] = "adminuser";
-        $breadCrumbs = array( 'admin/adminuser'=>'Admin User');
+        $breadCrumbs = array( 'admin/adminuser/users/0'=>'Admin User');
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         $this->template->write_view('content', 'admin/listing', $this->gen_contents);
         $this->template->render();
     }
 
-    public function ajax_list() {
+    public function ajax_list($init='') {
 
 
-        $headers = apache_request_headers();
-        $is_ajax = (isset($headers['X-Requested-With']) && $headers['X-Requested-With'] == 'XMLHttpRequest');
-        $this->load->library('pagination');
 
         $config['base_url'] = base_url() . 'admin/adminuser/ajax_list';
-        if ('' != $this->input->post('per_page')) {
-            $config['per_page'] = $this->input->post('per_page');
-        } else {
+    
+
+		if ('' != $this->input->post('per_page')) {
+            $config['per_page'] = $this->input->post('per_page');            
+            $perPage = '';
+        }        
+        else {
             $config['per_page'] = 10;
+        }        
+        	
+		if('' != $this->input->post ('offset')){
+               $offset	= safeInteger($this->input->post ('offset'));			    
         }
-
-
-        if ('' != $this->uri->segment(4)) {
-            $offset = safeOffset(4);
-        } else {
-            $offset = 0;
-        }
-        $this->mcontents['offset'] = $offset;
-        $config['uri_segment'] = 4;
-        $config['callbackfunction'] = 'loadListing';
+		else {
+        	$offset = 1;
+        } 
+        $this->gen_contents['offset'] = $offset;
+         
         $arr_where = array();
 
         $arr_sort = array();
         if ('' != $this->input->post('sort_field')) {
             $arr_sort['name'] = $this->input->post('sort_field');
         } else {
-            $arr_sort['name'] = 'name';
+            $arr_sort['name'] = 'created_at';
         }
         if ('' != $this->input->post('sort_val')) {
             $arr_sort['value'] = $this->input->post('sort_val');
@@ -85,12 +83,12 @@ class Adminuser extends CI_Controller {
         }
         //Search Factor
         $arr_search = array();
+         
         if ($this->input->post('search_name') != "") {
-            $arr_search["where"] = $this->input->post('search_name');
-            $this->session->set_userdata("user_search", $arr_search["where"]);
-        } else {
-            $arr_search["where"] = "";
-            $this->session->set_userdata("user_search", "");
+        	$arr_search["where"] = mysql_real_escape_string($this->input->post('search_name')) ;            		
+        }else {
+           	$arr_search["where"] = "";
+            
         }
 
 
@@ -98,26 +96,27 @@ class Adminuser extends CI_Controller {
         $end_date = $this->session->userdata('endDate') . " 23:59:59";
         $arr_where = array("created_at >=" => "$start_date", "created_at  <=" => "$end_date", "user_status !=" => "10");
 
-        $config['total_rows'] = $this->master_model->getAllUsers($arr_where, $arr_sort, 'count', $config['per_page'], $offset, $arr_search);
-        $this->gen_contents['total_count'] = $config['total_rows'];
-        $this->pagination->initialize($config);
-        $this->gen_contents['paginate'] = $this->pagination->create_links_ajax();
+        $config['total_rows'] = $this->master_model->getAllUsers($arr_where, $arr_sort, 'count', $config['per_page'], ($offset-1)*$config['per_page'], $arr_search);
+        $config['total_page'] = ceil($config['total_rows'] / $config['per_page']);
+		$config['offset'] = $offset;
+	    $this->gen_contents['total_count'] = $config['total_rows'];         	
+        $this->gen_contents['data_search'] = $arr_search["where"];		
+        $this->gen_contents['paginate'] = $config;
         $this->gen_contents['data_url'] = $config['base_url'];
-        $this->gen_contents['users'] = $this->master_model->getAllUsers($arr_where, $arr_sort, 'list', $config['per_page'], $offset, $arr_search);
+        $this->gen_contents['users'] = $this->master_model->getAllUsers($arr_where, $arr_sort, 'list', $config['per_page'], ($offset-1)*$config['per_page'], $arr_search);
 
-        if ($is_ajax) {
-            $this->load->view('admin/admin_user/listing', $this->gen_contents);
-        }
+         echo json_encode($this->gen_contents);exit;
     }
     
-    public function create() { 
+    public function create() {
+    	$breadCrumbs = array( 'admin/adminuser/users/0'=>'Admin Users');
+        $this->gen_contents['breadcrumbs'] = $breadCrumbs; 
         try {
             if(!$this->master_model->checkAccess('create', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
                 return FALSE;
             }
 
-            $this->mcontents = array();
-
+            
             if (!empty($_POST)) {
                 
                                 
@@ -146,67 +145,91 @@ class Adminuser extends CI_Controller {
                         $config =  array(
                           'upload_path'     => $this->config->item("upload_file_path") ."/admin_users/",
                           'upload_url'      => base_url()."uploads/admin_users/",
-                          'allowed_types'   => "gif|jpg|png|jpeg",
+                          'allowed_types'   => "jpg|png|jpeg",
                           'overwrite'       => FALSE,
-                          'max_size'        => "10000",
+                          'max_size'        => "2000",
                             
                         );
                         $this->load->library('upload', $config);
-                        if ($this->upload->do_upload('image')) {
-                            
-                            $data = array('upload_data' => $this->upload->data());
-                           
-                            $image = $data['upload_data']['file_name']; 
-                        }
-                        
+						
+						if ( $_FILES AND $_FILES['image']['name'] ) 
+						{
+	                        if ($this->upload->do_upload('image')) {                            
+	                            $data = array('upload_data' => $this->upload->data());                           
+	                            $image = $data['upload_data']['file_name']; 
+	                       
+						    }else{
+						    	
+								sf('error_message', $this->upload->display_errors ());  
+                          		redirect('admin/adminuser/create');
+						    }
+						}
                         
                         $this->master_model->create_user($image);
-                        $this->mcontents["suc"]       = TRUE;
-                        $this->mcontents["sucmsg"]   = "You have successfully created a new admin account for ".$this->input->post('first_name');
+                        $this->gen_contents["suc"]       = TRUE;
+                        $this->gen_contents["sucmsg"]   = "You have successfully created a new admin account for ".$this->input->post('first_name');
                         
-                        if ( $this->mcontents["suc"] ){
-                          sf('success_message', $this->mcontents["sucmsg"]);  
-                          redirect('admin/adminuser');
+                        if ( $this->gen_contents["suc"] ){
+                        	$to_email  = $this->input->post('email');					        
+					        $name  = $this->input->post('first_name').' '.$this->input->post('last_name') ; 
+					        $from = $this->config->item('smtp_from_name');
+					        $subject = "New administrator account";
+					        $body_content = "Dear ".$name.",<br /><br />";
+					        $body_content .= "Partyhost  has created a new administrator account for you .<br />";
+							$body_content .= "Login url :".base_url()."admin<br />";
+							$body_content .= "User name :".$to_email."<br /><br />";
+					        $body_content .= "Password :".$this->input->post('password')."<br /><br />";
+					        $body_content .= "Partyhost";
+					        $this->common_model->send_mail($to_email, $from, $subject, $body_content);
+                            sf('success_message', $this->gen_contents["sucmsg"]);  
+                            redirect('admin/adminuser');
                         }
                     }
                     else {
-                        throw new Exception('User with this Email already exist.');
+                        
+						sf('error_message', 'User with this Email already exist.');  
+                        redirect('admin/adminuser/create');
                     }
                 }
                 
             } else {
                 
             }
-            $this->mcontents["user_types"] = $this->common_model->getDataExistsArray(array("user_type_id","user_type_name"), "user_type", array("user_type_id !=" => "1"));
-            $this->template->write_view('content', 'admin/admin_user/create',$this->mcontents);
+            $this->gen_contents["user_types"] = $this->common_model->getDataExistsArray(array("user_type_id","user_type_name"), "user_type", array("user_type_id !=" => "1"));
+            $this->template->write_view('content', 'admin/admin_user/create',$this->gen_contents);
             $this->template->render();
         } catch (Exception $e) {
             sf('error_message',  $e->getMessage());
-            $this->mcontents["user_types"] = $this->common_model->getDataExistsArray(array("user_type_id","user_type_name"), "user_type", array("user_type_id !=" => "1"));
-            $this->template->write_view('content', 'admin/admin_user/create',$this->mcontents);
+            $this->gen_contents["user_types"] = $this->common_model->getDataExistsArray(array("user_type_id","user_type_name"), "user_type", array("user_type_id !=" => "1"));
+            $this->template->write_view('content', 'admin/admin_user/create',$this->gen_contents);
             $this->template->render();
         }
     }
     
 
     public function details($adminuser_id = "") {
-        $breadCrumbs = array( 'admin/adminuser'=>'Admin User','admin/adminuser/details/'.$adminuser_id=>'Admin User Details');
+        $breadCrumbs = array( 'admin/adminuser/users/0'=>'Admin User','admin/adminuser/details/'.$adminuser_id=>'Admin User Details');
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         try {
             (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
             if (empty($adminuser_id)) {
-                throw new Exception("User Id should not be empty");
+            	 sf('error_message', "User Id should not be empty");  
+                 redirect('admin/adminuser');
+                 //throw new Exception("User Id should not be empty");
             }
             $seleced_fields = array("id", "CONCAT_WS(' ', first_name, last_name) as name", "email", "first_name", "last_name", "user_type_id", "profile_image_url", "email", "user_status", "created_at");
             $this->gen_contents['adminuser_id'] = $adminuser_id;
-            $admin_user = $this->common_model->getDataExists($seleced_fields, "admin_users", array("id" => $adminuser_id));
-            if (empty($admin_user)) {
-                throw new Exception("Admin User details not found");
+            $admin_user = $this->common_model->getDataExists($seleced_fields, "admin_users", array("id" => $adminuser_id,'user_status !='=>10));
+           
+		    if (!$admin_user) {
+		    	sf('error_message', "Admin User details not found");  
+                redirect('admin/adminuser');		    	
+               // throw new Exception("Admin User details not found");
             }
             
             if (!empty($_POST)) {
                 
-                $this->form_validation->set_rules('email', 'Email', 'required');
+                //->form_validation->set_rules('email', 'Email', 'required');
                 $this->form_validation->set_rules('user_type_id', 'User Type', 'required');
                 $this->form_validation->set_rules('first_name', 'First Name', 'required');
                 $this->form_validation->set_rules('last_name', 'Last Name', 'required');
@@ -227,19 +250,25 @@ class Adminuser extends CI_Controller {
                     $config =  array(
                       'upload_path'     => $this->config->item("upload_file_path") ."/admin_users/",
                       'upload_url'      => base_url()."uploads/admin_users/",
-                      'allowed_types'   => "gif|jpg|png|jpeg",
+                      'allowed_types'   => "jpg|png|jpeg",
                       'overwrite'       => FALSE,
                       'max_size'        => "10000",
 
                     );
                     $this->load->library('upload', $config);
-                    if ($this->upload->do_upload('image')) {
-
-                        $data = array('upload_data' => $this->upload->data());
-
-                        $image = $data['upload_data']['file_name']; 
-                    }
-                    
+                   
+                    if ( $_FILES AND $_FILES['image']['name'] ) 
+					{
+                        if ($this->upload->do_upload('image')) {                            
+                            $data = array('upload_data' => $this->upload->data());                           
+                            $image = $data['upload_data']['file_name']; 
+                       
+					    }else{
+					    	
+							sf('error_message', $this->upload->display_errors ());  
+                      		redirect('admin/adminuser/details/'.$adminuser_id);
+					    }
+					}
                     $this->master_model->update_adminuser($adminuser_id,$image);
                     $this->gen_contents["suc"]       = TRUE;
                     $this->gen_contents["sucmsg"]   = "You have successfully edited admin account for ".$this->input->post('first_name');
@@ -285,11 +314,22 @@ class Adminuser extends CI_Controller {
     
     
 
-    public function permission($userid=""){ 
+    public function permission($userid=""){
+    	 $breadCrumbs = array( 'admin/adminuser/users/0'=>'Admin User','admin/adminuser/details/'.$userid=>'Admin User Permissions');
+         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
+    	 $admin_user = $this->common_model->getDataExists(array('id'), "admin_users", array("id" => $userid,'user_status !='=>10));
+           
+		    if (!$admin_user) {
+		    	sf('error_message', "Admin User details not found");  
+                redirect('admin/adminuser');		    	
+               // throw new Exception("Admin User details not found");
+            }
+             
         if(!$this->master_model->checkAccess('update', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
             return FALSE;
         }
-        $this->mcontents = array();
+		
+        //$this->gen_contents = array();
         try {
             if($userid == 1) {
                 throw new Exception("Access Restricted!");
@@ -297,24 +337,21 @@ class Adminuser extends CI_Controller {
             if (empty($userid)) {
                 throw new Exception("User Id should not be empty");
             }
-            $this->mcontents['item'] = $this->common_model->getDataExists(array("email","user_type_id","id"), "admin_users", array("id" => $userid));
-            if (empty($this->mcontents['item'])) {
+            $this->gen_contents['item'] = $this->common_model->getDataExists(array("email","user_type_id","id"), "admin_users", array("id" => $userid));
+            if (empty($this->gen_contents['item'])) {
                 throw new Exception("Invalid user");
             }
             
-            $this->permission_process($this->mcontents['item']);
-            if ( ! empty ( $this->mcontents['my_permissions'] ) )$this->permission_create($this->mcontents['my_permissions'],$this->mcontents['item']);
-            $this->permission_process($this->mcontents['item']);
+            $this->permission_process($this->gen_contents['item']);
+            if ( ! empty ( $this->gen_contents['my_permissions'] ) )$this->permission_create($this->gen_contents['my_permissions'],$this->gen_contents['item']);
+            $this->permission_process($this->gen_contents['item']);
 
-            //$this->load->view('fleetadmin/header', $this->mcontents);
-            //$this->load->view('fleetadmin/fleetpermission');
-            //$this->load->view('fleetadmin/footer');
-            $this->template->write_view('content', 'admin/admin_user/permission',$this->mcontents);
+            $this->template->write_view('content', 'admin/admin_user/permission',$this->gen_contents);
             $this->template->render();
         }
         catch (Exception $e) {
             //echo $e->getMessage();
-            $this->template->write_view('content', 'admin/admin_user/permission',$this->mcontents);
+            $this->template->write_view('content', 'admin/admin_user/permission',$this->gen_contents);
             $this->template->render();
         }
     }
@@ -368,8 +405,8 @@ class Adminuser extends CI_Controller {
         //$trees = $this->getChildrenFor($finalmodule[9],9);
         
         //unset ($my_permissions);
-        $this->mcontents['modules'] = $tree;
-        $this->mcontents['my_permissions'] = $my_permissions;
+        $this->gen_contents['modules'] = $tree;
+        $this->gen_contents['my_permissions'] = $my_permissions;
         unset($modules);
         unset($finalmodule);
         unset($tree);
@@ -406,7 +443,7 @@ class Adminuser extends CI_Controller {
 
     }
     private function permission_create($my_permissions,$userdetails){ 
-            
+        if(!empty($_POST)) {    
         $this->form_validation->set_rules('user_permission[]', 'Permission', 'required');
         if ( $this->form_validation->run() ){
             try{
@@ -430,9 +467,9 @@ class Adminuser extends CI_Controller {
                     }
                 }
                 
-                //$this->mcontents["suc"]         = TRUE;
-                $this->mcontents["sucmsg"]      = "User permissions has been set successfully";
-                //if ( notify_success($this->mcontents["sucmsg"]) ){
+                //$this->gen_contents["suc"]         = TRUE;
+                $this->gen_contents["sucmsg"]      = "User permissions has been set successfully";
+                //if ( notify_success($this->gen_contents["sucmsg"]) ){
                     //redirect('admin/device');
                     //exit;
                 //}
@@ -442,7 +479,9 @@ class Adminuser extends CI_Controller {
             }
         }
         else{
-             notify_error(validation_errors());
+        	$this->gen_contents["errormsg"]      = "Please select at least one permission ";
+             //notify_error(validation_errors());
+        }
         }
     }
     
@@ -468,8 +507,21 @@ class Adminuser extends CI_Controller {
         if(!$this->master_model->checkAccess('delete', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
             return FALSE;
         }
+	    $seleced_fields = array("id", "CONCAT_WS(' ', first_name, last_name) as name", "email", "first_name", "last_name", "user_type_id", "profile_image_url", "email", "user_status", "created_at");
+       
+        $admin_user = $this->common_model->getDataExists($seleced_fields, "admin_users", array("id" => $userid,'user_status !='=>10));
+           
         $this->master_model->delete_user($userid);
-        sf('success_message', 'Admin User deleted successfully');
+		$to_email  = $admin_user->email;					        
+        
+        $from = $this->config->item('smtp_from_name');
+        $subject = "Administrator account deleted";
+        $body_content = "Dear ".$admin_user->name.",<br />";
+        $body_content .= "Partyhost  has deleted your administrator account .<br /><br />";
+		
+        $body_content .= "Partyhost";
+        $this->common_model->send_mail($to_email, $from, $subject, $body_content);
+        sf('success_message', 'Admin User has been deleted successfully');
         redirect("admin/adminuser");
     }
     
@@ -479,7 +531,7 @@ class Adminuser extends CI_Controller {
             echo json_encode(array("status" => 2));
             exit;
         }
-        $email_exists = $this->common_model->getDataExists(array("email"), "admin_users", array("email" => $email));
+        $email_exists = $this->common_model->getDataExists(array("email"), "admin_users", array("email" => $email,"user_status !=" => 10));
         if (empty($email_exists)) {
             echo json_encode(array("status" => 1));
         } else {
@@ -490,16 +542,33 @@ class Adminuser extends CI_Controller {
     }
     
     public function export() {
+    	
         try {
             if(!$this->master_model->checkAccess('export', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
                 return FALSE;
             }
             $start_date = $this->session->userdata('startDate') . " 00:00:00";
             $end_date = $this->session->userdata('endDate') . " 23:59:59";
-            $this->master_model->export($start_date, $end_date, $this->session->userdata("user_search"));
-            exit;
-        } catch (Exception $e) {
+            $url= $_SERVER['QUERY_STRING'];
+			$pars = explode('/',$url);
+			$data = array();
+			if($url){
+				foreach ($pars as $values){
+				 	$val = explode('=' ,$values);
+					$data[$val[0]] =$val[1];
+				 }
+			 }
+			if(isset($data['sort_field']))
+				$arr_sort['name'] = @$data['sort_field'] ; 
+			if(isset($data['sort_val']))
+				$arr_sort['value'] = @$data['sort_val'] ;  
+			$arr_search["where"] = mysql_real_escape_string(@$data['search_name']) ;              
+            $this->master_model->export($start_date, $end_date,  @$arr_sort,  @$arr_search);
             
+            //exit;
+        } catch (Exception $e) {
+            echo  $e->getMessage();
+			
         }
     }
 }    

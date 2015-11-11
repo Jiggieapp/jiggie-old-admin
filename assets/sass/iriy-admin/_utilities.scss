@@ -106,6 +106,38 @@
   .hidden-xxs {
     display: none !important;
   }
+  .page-subheading-xxs {
+  padding-left: 5px;
+  padding-right: 1px;
+  }
+  .npxx{
+    padding:0px;
+  }
+  .plxx{
+    padding-left:15px;
+  }
+  .daterangepicker-buttonpanel{
+    clear: both;
+    text-align: left !important;  
+  }
+  #reportrange{
+    display:inline-block;
+  }
+  .page-subheading {
+    padding-bottom:1.6em !important;
+  }
+  .mbsm{
+    margin-bottom:5px;
+  }
+  .modal-dialog {
+    margin: 0px !important;
+  }
+  .select2-container.select2-allowclear .select2-choice .select2-chosen{margin-right:30% !important; }
+  .select2-container .select2-choice abbr{right:30% !important;}
+  .range_inputs .form-control{
+      padding:4px 2px !important;
+  }
+
 }
 
 .grid-float-breakpoint {
@@ -122,17 +154,57 @@
   .pull-right-xs {
     float: right;
   }
+  .mbsm{
+    margin-bottom:5px;
+  }
+  .hidden-xxs {
+    display: none !important;
+  }
+  .page-subheading-xxs {
+  padding-left: 5px;
+  padding-right: 1px;
+  }
+  .npxx{
+    padding:0px;
+  }
+  .daterangepicker-buttonpanel{
+    clear: both;
+    text-align: left !important;  
+  }
+  #reportrange{
+    display:inline-block;
+  }
+  .page-subheading {
+    padding-bottom:1.6em !important;
+  }
+  .mbsm{
+    margin-bottom:5px;
+  }
+  .modal-dialog {
+    margin: 0px !important;
+  }
+  .select2-container.select2-allowclear .select2-choice .select2-chosen{margin-right:30% !important; }
+  .select2-container .select2-choice abbr{right:30% !important;}
+  .range_inputs .form-control{
+      padding:4px 2px !important;
+  }
 }
 
 @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
   .pull-right-sm {
     float: right;
   }
+  .mbsm{
+    margin-bottom:5px;
+  }
 }
 
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
   .pull-right-md {
     float: right;
+  }
+  .p5{
+  padding-left: 5px;
   }
 }
 

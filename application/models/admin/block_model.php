@@ -111,8 +111,8 @@ class Block_model extends CI_Model {
         $data = $this->dbutil->csv_from_result($query, $delimiter, $newline);
 
         $file_path = $this->config->item("site_basepath") . "uploads/csv/";
-        $file = strtotime(date("Y-m-d h:i:s")) . ".csv";
-
+        
+		$file = "Block-".date("Y-m-d").".csv";
         if (write_file($file_path . $file, $data)) {
             header('Content-Type: application/csv');
             header('Content-Disposition: attachment; filename=' . $file);

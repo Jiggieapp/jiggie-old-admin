@@ -5,7 +5,7 @@
 	    </a>
 	    <a class="navbar-brand hidden-xxs" href="">
 	        <span class="sc-visible">
-	            I
+	            <!--img src="<?php echo $this->config->item('assets_url')?>images/logo.png"  /-->
 	        </span>
 	        <span class="sc-hidden">
 	            <span class="semi-bold">PartyHost</span>
@@ -13,6 +13,7 @@
 	        </span>
 	    </a>
 	</div>
+	<button class="btn btn-default btn-sm pagebackbtn">Back</button>
 	<ul class="nav navbar-nav navbar-nav-expanded pull-right margin-md-right">
 	    <li class="dropdown">
 	        <a data-toggle="dropdown" class="dropdown-toggle navbar-user" href="javascript:;">

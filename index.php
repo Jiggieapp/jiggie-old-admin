@@ -18,7 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+	define('ENVIRONMENT', 'production');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -27,24 +27,34 @@
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
-
+//date_default_timezone_set('America/New_York');
 if (defined('ENVIRONMENT'))
 {
 	switch (ENVIRONMENT)
 	{
 		case 'development':
+			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
+			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 			error_reporting(E_ALL);
 		break;
 	
 		case 'testing':
+			error_reporting(E_ALL);
+			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
+			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 		case 'production':
+			//define('APIURL', 'http://partyhostapp.herokuapp.com/');
+			//define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 			error_reporting(0);
+			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
+			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 		break;
 
 		default:
 			exit('The application environment is not set correctly.');
 	}
 }
+
 
 /*
  *---------------------------------------------------------------

@@ -259,7 +259,7 @@ $config['encryption_key'] = 'partyhost';
 */
 $config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 48*60*60*2; // 48 hr  =  (48*60*60)
-$config['sess_expire_on_close']	= FALSE;
+$config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= TRUE;
 $config['sess_table_name']		= 'ci_sessions';
@@ -329,7 +329,7 @@ $config['csrf_expire'] = 7200;
 | by the output class.  Do not 'echo' any values with compression enabled.
 |
 */
-$config['compress_output'] = TRUE;
+$config['compress_output'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------

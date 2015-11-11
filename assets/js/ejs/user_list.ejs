@@ -1,0 +1,97 @@
+<div class="us-listing table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>   
+    <tr>
+        <th class="sorting " data-field="first_name">Full name</th>
+        <th class="sorting" data-field="birth_date">Age</th>
+        <th class="sorting" data-field="gender">Sex</th>
+        <th class="sorting" data-field="location">Location</th>
+        <th class="sorting sorting_desc" data-field="created_at">Joined</th>
+        <th class="sorting " data-field="last_login">last</th>
+        <th class="sorting " data-field="chat_count">Chats</th>
+        <th class="sorting " data-field="hosting_count">Hostings</th>
+        <th class="sorting" data-field="user_ref_name">Invited By</th>
+        <th class="sorting" data-field="ref_count">Invites</th>
+        <th class="sorting" data-field="is_verified_host">Verified</th>
+        <th class="sorting" data-field="visible">Status</th>
+    </tr>
+</thead>
+<tbody >
+  <% 
+	 if(users.length){  
+	 for(var i=0; i<users.length; i++) {%>
+            <tr class="odd gradeA">
+                <td><a data-user_id="<%= users[i].fb_id %>" class="" href="<%= siteurl+'admin/user/users/#/details='+users[i].fb_id%>"  >
+                <%if(users[i].first_name ==''&& users[i].last_name=='' ) { %>
+                n/a
+                <%} else { %><%= users[i].first_name %> <%= users[i].last_name %><%}%>
+                </a></td>  
+                    
+                <td class="center"><%= getAge(users[i].birth_date)  %></td>
+                <td class="center"><%= users[i].gender %></td>
+                <td class=" "><%= users[i].location  %></td>
+                <td class=" ">
+                 
+                <%=  convertToServerDate(users[i].created_at, "mm/dd/yy") %>
+               
+                </td>
+                
+                <td><% 
+                	if(users[i].last_login){
+                	 %>
+                	<%=  convertToServerDate(users[i].last_login,'mm/dd/yy') %>
+                	 <% }%>
+                </td>
+                <td class=""><% if (users[i].chat_count >0) { %>
+                 <a href="<%= siteurl+'admin/chat/chat_list/#/search_filter=guest_id,host_id/search_name='+users[i].fb_id %>" target="_blank"  ><%= users[i].chat_count %></a>                	 
+                 <% }else{%>0<% }%>                 
+                </td>
+                <td class="">
+                <% if (users[i].hosting_count >0) { %>
+                 <a href="<%= siteurl+'admin/hostings/hosting/#/search_filter=user_fb_id/search_name='+users[i].fb_id%>" target="_blank"  ><%= users[i].hosting_count %></a>                	 
+                <% }else{%>0<% }%>  
+               </td>                			
+                <td class=" "><% if(typeof(users[i].user_ref_fb_id) != "undefined" &&  users[i].user_ref_fb_id  != '') { %>
+                    <a href="<%= siteurl+'admin/user/users/#/details='+users[i].user_ref_fb_id %>" target="_blank"  ><%= users[i].user_ref_name %></a>                	 
+                 <% }else{ %>
+                 <%= users[i].user_ref_name %>
+                <% } %>                
+                </td>
+                <td class=" "><a href="/admin/user/users/#/search_ref=<%= users[i].fb_id %>" ><%= users[i].ref_count %></a></td>
+                <td>
+                	<% 
+                    	  if (typeof(users[i].is_verified_host) == "undefined" || users[i].is_verified_host  == false){
+                    	 	obj_is_verified_host= 'No';
+                    	  }else{
+                    	 	 obj_is_verified_host='Yes';
+                    	  }
+                    	  
+                    	 %>	
+                	<%= obj_is_verified_host %>
+                </td>
+                <td class=" ">
+                <% 
+            	  if (typeof(users[i].visible) == "undefined" ||  users[i].visible  == true){
+            	 	obj_active= 'Active';
+            	  }else{
+            	 	 obj_active= 'Suspended';
+            	  }
+            	  
+            	 %>	
+                <%= users[i].visible %>
+                
+                </td>
+            </tr>
+         <% } 
+     } else { %>
+          <tr class="odd gradeA noresult"><td colspan="11 alert alert-warning">No data matching your search.</td></tr>
+     <%
+     }
+     %>   
+ </tbody>
+</table>
+</div>
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id="paginate_count"><%=i%></span> out of <%=  total_count%> results</span>
+</div>

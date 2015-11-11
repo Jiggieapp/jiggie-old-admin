@@ -3956,7 +3956,7 @@ $.extend(Datepicker.prototype, {
 		if ($(td).hasClass(this._unselectableClass) || this._isDisabledDatepicker(target[0])) {
 			return;
 		}
-
+		
 		inst = this._getInst(target[0]);
 		inst.selectedDay = inst.currentDay = $("a", td).html();
 		inst.selectedMonth = inst.currentMonth = month;
@@ -4512,6 +4512,7 @@ $.extend(Datepicker.prototype, {
 		inst.drawMonth = inst.selectedMonth = inst.currentMonth = newDate.getMonth();
 		inst.drawYear = inst.selectedYear = inst.currentYear = newDate.getFullYear();
 		if ((origMonth !== inst.selectedMonth || origYear !== inst.selectedYear) && !noChange) {
+			
 			this._notifyChange(inst);
 		}
 		this._adjustInstDate(inst);
@@ -4725,7 +4726,7 @@ $.extend(Datepicker.prototype, {
 							(otherMonth && !showOtherMonths ? "&#xa0;" : // display for other months
 							(unselectable ? "<span class='ui-state-default'>" + printDate.getDate() + "</span>" : "<a class='ui-state-default" +
 							(printDate.getTime() === today.getTime() ? " ui-state-highlight" : "") +
-							(printDate.getTime() === currentDate.getTime() ? " ui-state-active" : "") + // highlight selected day
+							(printDate.getTime() === currentDate.getTime() ? " " : "") + // highlight selected day
 							(otherMonth ? " ui-priority-secondary" : "") + // distinguish dates from other months
 							"' href='#'>" + printDate.getDate() + "</a>")) + "</td>"; // display selectable date
 						printDate.setDate(printDate.getDate() + 1);

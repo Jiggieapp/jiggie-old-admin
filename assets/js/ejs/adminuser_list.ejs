@@ -1,0 +1,41 @@
+<div class="table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>   
+    <tr>
+        <th class="sorting " data-field="name">Full Name</th>
+        <th class="sorting  " data-field="email">Email Address</th>
+        <th class="sorting  sorting_desc" data-field="created_at">Created Date</th>
+    
+        <th class="" data-field="user_status"></th>
+    </tr>
+</thead>
+<tbody >
+   <% 
+	 if(users.length){  
+	 for(var i=0; i<users.length; i++) {%>
+            <tr class="odd gradeA">
+                <td><a href="<%= base_url+'admin/adminuser/details/'+users[i].id %>"  ><%= users[i].name %></a>
+               
+                </td>
+                <td class="center  "><%=  users[i].email %></td>
+                
+                <td><%=  users[i].usercreated_at %></td>
+                <td class=" " align="center">
+                     <a  title="Permission" href="<%= base_url+'admin/adminuser/permission/'+users[i].id %>"  > <i class="fa fa-sitemap"></i></a>
+                     <a class="confirm" data-type="admin user"  href="<%= base_url+'admin/adminuser/delete/'+users[i].id %>"  title="Delete">  <i class="fa fa-times"></i></a>
+                	
+                </td>
+            </tr>
+         <% } 
+     } else { %>
+          <tr class="odd gradeA"><td colspan="11 alert alert-warning">No data matching your search.</td></tr>
+     <%
+     }
+     %>     
+ </tbody>
+</table>
+</div>
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id="paginate_count"><%=i%></span> out of <%=  total_count%> results</span>
+</div>

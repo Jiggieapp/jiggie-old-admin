@@ -1,0 +1,398 @@
+<div class="user-detail">
+    <form class="form-horizontal form-bordered" role="form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">User Details</h4>
+
+                <div class="panel-options">
+                    <!--a href="#" data-rel="collapse"><i class="fa fa-fw fa-minus"></i></a>
+                    <a href="#" data-rel="reload"><i class="fa fa-fw fa-refresh"></i></a-->
+                   
+                    <a href="#" class="detail_close" data-rel="close">
+                        <i class="fa fa-fw fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body" id="selected_user" user_id="<%= user._id  %>" user_fb_id="<%=user.fb_id %>">
+               
+                    <div class="col-sm-6 col-md-5 mbsm" style="overflow-x: hidden">
+                        <a class="profile_image"  data-user_id="<%= user.fb_id %>" href="#">                            
+                            <% image = user.profile_image_url ? encodeURIComponent(user.profile_image_url): siteurl+'assets/images/default.png' %>
+                            
+                            <img   alt="image"  src="<%=  siteurl +'timthumb1.php?src='+image+'&w=200&q=100&h=150' %>" />
+                        </a>   
+                    </div>
+                    <div class="col-sm-6  col-md-7 profile-details">
+                        
+                         <p id="view_fname" class="form-group">
+                           
+                            <a id="fname" class="edit_user1" ><%= user.first_name  %></a>
+                                                     
+                            <a id="lname" class="edit_user1"><%= user.last_name  %></a>
+                        </p>
+                        <div class="row">
+                            <div class="col-xs-3"> 
+                                DOB 
+                            </div>
+                            <div class="col-xs-9"> 
+                                <%=  user.birthday %>
+                                <!--<p id="edit_birthday">
+                                    <a data-title="Select Date of birth" data-pk="1" data-template="MMM / DD / YYYY" data-viewformat="MM/DD/YYYY" data-format="MM/DD/YYYY" data-value="<%=  user.birthday %>" data-type="combodate" id="dob" href="#" class="editable" style="display: inline;">
+                                        <%=  user.birthday %>
+                                    </a>
+                                    
+                                </p>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3"> 
+                                Location: 
+                            </div>
+                            <div class="col-xs-9"> 
+                                <%= user.location %>
+                                <!--
+                                <p id="view_locationP">                                    
+                                    <a id="locationP" class="edit_user"></a>
+                                </p>
+                                -->
+                            </div>    
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3"> 
+                                Verified Host 
+                            </div>
+                            <div class="col-xs-9"> 
+                                <p>
+                                    <span id="wrap_verified_host">
+                                    	 <% 
+				                    	  if (typeof(user.is_verified_host) == "undefined"){
+				                    	 	obj_is_verified_host= 'false';
+				                    	  }else{
+				                    	 	 obj_is_verified_host= user.is_verified_host;
+				                    	  }
+				                    	  
+				                    	 %>	
+                                    	 <input type="checkbox"  name="is_verified_host" data-off-text="NO"  data-on-text="YES" id="verified_host" data-off-color="success" data-size="small" data-on-color="primary" value ="1" 
+                                    	 <%=   obj_is_verified_host == true ? "checked" : ""  %> class="boot-switch"/>
+                     
+                                      
+                                    </span>
+                                </p>
+                            </div>    
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3"> 
+                                Suspend user
+                            </div>
+                            <div class="col-xs-9"> 
+                                <p>
+                                    <span id="wrap_suspend_user">
+                                    	<% 
+				                    	  if (typeof(user.visible) == "undefined"){
+				                    	 	obj_active= true;
+				                    	  }else{
+				                    	 	 obj_active= user.visible;
+				                    	  }
+				                    	  
+				                    	 %>	
+                                    	<input type="checkbox"  name="suspend_user" data-off-text="NO"  data-on-text="YES" data-size="small" id="suspend_user" data-off-color="success"  
+                                    	data-on-color="primary" value ="1" <%= obj_active != true ? "checked" : "" %> class="boot-switch"/>
+                     
+                                       
+                                    </span>
+                                </p>
+                            </div>    
+                        </div>    
+                    </div>
+                </div>
+                <div class="panel-body" >
+
+                    <div class="form-group" id="view_fbid">
+                        <label class="control-label col-xs-3  ">Facebook ID</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="edit_user1" id="fbid"><%= user.fb_id  %></a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="view_email">
+                        <label class="control-label col-xs-3  ">Email</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">
+                                <a class="edit_user1" id="email"><%=  user.email %></a>
+                            </p>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="form-group" id="view_nickname">
+                        <label class="control-label col-xs-3  ">Nick Name</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static"> 
+                               
+                                <a class="edit_user" id="nickname"><%= user.nick_name  %></a>
+                            </p>
+                        </div>
+                    </div>
+                    -->
+                    <div class="form-group" id="view_gender">
+                        <label class="control-label col-xs-3  ">Gender</label>
+                         
+                        <div class="controls col-xs-9">
+                        	<input class="boot-switch" type="radio" name="gender" data-size="small"   data-off-text="M"  data-on-text="M" data-label-text="<i class='fa fa-male'></i>" data-on-color="info" value="male" <%= user.gender == "male" ? "checked" : ""  %>>
+                     	 	<input class="boot-switch" type="radio" name="gender" data-size="small"   data-off-text="F"  data-on-text="F" data-label-text="<i class='fa fa-female'></i>" data-on-color="info" value="female" <%= user.gender == "female" ? "checked" : "" %>>
+               	            <span id="p_gender"></span>
+                        </div>
+                    </div>
+					
+                    
+
+                    <div class="form-group" id="view_about">
+                        <label class="control-label col-xs-3  ">About</label>
+                        <div class="controls col-xs-9">
+                            <%= user.about %>
+                            <!--
+                            <p class="form-control-static"> 
+                                
+                                <a class="edit_user" id="about"></a>
+                            </p>
+                            -->
+                        </div>
+                    </div>
+
+                    <div class="form-group" id ="view_phone"> 
+                        <label class="control-label col-xs-3  ">Phone</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                                 
+                                
+                                <a class="edit_user1" id="phone"><%= user.phone %></a>
+                            </p>
+                        </div>
+                    </div>
+
+
+
+                    
+
+
+                    <!--div class="form-group">
+                        <label class="control-label col-xs-3  ">Invite Code</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static"> <%= user.invite_code %></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3  ">Invited by</label>
+                        <div class="controls col-xs-9">
+                            <span class="form-control-static">  
+                            <% if (invited_by_user) { %>
+			                    <a href="<%= siteurl+'admin/user/user_details/'+user.invited_by %>" target="_blank"  ><%= invited_by_user %></a>                	 
+			                 <% } %>       
+                             
+                            </span>
+                        </div>
+                    </div-->
+                    <div class="form-group">
+                        <label class="control-label col-xs-3  ">Joined</label>
+                        <div class="controls col-xs-9">
+                          
+              
+                         <p class="form-control-static"><%= convertToServerDate(user.created_at,'mm/dd/yy hh:MM TT') %>
+                         </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3  ">Last Login</label>
+                        <div class="controls col-xs-9">
+                           
+                            <p class="form-control-static"> <%=  convertToServerDate(user.last_login, "mm/dd/yy hh:MM TT")%></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3  ">Orders</label>
+                        <div class="controls col-xs-9">
+                            <span class="form-control-static"> 
+                              <% if (user.orders_count >0) { %>
+			                 	<a href="<%= siteurl+'/admin/orders/#/cust_fb_id='+user.fb_id%>" target="_blank"  ><%= user.orders_count %></a>                	 
+			                  <% }else{%>0<% }%> 
+                             </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-xs-3  ">Hostings</label>
+                        <div class="controls col-xs-9">
+                            <span class="form-control-static"> 
+                              <% if (user.hosting_count >0) { %>
+                                <a href="<%= siteurl+'admin/hostings/hosting/#/search_filter=user_fb_id/search_name='+user.fb_id%>" target="_blank"  ><%= user.hosting_count %></a>                  
+                              <% }else{%>0<% }%> 
+                             </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3  ">Chats</label>
+                        <div class="controls col-xs-9">
+                            <span class="form-control-static"> 
+                            <% if (user.chat_count >0) { %>                 
+                                
+			                 	<a href="<%= siteurl+'admin/chat/chat_list/#/search_filter=guest_id,host_id/search_name='+user.fb_id %>" target="_blank"  ><%= user.chat_count %></a>                	 
+			                <% }else{%>0<% }%>
+                             
+                             </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id ="view_ref_count"> 
+                        <label class="control-label col-xs-3  ">Referral Count</label>
+                        <div class="controls col-xs-9">
+                            <span class="form-control-static">                                 
+                                
+                                <a target="_blank" href="/admin/user/users/#/search_ref=<%= user.fb_id %>"><%= user.ref_count %></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <% if(user.appsflyer) { %>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3  ">Invited By</label>
+                        <div class="controls col-xs-9">
+                            <span class="form-control-static">
+								
+                             	<div class="row form-group">
+		                            <div class="col-xs-3">Name</div>
+		                            <div class="col-xs-9">: 
+		                            	<a target="_blank"  href="<%= siteurl +'admin/user/users/#/details='+ invited_by.fb_id %>" style="color:blue"   >
+                                        <img   alt="image"  src="https://graph.facebook.com/<%= invited_by.fb_id%>/picture?width=150&height=100" /><br/>
+		                            		<%= invited_by.first_name %>
+		                            	</a>
+		                            </div>    
+		                        </div>
+                             	<div class="row form-group">
+		                            <div class="col-xs-3">Gender</div>
+		                            <div class="col-xs-9">: <%= invited_by.gender %></div>    
+		                        </div>
+		                        <div class="row form-group">
+		                            <div class="col-xs-3">About</div>
+		                            <div class="col-xs-9">: <%= invited_by.about %></div>    
+		                        </div>
+		                        	
+		                        
+                             </span>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if(user.reviews) { %>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3  ">Reviews</label>
+                            <div class="controls col-xs-9">
+                                <span class="form-control-static">
+                                    <%
+                                    $.each(user.reviews, function( index, val ) {
+                                     
+
+                                    if (moment(val).isValid()){                                      
+                                        value = moment(val);                                      
+                                        value = value.format("YYYY-MM-DD"); 
+                                        value =      convertToServerDate(value,'mm/dd/yy hh:MM TT')                 
+                                    }else{ 
+                                        value= val
+                                    }
+                                    %>
+                                    <div class="row form-group">
+                                        <div class="col-xs-3">
+                                        <a target="_blank"  href="<%= siteurl +'admin/user/users/#/details='+ user.reviews[index].from_fb_id %>" style="color:blue"   >
+                                            <img   alt="image"  src="https://graph.facebook.com/<%= user.reviews[index].from_fb_id%>/picture?width=150&height=100" />
+                                            <br/>
+                                            <%= user.reviews[index].first_name %></div>
+                                        </a>
+
+                                
+                                        <div class="col-xs-9">:<b><%= user.reviews[index].rating %> stars</b><br/> <%= user.reviews[index].message %>
+                                            <br>
+                                            <%
+                                                created_at = moment(user.reviews[index].created_at);
+                                            created_at = created_at.format("MM-DD-YYYY hh:MM A"); 
+                                            //created_at =      convertToServerDate(created_at,'MM-DD-YYYY hh:MM A')
+                                            %>
+                                            <%= created_at %>
+                                        </div>    
+                                    </div>
+                                    <%    
+                                    });
+                                    %>
+                                     
+                                        
+                                    
+                                 </span>
+                            </div>
+                    </div>
+                    <% } %>
+
+                    <% if(user.appsflyer) { %>
+                    	<div class="form-group">
+	                        <label class="control-label col-xs-3  ">Appsflyer info</label>
+	                        <div class="controls col-xs-9">
+	                            <span class="form-control-static">
+									<%
+									$.each(user.appsflyer, function( index, val ) {
+									 
+
+									if (moment(val).isValid()){										 
+									    value = moment(val);									  
+									    value = value.format("YYYY-MM-DD");	
+									    value = 	 convertToServerDate(value,'mm/dd/yy hh:MM TT')					
+									}else{ 
+										value= val
+									}
+									%>
+									<div class="row form-group">
+			                            <div class="col-xs-3"><%= index %></div>
+			                            <div class="col-xs-9">: <%= value %></div>    
+			                        </div>
+									<%	  
+									});
+									%>
+	                             	 
+			                        	
+			                        
+	                             </span>
+	                        </div>
+                    </div>
+                    <% } %>
+                    <% if(user.mixpanel) { %>
+                    	<div class="form-group">
+	                        <label class="control-label col-xs-3  ">Mixpanel info</label>
+	                        <div class="controls col-xs-9">
+	                            <span class="form-control-static">
+									<%
+									$.each(user.mixpanel, function( index, val ) {
+									 
+
+									 
+									%>
+									<div class="row form-group">
+			                            <div class="col-xs-3"><%= index %></div>
+			                            <div class="col-xs-9">: <%= val %></div>    
+			                        </div>
+									<%	  
+									});
+									%>
+	                             	 
+			                        	
+			                        
+	                             </span>
+	                        </div>
+                    </div>
+                    <% } %>
+                <div class="form-group">
+                    <label class="control-label col-xs-3"></label>
+                    
+                    	<!--a class="confirm btn btn-danger" href="#" data-type="user"  data-url="<%= siteurl %>admin/user/delete_user/<%= user_id %>" title="Delete">Delete user</a-->
+                                        
+                
+                </div>
+             </div>
+          </div>  
+        
+    </form>
+</div> 

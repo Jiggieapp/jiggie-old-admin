@@ -48,6 +48,7 @@
  *  Load the global functions
  * ------------------------------------------------------
  */
+
 	require(BASEPATH.'core/Common.php');
 
 /*

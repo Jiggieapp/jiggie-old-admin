@@ -1,62 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Error</title>
-<style type="text/css">
+<!doctype html>
+<html class="no-js">
+    <head>
+        <!-- Meta, title, CSS, favicons, etc. -->
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Party Host- Error </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!--<link rel="shortcut icon" href="/favicon.ico">-->
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="//admin.partyhostapp.com/assets/css/bootstrap.css">
+        <link rel="stylesheet" href="//admin.partyhostapp.com/assets/css/iriy-admin.css">
+        <link rel="stylesheet" href="//admin.partyhostapp.com/assets/css/font-awesome/css/font-awesome.css">
 
-::selection{ background-color: #E13300; color: white; }
-::moz-selection{ background-color: #E13300; color: white; }
-::webkit-selection{ background-color: #E13300; color: white; }
-
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
-
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
-
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
-
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
-
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	-webkit-box-shadow: 0 0 8px #D0D0D0;
-}
-
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
-</head>
-<body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
+        <!--[if lt IE 9]>
+        <script src="assets/libs/html5shiv/html5shiv.min.js"></script>
+        <script src="assets/libs/respond/respond.min.js"></script>
+        <![endif]-->
+        
+    </head>
+    <body class="body-error body-error-404">
+    <div class="container">
+        <div class="error-container">
+            <div id="container">
+		<h4><?php echo $heading; ?></h4>
 		<?php echo $message; ?>
 	</div>
+        </div>
+    </div>
 </body>
+
 </html>

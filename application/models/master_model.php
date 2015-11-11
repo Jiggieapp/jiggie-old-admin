@@ -92,7 +92,7 @@ class Master_model extends CI_Model {
     public function check_email_bystatus($user_type_id = null) {
         $str = '';
         $myarray = array();
-        
+        $myarray["user_status !="] = 10;
         if (isset($user_type_id)) {
             $myarray["user_type_id"] = $user_type_id;
         }
@@ -112,7 +112,7 @@ class Master_model extends CI_Model {
     
     public function create_user($image) {
        
-        $password = $this->input->post('password');
+        $password = mysql_real_escape_string($this->input->post('password'));
         $myarray = array();
         $myarray['email'] = $this->input->post('email');
         $myarray['user_type_id'] = $this->input->post('user_type_id');
@@ -182,7 +182,7 @@ class Master_model extends CI_Model {
 		if($num > 0){
 			$this->db->limit($num, $offset);
 		}
-		 $this->db->select("id ,CONCAT_WS(' ', first_name, last_name) as name,  profile_image_url ,email, created_at",false);
+		 $this->db->select("id ,CONCAT_WS(' ', first_name, last_name) as name,  profile_image_url ,email, DATE_FORMAT(created_at,'%m-%d-%Y %T') as created_at",false);
 		$query	=	$this->db->get('admin_users');
 		return $query->result();
    }
@@ -226,11 +226,11 @@ class Master_model extends CI_Model {
         
         return $this->db->update("admin_users", $update_field, array("id" => $user));
     }
-    
+   
     public function update_adminuser($user_id, $image)
     {
         $myarray = array();
-        $myarray['email'] = $this->input->post('email');
+       // $myarray['email'] = $this->input->post('email');
         $myarray['user_type_id'] = $this->input->post('user_type_id');
         $myarray['first_name'] = $this->input->post('first_name') ;
         $myarray['last_name'] = $this->input->post('last_name');
@@ -246,7 +246,7 @@ class Master_model extends CI_Model {
     function checkAccess($view_type, $module, $userid,$usertypeid, $permissions) {
         if (!$this->authentication->check_access($view_type, $module, $userid,$usertypeid, $permissions)) {
             //show_error("You don't have access to whatever you are trying to view", $status_code = 500);
-            $this->template->write_view('content', 'admin/noaccess');
+            $this->template->write_view('content', 'admin/noaccess',$this->gen_contents);
             $this->template->render();
             return FALSE;
         } else {
@@ -258,34 +258,44 @@ class Master_model extends CI_Model {
         $this->db->update("admin_users" , array("user_status" => 10), array("id" => $user_id));
     }
     
-    public function export($start_date, $end_date, $where="") {
+     
+     public function export($start_date, $end_date, $arr_sort,$arr_search=array()) {
         $delimiter = ",";
         $newline = "\r\n";
         $this->load->dbutil();
         $this->load->helper('file');
-        if(!empty($where)) {
-            $where_search = " AND (first_name  LIKE '%".$where."%' OR 
-                last_name  LIKE '%".$where."%' OR 
-                email  LIKE '%".$where."%' OR 
-                CONCAT_WS(' ', first_name, last_name)  LIKE '%".$where."%')";
+        $this->load->helper('common');
+        if(!empty($arr_search["where"])) { 
+            $where_search = " AND (first_name  LIKE '%".$arr_search["where"]."%' OR 
+                last_name  LIKE '%".$arr_search["where"]."%' OR 
+                email  LIKE '%".$arr_search["where"]."%' OR 
+                CONCAT_WS(' ', first_name, last_name)  LIKE '%".$arr_search["where"]."%')";
         } else {
             $where_search = "";
         }
         $where_search .= " AND user_status != 10";
-        $query = $this->db->query($SQL="SELECT * FROM admin_users WHERE created_at >= '$start_date' AND created_at <= '$end_date' $where_search");
+		if(is_array($arr_sort) && count($arr_sort) > 0){
+                $order = " ORDER BY ".$arr_sort['name'].' '.$arr_sort['value'];
+                 
+        }else {
+                
+				$order = " ORDER BY created_at DESC";
+        }
+        $query = $this->db->query($SQL="SELECT CONCAT_WS(' ', first_name, last_name) as name, `email`, `last_login`, `profile_image_url`, `created_at` as created_on FROM admin_users WHERE created_at >= '$start_date' AND created_at <= '$end_date' $where_search ".$order);
         //echo $SQL;
         $data = $this->dbutil->csv_from_result($query, $delimiter, $newline);
 
         $file_path = $this->config->item("site_basepath") . "uploads/csv/";
-        $file = strtotime(date("Y-m-d h:i:s")) . ".csv";
-
+        $file = "Adminuser-".date("m-d-Y").".csv";
+		
+		
+		
         if (write_file($file_path . $file, $data)) {
-            header('Content-Type: application/csv');
-            header('Content-Disposition: attachment; filename=' . $file);
-            header('Pragma: no-cache');
-            readfile("$file_path" . "$file");
+            set_time_limit(0);
+			output_file($file_path.$file, $file, 'application/csv');
         } else {
             
         }
     }
+
 }                

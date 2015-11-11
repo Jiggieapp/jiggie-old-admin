@@ -1,0 +1,69 @@
+<div class="table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>
+    <tr>
+        <th class="" data-field="title">Ticket Name</th>
+        <th class="" data-field="type">Type</th>
+        <th class="" data-field="end_datetime">Price</th>
+        <th class="" data-field="venue.name">Status</th>         
+        <th class="" data-field="event_type">People</th>        
+        <th class=" min70" data-field="num_orders">P/Person</th>        
+        <th class=" min70" data-field="num_hostings">Description</th>        
+        <th class=" min60" data-field="num_views">Sold</th>
+        <th class=" min60" data-field="num_views">Reserve</th>
+        <th class="min50" data-field="">Action</th>
+    </tr>
+</thead>
+<tbody > 
+ <% 
+ 
+	 if(tickets.length){  
+	 for(var i=0; i<tickets.length; i++) {%>
+        <tr class="odd gradeA">
+            <td> 
+            <% if(event_type=='weekly') 
+               		var  url= siteurl+'admin/tickets/#/ticket-recurring='+tickets[i]._id;
+               else
+             		var  url= siteurl+'admin/tickets/#/ticket-details='+tickets[i]._id;
+            %>
+               <a  href="<%= url %>"> <%= tickets[i].name %>  </a>         	
+            </td>
+            <td class="capitalize">
+            	 <%= tickets[i].ticket_type %> 
+           </td>
+            <td class=" ">
+            	 <%= tickets[i].price %> 
+            	 
+            </td>
+            <% color ='#000000';
+            	if(tickets[i].status=='active')
+            	{
+            	 color = '#009900';
+            	}
+            		
+            	 %>
+            <td class="capitalize" style="color:<%=color%>">  <%= tickets[i].status %>  </td>         
+            <td>  
+            	<%= tickets[i].guest %> 
+            </td>
+			<td class="min70"><%= tickets[i].add_guest %></td>
+			<td class="min70"><%= tickets[i].description %></td>
+			<td class="min60">
+			<a href="<%=siteurl%>admin/orders"><%= tickets[i].sold %></a>
+			<a href="<%=siteurl%>admin/orders"><%= tickets[i].sold %></a>	
+			</td>		
+			<td></td>	 
+			<td class="min50">				
+				<a title="Duplicate"  id="" href="<%= siteurl+'admin/tickets/duplicate/'+tickets[i]._id+'/'+tickets[i].is_recurring %>"><i class="fa fa-lg fa-fw fa-copy"></i></a>
+			</td>	  
+           
+        </tr>
+     <% } 
+     } else { %>
+          <tr class="odd gradeA noresult"><td colspan="10" class="">No tickets available.</td></tr>
+     <%
+     }
+     %> 
+ </tbody>
+</table>
+</div>

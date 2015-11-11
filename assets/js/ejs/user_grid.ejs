@@ -1,0 +1,61 @@
+<div class="mtop10">&nbsp;</div>
+<div class="table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>   
+    <tr>
+        <th class="sorting " data-field="first_name">Full name</th>
+        <th class="sorting" data-field="birth_date">Age</th>        
+        <th class="sorting" data-field="location">Location</th>
+        <th class="sorting sorting_desc" data-field="created_at">Joined</th>
+        
+    </tr>
+</thead>
+</table>
+</div>
+<div id="img-tems" class="img-tems"> 
+   
+    <% 
+	 if(users.length){  
+	 	for(var i=0; i<users.length; i++) {%>
+        		<div class="item col-xs-12 col-sm-6 col-md-3">
+            		<div class="thumbnail">
+            		<td>
+            		    <a data-user_id="<%= users[i].fb_id %>" class="" href="<%= siteurl+'admin/user/users/#/details='+users[i].fb_id%>"  >
+            		    
+            			
+            				 <%
+            					if(users[i].profile_image_url){
+            						var image = encodeURIComponent(users[i].profile_image_url);
+            					}else if(users[i].profile_image_url_2){
+            						var image = encodeURIComponent(users[i].profile_image_url_2);
+            					}else if(users[i].profile_image_url_3){
+            						var image = encodeURIComponent(users[i].profile_image_url_3);
+            					}else if(users[i].profile_image_url_4){
+            						var image = encodeURIComponent(users[i].profile_image_url_4);
+            					}else if(users[i].profile_image_url_5){
+            						var image = encodeURIComponent(users[i].profile_image_url_5);
+            					}else{
+            						var image = encodeURIComponent(siteurl+'assets/images/default.png');
+            					}
+            			    %>
+		                    <img   alt="image" class="img-responsive" src="<%= siteurl+'timthumb1.php?src='+image+'&w=200&q=100&h=150' %>" />
+		                </a>
+		                
+		                <div class="caption">
+		                    <span class="group inner list-group-item-heading"> 
+		                    <a  href="<%= siteurl+'admin/user/users/#/details='+users[i].fb_id%>"  ><%= users[i].first_name %></a>	
+		                    	                    
+		                </div>		                
+            		</div>
+            	</div>
+
+      <%   } 
+     } else { %>
+          <div class="col-md-12"><div class=" col-md-12 alert alert-warning">No data matching your search.</div></div> 
+     <%} %>
+              
+</div> 
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id=""><%=i%></span> out of <%=  total_count%> results</span>
+</div>

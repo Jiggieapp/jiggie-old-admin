@@ -9,8 +9,10 @@ class Blocklists extends CI_Controller {
         parent::__construct();
         $this->merror['error']	= '';
         $this->msuccess['msg']	= '';
+		 $this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->load->model(array('admin/admin_model','common_model','admin/block_model', 'admin/chat_model','master_model','admin/permission_model'));
         $this->gen_contents['title']	=	'';
+		presetpastdaterange();
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
@@ -27,23 +29,29 @@ class Blocklists extends CI_Controller {
                 $this->blocks();
             }
         }
-	 public function blocks(){
-    	$this->ajax_list();
+	 public function blocks($init=''){
+	 	
+    	//$this->ajax_list($init);
         $this->gen_contents['p_title']= 'User Blocks';
         $this->gen_contents['ci_view']= 'admin/block/listing';
         $this->gen_contents['add_link']= '';
         $this->gen_contents['export_link']= base_url() . 'admin/blocklists/export';
-        $this->gen_contents['current_controller'] = "block";
-        $breadCrumbs = array( 'admin/blocklists'=>'Blocks');
+        //$this->gen_contents['current_controller'] = "block";
+        $breadCrumbs = array( 'admin/blocklists/blocks/0'=>'Blocks');
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         $this->template->write_view('content', 'admin/listing',$this->gen_contents);
         $this->template->render();
     }
-	public function ajax_list(){
+	public function ajax_list($init=''){
 		
 
-		$headers = apache_request_headers();
-		$is_ajax = (isset($headers['X-Requested-With']) && $headers['X-Requested-With'] == 'XMLHttpRequest');		
+		//$headers = apache_request_headers();
+		//$is_ajax = (isset($headers['X-Requested-With']) && $headers['X-Requested-With'] == 'XMLHttpRequest');		
+        $is_ajax = $this->input->is_ajax_request();
+		if($is_ajax || $init=='' ){				
+			$array_items = array('blocklist_search' => '', 'cur_page'=>'','per_page'=>'');
+			$this->session->unset_userdata($array_items);		
+		}
 		$this->load->library('pagination');	
 		
 		$config['base_url'] = base_url().'admin/blocklists/ajax_list';
@@ -54,10 +62,17 @@ class Blocklists extends CI_Controller {
 		}
 	 
 	 
-	 	if('' != $this->uri->segment(4)){
-			$offset	= safeOffset(4);
+	 	$offset	= safeOffset(4);   
+	 	
+	 	if($offset){			
+			$this->session->set_userdata("cur_page", $offset);
 		}else{
-			$offset	= 0;
+			if($this->uri->segment(4)!==0){				
+				$offset	= $this->session->userdata('cur_page');				
+			}				
+			else{				
+				$offset=0;
+			}		
 		}
 		$this->mcontents['offset'] = $offset;
 		$config['uri_segment']					= 4;
@@ -79,11 +94,14 @@ class Blocklists extends CI_Controller {
                 //Search Factor
                 $arr_search = array();
                 if($this->input->post ('search_name') != "") {
-                    $arr_search["where"]    = $this->input->post ('search_name');
-                    $this->session->set_userdata("user_search", $arr_search["where"]);
-                } else {
+                    //$arr_search["where"]    = $this->input->post ('search_name');
+					 $arr_search["where"] = mysql_real_escape_string($this->input->post('search_name')) ;
+                    $this->session->set_userdata("blocklist_search", $arr_search["where"]);
+                } elseif($this->session->userdata('blocklist_search')){
+		            	$arr_search["search_name"] = mysql_real_escape_string($this->session->userdata('blocklist_search')) ;                	
+		        }else {
                     $arr_search["where"]    = "";
-                    $this->session->set_userdata("user_search", "");
+                    $this->session->set_userdata("blocklist_search", "");
                 }
                 
 		$start_date = $this->session->userdata('startDate')." 00:00:00";
@@ -92,14 +110,14 @@ class Blocklists extends CI_Controller {
 		
 		$config['total_rows'] 					= $this->block_model->getBlocked ($arr_where, $arr_sort, 'count', $config['per_page'], $offset, $arr_search);
 		$this->gen_contents['total_count']			= $config['total_rows'];
-		$this->pagination->initialize($config);
-		$this->gen_contents['paginate']		= $this->pagination->create_links_ajax();
+	 
+		$this->gen_contents['paginate']		= $config;
 		$this->gen_contents['data_url']		= $config['base_url'];
 		$this->gen_contents['blocks']		= $this->block_model->getBlocked ($arr_where, $arr_sort,'list', $config['per_page'], $offset, $arr_search);
-		if($is_ajax){
-			$this->load->view('admin/block/listing',$this->gen_contents); 
-		}
-			
+		//if($is_ajax){
+		//	$this->load->view('admin/block/listing',$this->gen_contents); 
+		//}
+		echo json_encode($this->gen_contents);exit;
 	}
         
         public function unblock($block_id="", $requestor = "", $blockee = "") {

@@ -41,36 +41,43 @@
     			$emailid        = $login['email'];
     			$password        = $login['password'];
     			
-				$this->CI->db->select ('username   AS USERNAME, crypted_password, CONCAT_WS(" ", first_name, last_name) as NAME, id as USERID, email as EMAIL,user_type_id', false);
-				$this->CI->db->where ('email', $emailid);
-		
+				$this->CI->db->select ('username   AS USERNAME, crypted_password, CONCAT_WS(" ", first_name, last_name) as NAME, id as USERID, email as EMAIL,user_type_id,user_status', false);
+				$this->CI->db->where ('email', $emailid);					
 				$password =$this->CI->db->escape_like_str($password);
-				$this->CI->db->where ("crypted_password = LEFT(MD5(CONCAT(MD5('$password'), 'cloud')), 50)", NULL, false );
-				
+				$this->CI->db->where ("crypted_password = LEFT(MD5(CONCAT(MD5('$password'), 'cloud')), 50)", NULL, false );				
 				$select_query    = $this->CI->db->get ('admin_users');
 				
 				if (0 < $select_query->num_rows ())
 				{
-                                    $row 			= $select_query->row();  
-                                      		
-                                    $session_data 	= array (
-                                        'ADMIN_USERNAME'      => $row->USERNAME,
-                                        'ADMIN_NAME'          => $row->NAME,
-                                        'ADMIN_USERID'        => $row->USERID,
-                                        'ADMIN_EMAIL'         => $row->EMAIL,
-                                        'USER_TYPE_ID'        => $row->user_type_id,  
-                                        'startDate'           => '2010-01-01',
+                    $row 			= $select_query->row();  
+                    if($row->user_status==1){
+                    	$session_data 	= array (
+                        'ADMIN_USERNAME'      => $row->USERNAME,
+                        'ADMIN_NAME'          => $row->NAME,
+                        'ADMIN_USERID'        => $row->USERID,
+                        'ADMIN_EMAIL'         => $row->EMAIL,
+                        'USER_TYPE_ID'        => $row->user_type_id,  
+                        'startDate'           => $this->CI->config->item("start_date"), 
+            			'endDate'             => date("Y-m-d"), 
+            			'selected'			  => 'All',
+            			'current_cont'		  => 'Home',
+            			'metric1'	          =>  'new_users',
+            			'date_picker_sec'	  => 'past',                               	
+                    );
 
- 
-		                    			'endDate'             => date("Y-m-d")                                             	
-                                    );
-
-                                    $this->CI->session->set_userdata ($session_data);
-                                    return 'success';
+                    $this->CI->session->set_userdata ($session_data);	
+					$myarray= array('last_login'=> date("Y-m-d H:i:s"));
+				    $this->CI->db->update("admin_users", $myarray, array("id" => $row->USERID))	;							
+                    return 'success';
+                    }		
+					else if($row->user_status==10){
+						return 'deleted';
+					}else{
+						return false;	
+					}
 				}
 				else 
-                                    return false;
-				
+                     return false;				
 				
 		}
 			
@@ -216,32 +223,22 @@
 
 		
 		 
-		function CheckAdminStatus($user_id)
+		function check_admin_status($user_id)
 		{
-			$status			 = 'A';
-			$this->CI->db->select ("*");
-			$this->CI->db->where ('admin_id', $user_id);
-			//$this->CI->db->where ('status', $status);
-			$select_query    = $this->CI->db->get ('admin_user_details');
+			$status			 = 1;
+			$this->CI->db->select ("id");
+			$this->CI->db->where ('id', $user_id);
+			$this->CI->db->where ('user_status', $status);
+			$select_query    = $this->CI->db->get ('admin_users');
+			
+			
 			if (0 < $select_query->num_rows ())
 			{
-				$row = $select_query->row();
-				if($row->status != 'A'){
-					return 'freezed';
-				}else {
-					if($row->webmaster  == 'Y' )  
-							$user_type ='A';   
-						else 
-							$user_type ='SA';    
-					$session_data['ADMIN_USERTYPE'] 	= $user_type;
-	                   	        
-					$this->CI->session->set_userdata ($session_data);
-					return 'ok';
-				}
+				return true;
 			}
 			else
 			{
-				return 'deleted';
+				return false;
 			}
 		}
 		
@@ -249,10 +246,25 @@
 		{
                     switch ($user_type) {
 
-                            case "admin":
+                          case "admin":
+							  		
                                     if (!$this->CI->session->userdata ('ADMIN_USERID')){
                                           return FALSE;
-                                    }else{
+                                    }
+									else if(!$this->check_admin_status($this->CI->session->userdata ('ADMIN_USERID'))){
+										$session_data 	= array (                               
+									
+							                                    'ADMIN_USERNAME'      => '',
+							                                  	'ADMIN_NAME'      	  => '',
+							                                  	'ADMIN_USERID'        => '',
+							                                  	'ADMIN_EMAIL'      => ''
+							                               
+							                           	        );	    
+									    $this->CI->session->unset_userdata($session_data);						
+										$this->CI->session->sess_destroy();
+							  			return FALSE;
+							  		}
+                                    else{
                                         return true;
                                     }
                           break;					
@@ -262,18 +274,20 @@
 		}
 		
 		public function check_user_permissions(&$user_permissions, $permissions) {
-                    foreach ($user_permissions as $k => $v) {
-                        foreach ($permissions as $pk => $pv) {
-                            if ( intval( $v['user_permission'] ) & intval($pv['value']) ){
-                                //echo $v['module_id'].'- can ', $pv['permission'], '<br />';
-                                $user_permissions[$k]['permissions'][$pv['permission_id']] = $pv;
-                            }
-                            else{
-                               //echo $v['module_id']. '- can not ', $pv['permission'], '<br />';
-                            }
-
-                        }
-                    }
+                    if(!empty($user_permissions)){
+	                    foreach ($user_permissions as $k => $v) {
+	                        foreach ($permissions as $pk => $pv) {
+	                            if ( intval( $v['user_permission'] ) & intval($pv['value']) ){
+	                                //echo $v['module_id'].'- can ', $pv['permission'], '<br />';
+	                                $user_permissions[$k]['permissions'][$pv['permission_id']] = $pv;
+	                            }
+	                            else{
+	                               //echo $v['module_id']. '- can not ', $pv['permission'], '<br />';
+	                            }
+	
+	                        }
+	                    }
+					}	
                 }
 
                 public function check_single_user_permissions(&$user_permissions, $permissions) {

@@ -3,7 +3,30 @@
   .panel-body {
     padding: 0;
   }
-
+  .metric-box {
+    
+    header {     
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+      margin: 25px 0 0 20px;
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 2px 0 12px;
+      }
+    }
+    .value {
+      top: 0;
+      left: 0;
+      margin-bottom:20px;
+      color: $brand-primary;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 1em;
+      text-align:center;
+    }
+  }
   .metric-content {
     position: relative;
     min-height: 135px;
@@ -27,9 +50,7 @@
     .value {
       top: 0;
       left: 0;
-
       margin: 25px 0 0 20px;
-
       color: $brand-primary;
       font-weight: 700;
       font-size: 36px;

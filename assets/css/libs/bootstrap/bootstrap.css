@@ -5813,8 +5813,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   line-height: 1;
   color: black;
   text-shadow: 0 1px 0 white;
-  opacity: 0.2;
-  filter: alpha(opacity=20);
+  opacity: 1;
+  filter: alpha(opacity=100);
 }
 .close:hover, .close:focus {
   color: black;

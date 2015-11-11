@@ -2,12 +2,19 @@
 
 if(!function_exists('showMessage')){
 	function showMessage ($width=''){
+		
 		$CI 				= 	&get_instance();
+		//var_dump($CI->session->flashdata ('success_message'));
+		$userdata = $CI->session->all_userdata();
+		foreach ($userdata as $key => $value)
+		{
+			//echo $key .'bbbbbbbb'. $value;
+		}
 		$error_message		=	$CI->session->flashdata ('error_message');
 		$success_message	=	@$CI->msuccess['msg'] ? @$CI->msuccess['msg'] :$CI->session->flashdata ('success_message');
 		$validation_errors  = 	validation_errors();
 		$validation_errors	=	$CI->merror['error'] ? $CI->merror['error'] : (('' == trim($validation_errors))? $CI->merror['error']:$validation_errors);
-		
+		 
 		if ('' != trim ($error_message)){
 			$data['message']	=	'<div class="alert alert-block  alert-danger fade in"><button class="close" type="button" data-dismiss="alert">×</button>'.$error_message.'</div>';
 		}
@@ -18,7 +25,11 @@ if(!function_exists('showMessage')){
 		}else{		
 			$data['message']	=	'<div style="display:none;" class="alert alert-block alert-success fade in"><button class="close" type="button" data-dismiss="alert">×</button>'.$success_message.'</div>'; 
 		}
+		
+		 
 		$CI->load->view ('common/messages', $data);
+		
+		 
 	}
 }
 
@@ -91,7 +102,12 @@ if(!function_exists("safeOffset")){
 		return abs(intval($CI->uri->segment($segment_number, $default)));
 	}	
 }
-
+if(!function_exists("safeInteger")){
+	function safeInteger ($val ){
+		if($val < 0 ) return 1;
+		return abs(intval($val));
+	}	
+}
 
 /**
  * Function for checking the safe html data to transfer or post
@@ -405,7 +421,34 @@ function get_general_settings_value($config_name){
 	return '';
 }
 
-
+function getUserFromId($id=''){
+	$CI =& get_instance();
+	#$CI->db->_reset_select();
+	$CI->db->where('id',$id);
+	$CI->db->select("CONCAT_WS(' ', first_name, last_name) as name",FALSE);
+	$general_settings	=	$CI->db->get('users');
+	if ($general_settings->num_rows() > 0){
+		$settings			=	$general_settings->result_array();
+		if($settings[0]['name'] ){
+			return $settings[0]['name'];
+		}
+	}
+	return '';
+}
+function getUserFromFBId($id=''){
+	$CI =& get_instance();
+	#$CI->db->_reset_select();
+	$CI->db->where('fb_id',$id);
+	$CI->db->select("id",FALSE);
+	$general_settings	=	$CI->db->get('users');
+	if ($general_settings->num_rows() > 0){
+		$settings			=	$general_settings->result_array();
+		if($settings[0]['id'] ){
+			return $settings[0]['id'];
+		}
+	}
+	return '';
+}
 /**
  * *
  *
@@ -651,6 +694,172 @@ function rhttp($str=''){
 	
 	return $str;
 }
+function presetdaterange(){
+	$CI = &get_instance();
+	$current = $CI->router->fetch_class();
+	If($current !=$CI->session->userdata('current_cont')){
+		$data = array(        
+            'startDate' => $CI->config->item("start_date"),
+            'endDate' => date("Y-m-d"),
+            'current_cont'=> $current
+        );
 
+        $CI->session->set_userdata($data);
+		
+		
+	}
+}
+function presetfuturedaterange(){
+	
+	$CI = &get_instance();
+	$current = $CI->router->fetch_class();
+	 
+	$effectiveEndDate = date('Y-m-d', strtotime("+6 months", strtotime(date('Y-m-d'))));
+	if($CI->session->userdata('date_picker_sec') =='past'){		 
+		$data = array(        
+            'startDate' => '2015-04-01',
+            'endDate' => $effectiveEndDate,
+            'current_cont'=> $current,
+            'date_picker_sec'=>'future',
+            'selected' =>'All'
+        );
+		 
+        $CI->session->set_userdata($data);	
+	}	 
+ 
+}
+function presetpastdaterange(){
+	$CI = &get_instance();
+	$current = $CI->router->fetch_class();
+	if($CI->session->userdata('date_picker_sec') =='future'){
+		$data = array(        
+            'startDate' => $CI->config->item("start_date"),
+            'endDate' => date('Y-m-d'),
+            'current_cont'=> $current,
+            'date_picker_sec'=>'past',
+            'selected' =>'All'
+        );
+		 
+        $CI->session->set_userdata($data);	
+	}	 
+	 
+}
+
+function isodate($date){
+	$date = new DateTime($date);
+	return  $date->getTimestamp()."000";
+	
+}
+
+function output_file($file, $name, $mime_type='')
+{
+	 /*
+	 This function takes a path to a file to output ($file),
+	 the filename that the browser will see ($name) and
+	 the MIME type of the file ($mime_type, optional).
+	 
+	 If you want to do something on download abort/finish,
+	 register_shutdown_function('function_name');
+	 */
+	 if(!is_readable($file)) die('File not found or inaccessible!');
+	  
+	 $size = filesize($file);
+	 $name = rawurldecode($name);
+	  
+	 /* Figure out the MIME type (if not specified) */
+	 $known_mime_types=array(
+	    "pdf" => "application/pdf",
+	    "txt" => "text/plain",
+	    "html" => "text/html",
+	    "htm" => "text/html",
+	    "exe" => "application/octet-stream",
+	    "zip" => "application/zip",
+	    "doc" => "application/msword",
+	    "xls" => "application/vnd.ms-excel",
+	    "ppt" => "application/vnd.ms-powerpoint",
+	    "gif" => "image/gif",
+	    "png" => "image/png",
+	    "jpeg"=> "image/jpg",
+	    "jpg" =>  "image/jpg",
+	    "csv" => "application/csv",
+	    "php" => "text/plain"
+	 );
+	       
+	 if($mime_type==''){
+	     $file_extension = strtolower(substr(strrchr($file,"."),1));
+	     if(array_key_exists($file_extension, $known_mime_types)){
+	        $mime_type=$known_mime_types[$file_extension];
+	     } else {
+	        $mime_type="application/force-download";
+	     };
+	 };
+	  
+	 @ob_end_clean(); //turn off output buffering to decrease cpu usage
+	  
+	 // required for IE, otherwise Content-Disposition may be ignored
+	 if(ini_get('zlib.output_compression'))
+	  ini_set('zlib.output_compression', 'Off');
+	   
+	 header('Content-Type: ' . $mime_type);
+	 header('Content-Disposition: attachment; filename="'.$name.'"');
+	 header("Content-Transfer-Encoding: binary");
+	 header('Accept-Ranges: bytes');
+	  
+	 /* The three lines below basically make the
+	    download non-cacheable */
+	 header("Cache-control: private");
+	 header('Pragma: private');
+	 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+	 
+	 // multipart-download and download resuming support
+	 if(isset($_SERVER['HTTP_RANGE']))
+	 {
+	    list($a, $range) = explode("=",$_SERVER['HTTP_RANGE'],2);
+	    list($range) = explode(",",$range,2);
+	    list($range, $range_end) = explode("-", $range);
+	    $range=intval($range);
+	    if(!$range_end) {
+	        $range_end=$size-1;
+	    } else {
+	        $range_end=intval($range_end);
+	    }
+	 
+	    $new_length = $range_end-$range+1;
+	    header("HTTP/1.1 206 Partial Content");
+	    header("Content-Length: $new_length");
+	    header("Content-Range: bytes $range-$range_end/$size");
+	 } else {
+	    $new_length=$size;
+	    header("Content-Length: ".$size);
+	 }
+	 
+	 /* output the file itself */
+	 $chunksize = 1*(1024*1024); //you may want to change this
+	 $bytes_send = 0;
+	 if ($file = fopen($file, 'r'))
+	 {
+	    if(isset($_SERVER['HTTP_RANGE']))
+	    fseek($file, $range);
+	     
+	    while(!feof($file) &&
+	        (!connection_aborted()) &&
+	        ($bytes_send<$new_length)
+	          )
+	    {
+	        $buffer = fread($file, $chunksize);
+	        print($buffer); //echo($buffer); // is also possible
+	        flush();
+	        $bytes_send += strlen($buffer);
+	    }
+	 fclose($file);
+	 } else die('Error - can not open file.');
+	  
+	die();
+} 
+function validateDate($date, $format = 'Y-m-d H:i:s')
+{
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) == $date;
+}
 /*End of file common_helper.php*/
 /* Location: ./system/application/helpers/common_helper.php */

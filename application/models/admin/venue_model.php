@@ -59,7 +59,11 @@ class Venue_model extends CI_Model {
 		if($num > 0){
 			$this->db->limit($num, $offset);
 		}
-		$query	=	$this->db->get('venues');
+		//$query	=	$this->db->get('venues');
+		//return $query->result();
+		 $this->db->select('v.id, v.fs_venue_id, v.venue_city_id, v.name, v.address, v.neighborhood, v.cross_street, v.city, v.state, v.zip, v.country, v.phone, v.lat, v.lng, v.url, v.description, v.rank, v.grade, v.images_processed, v.closed, v.deleted, v.venue_status, v.img_title, v.img_title_2, v.img_1, v.img_2, v.img_3, v.img_4, v.img_5, v.created_at, v.created_ip, v.updated_at, v.updated_ip
+		 ,(SELECT COUNT(venue_id) AS other FROM hostings AS hs where hs.venue_id = v.id GROUP BY venue_id) AS host_cnt',false);
+		$query	=	$this->db->get('venues as v');
 		return $query->result();
 	}	
     
@@ -80,6 +84,7 @@ class Venue_model extends CI_Model {
         
         $venue_image_concat = $venue_image;
         $venue_images = explode(",", $venue_image_concat);
+		 
         $i = 0;
         if(!empty($venue_images)) {
             foreach($venue_images as $venue_image) 
@@ -90,7 +95,7 @@ class Venue_model extends CI_Model {
             }
         }
         
-        $data["created_at"] = date("Y-m-d h:i:s");
+        $data["created_at"] = date("Y-m-d H:i:s");
         $this->db->set($data);
         $this->db->insert('venues'); 
     }
@@ -98,28 +103,45 @@ class Venue_model extends CI_Model {
         return $this->db->update("venues", $data, array("id"=>$user));
     }
     
-    public function export($start_date, $end_date, $where="") {
+    
+    public function export($start_date, $end_date, $arr_sort,$arr_search=array()) {
         $delimiter = ",";
         $newline = "\r\n";
         $this->load->dbutil();
         $this->load->helper('file');
-        if(!empty($where)) {
-             $where_search = " AND (name  LIKE '%".$where."%' OR address  LIKE '%".$where."%' OR neighborhood  LIKE '%".$where."%' OR description  LIKE '%".$where."%' )";  
+         if(!empty($arr_search["where"])) { 
+             $where_search = " AND (name  LIKE '%".$arr_search["where"]."%' OR
+                        address  LIKE '%".$arr_search["where"]."%' OR
+                        neighborhood  LIKE '%".$arr_search["where"]."%' OR
+                        description  LIKE '%".$arr_search["where"]."%' OR
+                        grade  LIKE '%".$arr_search["where"]."%'  OR  
+                        cross_street  LIKE '%".$arr_search["where"]."%' OR
+                        phone  LIKE '%".$arr_search["where"]."%' OR
+                        lat  LIKE '%".$arr_search["where"]."%' OR
+                        lng  LIKE '%".$arr_search["where"]."%'  OR
+                        url  LIKE '%".$arr_search["where"]."%' OR
+                        city  LIKE '%".$arr_search["where"]."%' OR
+                        zip  LIKE '%".$arr_search["where"]."%'     
+                        )";  
         } else {
             $where_search = "";
         }
         $where_search .= " AND venue_status != 10";
-        $query = $this->db->query("SELECT * FROM venues WHERE created_at >= '$start_date' AND created_at <= '$end_date' $where_search");
+		if(is_array($arr_sort) && count($arr_sort) > 0){
+                $order = " ORDER BY ".$arr_sort['name'].' '.$arr_sort['value'];
+                 
+        }else {
+                
+				$order = " ORDER BY created_at DESC";
+        }
+        $query = $this->db->query("SELECT * FROM venues WHERE created_at >= '$start_date' AND created_at <= '$end_date' $where_search ".$order);
         $data = $this->dbutil->csv_from_result($query, $delimiter, $newline);
 
-        $file_path = $this->config->item("site_basepath") . "uploads/csv/";
-        $file = strtotime(date("Y-m-d h:i:s")) . ".csv";
-
+        $file_path = $this->config->item("site_basepath") . "uploads/csv/";        
+		$file = "venue-".date("m-d-Y").".csv";
         if (write_file($file_path . $file, $data)) {
-            header('Content-Type: application/csv');
-            header('Content-Disposition: attachment; filename=' . $file);
-            header('Pragma: no-cache');
-            readfile("$file_path" . "$file");
+             set_time_limit(0);
+			output_file($file_path.$file, $file, 'application/csv');
         } else {
             
         }

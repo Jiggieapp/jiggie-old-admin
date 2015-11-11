@@ -1,0 +1,134 @@
+<div class="table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>     
+    <tr>
+        <th class="sorting" data-field="host.first_name">Host name</th>
+        <th class="sorting  " data-field="start_datetime">Start time</th>
+        <th class="sorting  " data-field="end_datetime">End time</th>
+        <th class="sorting" data-field="event.title">Event</th>
+        <th class="sorting  " data-field="event.venue_name">Venue Name</th>
+        <th class="sorting  " data-field="description">Description</th>        
+        <th class=" sorting min50" data-field="hosting_chat_count">Chats</th>
+        <th class=" min50 " data-field="isrecurring">Repeats</th>
+        <th class=" min50" data-field="is_verified_table">Verified</th>
+        <th class="sorting min50" data-field="invite_count">Invited </th>
+        <th class="sorting  sorting_desc" data-field="created_at">Created</th>
+    </tr>
+</thead>
+<tbody >
+   <% 
+	 if(hostings.length){  
+	 for(var i=0; i<hostings.length; i++) {%>
+     
+            <tr class="odd gradeA">
+           		 <td>  
+           		 	<% 
+                 
+	            	  if (typeof(hostings[i].isrecurring) == "undefined"){
+	            	 	isrecurring =false;
+	            	  }else{
+	            	 	isrecurring =hostings[i].isrecurring;
+	            	  }
+
+                      function capFL(string)
+                        {
+                        return string.charAt(0).toUpperCase() + string.slice(1);
+                        }
+	            	  
+	            	 %>
+                   <a data-hosting_id="<%= hostings[i]._id %>" data-isrecurring=<%=isrecurring%> data-recurring_id="<%= hostings[i].recurring_hosting_id%>" class="host_detail"  href="#"   ><%= capFL(hostings[i].host.first_name) %></a>  
+                	 
+                </td>
+                <td class=" ">
+                	<% var startime = new TimeShift.OriginalDate(hostings[i].start_datetime_str );	%>
+                	<%=  dateFormats(startime, "mmm dd h:MM tt") %>
+                </td>
+                <td class=" ">                	  
+                	<% var endtime = new TimeShift.OriginalDate(hostings[i].end_datetime_str );	%>
+                	<%=  dateFormats(endtime, "mmm dd h:MM tt") %>
+                </td>
+                <td>
+                	<% 
+                		if(hostings[i].event.event_type=='special'){
+                			 type= 'event-special';
+						}else {
+							 type= 'event-weekly';
+						}
+						url =siteurl+'admin/events/#/event-special='+hostings[i].event._id
+                	 %>
+                	<a       href="<%=url%>"   ><%= hostings[i].event.title %></a> 
+                	
+                </td>
+
+                <td>
+                    <% 
+                        if(hostings[i].event.event_type=='special'){
+                             type= 'event-special';
+                        }else {
+                             type= 'event-weekly';
+                        }
+                        url =siteurl+'admin/venue/venues/#/venue-details='+hostings[i].event.venue_id
+                     %>
+                    <a       href="<%=url%>"   ><%= hostings[i].event.venue_name %></a> 
+                    
+                </td>
+
+                <td class=" "><%= hostings[i].description.replace(/^(.{80}[^\s]*).*/, "$1"+'...').slice(0,50) %></td>
+                <!--td class=" "><?php  //echo $hosting->email; ?></td-->
+                
+                
+                <td class="min50">
+	                 <% if (hostings[i].hosting_chat_count >0) { %>
+	                 <a href="<%= siteurl+'admin/chat/chat_list/#/search_filter=messages.hosting_id/search_name='+hostings[i]._id %>" target="_blank"  >
+	                 <%= hostings[i].hosting_chat_count %></a> 
+	                                 	 
+	                 <% }else{%>0<% }%>
+                		
+                </td>
+                <td class="min50 ">
+                <%  if (typeof(hostings[i].isrecurring) == "undefined" || hostings[i].isrecurring  == false){
+            	 	obj_isrecurring= 'No';
+            	  }else{
+            	 	 obj_isrecurring= 'Yes';
+            	  }
+            	 %>
+                <%= obj_isrecurring %></td>
+                <td class="min50 ">
+                <%  if (typeof(hostings[i].is_verified_table) == "undefined" || hostings[i].is_verified_table  == false){
+            	 	obj_is_verified_table= 'No';
+            	  }else{
+            	 	 obj_is_verified_table= 'Yes';
+            	  }
+            	 %>
+                <%= obj_is_verified_table %>
+                
+                </td>
+                <td class="min50 ">
+                 <%  if (typeof(hostings[i].invite_count) == "undefined"){
+            	 	obj_invite_count= 0;
+            	  }else{
+            	 	 obj_invite_count= hostings[i].invite_count;
+            	  }
+            	 %>
+                <%= obj_invite_count %></td>
+                <td class=" ">
+                <% var created_at =new Date(hostings[i].created_at); %>
+              
+                           <%=  convertToServerDate(hostings[i].created_at,'mm/dd h:MM tt')%> 
+                 
+                </td>
+
+            </tr>
+        <% } 
+     } else { %>
+          <tr class="odd gradeA noresult"><td colspan="11 alert alert-warning">No data matching your search.</td></tr>
+     <%
+     }
+     %>  
+ </tbody>
+</table>
+</div>
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id="paginate_count"><%=i%></span> out of <%=  total_count%> results</span>
+</div>

@@ -1,4 +1,4 @@
-<div class="container-fluid-md venue-details">
+<div class="venue-details">
     <form class="form-horizontal form-bordered" role="form">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -10,7 +10,10 @@
                 <div class="panel-options">
                     <!--a href="#" data-rel="collapse"><i class="fa fa-fw fa-minus"></i></a>
                     <a href="#" data-rel="reload"><i class="fa fa-fw fa-refresh"></i></a-->
-                    <a href="<?php if(isset($_SERVER['HTTP_REFERER'])){ echo $_SERVER['HTTP_REFERER']; } ?>" data-rel="close">
+                    <?php $page =$this->session->userdata('cur_page');
+                    	  $page = $page?$page:0;
+                    ?>
+                    <a href="<?php echo base_url().'admin/venue/venues/'.$page?>" data-rel="close">
                         <i class="fa fa-fw fa-times"></i>
                     </a>
                 </div>
@@ -22,12 +25,14 @@
                 } else {
                     ?>
                     
-                    <div class="col-sm-5">
+                    <div class="col-sm-6 col-md-5 mbsm" style="overflow-x: hidden">
                         <a href="<?php echo base_url(); ?>admin/venue/image/<?php echo $venue_id; ?>">
-                            <img  width="200" height="200" alt="image" class="img-circle img-profile" src="<?php echo $data->img_1; ?>" alt="<?php echo $data->img_title; ?>"/>
+                        	<?php $image = $data->img_1 ?$data->img_1: $this->config->item('assets_url').'images/default.png' ?>
+                        	<img   alt="image"  src="<?php echo base_url()?>timthumb.php?src=<?php echo base64_encode($image) ; ?>&w=200&q=100&h=150" />
+                           
                         </a>   
                     </div>
-                    <div class="col-sm-7 profile-details">
+                    <div class="col-sm-6  col-md-7 profile-details">
                         <div class="row">
                             <div class="col-xs-3">
                                 Name  
@@ -96,11 +101,22 @@
                                    
                                 </p>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                Country  
+                            </div>
+                            <div class="col-xs-9"> 
+                                <p id="view_zip">                                    
+                                    <a id="country" class="edit_venue"><?php echo $data->country; ?></a>
+                                   
+                                </p>
+                            </div>
                         </div>     
                     </div>
                 </div>
                 <div class="panel-body">
-                	<div class="form-group" id="view_neighborhood">
+                	<div class="form-group" id="view_neighborhood1">
                         <label class="control-label col-xs-3">Grade</label>
                         <div class="controls col-xs-9">
                             <p class="form-control-static">                                
@@ -109,8 +125,8 @@
                         </div>
                     </div>
                     <div class="form-group" id="view_neighborhood">
-                        <label class="control-label col-xs-3">Neighborhood</label>
-                        <div class="controls col-xs-9">
+                        <label class="control-label col-sm-3 col-xs-4 ">Neighborhood</label>
+                        <div class="controls col-sm-9 col-xs-8">
                             <p class="form-control-static">
                                 
                                  <a id="neighborhood"  class="edit_venue"><?php echo $data->neighborhood; ?></a>
@@ -131,10 +147,8 @@
                     <div class="form-group" id="view_phone">
                         <label class="control-label col-xs-3">Phone</label>
                         <div class="controls col-xs-9">
-                            <p class="form-control-static">
-                               
-                                <a id="phone" class="edit_venue"><?php echo $data->phone; ?></a>
-                                <span class="save_error"></span>
+                            <p class="form-control-static">                               
+                                <a id="phone" class="edit_venuephone"><?php echo $data->phone; ?></a>                               
                             </p>
                         </div>
                     </div> 
@@ -142,9 +156,8 @@
                     <div class="form-group" id="view_lat">
                         <label class="control-label col-xs-3">Latitude</label>
                         <div class="controls col-xs-9">
-                            <p class="form-control-static">
-                              
-                                <a id="lat" class="edit_venue"><?php echo $data->lat; ?></a>
+                            <p class="form-control-static">                              
+                                <a id="lat" class="edit_venuelat"><?php echo $data->lat; ?></a>
                             </p>
                         </div>
                     </div>
@@ -154,7 +167,7 @@
                         <div class="controls col-xs-9">
                             <p class="form-control-static">
                                
-                                <a id="lng" class="edit_venue"><?php echo $data->lng; ?></a>
+                                <a id="lng" class="edit_venuelat"><?php echo $data->lng; ?></a>
                             </p>
                         </div>
                     </div>  
@@ -164,8 +177,8 @@
                         <div class="controls col-xs-9">
                             <p class="form-control-static">
                               
-                                <a id="url" class="edit_venue"><?php echo $data->venue_url; ?></a>
-                                <span class="save_error"></span>
+                                <a id="url" class="edit_venue_url"><?php echo $data->venue_url; ?></a>
+                               
                             </p>
                         </div>
                     </div> 
@@ -191,9 +204,10 @@
                 </div>
                     
                  <div class="form-group">
-                    <label class="control-label col-xs-3 "></label>
-                    <a  href="<?php echo base_url();?>admin/venue/delete_venue/<?php echo $venue_id?>" class="btn btn-danger">Delete Venue</a>
-                    <a href="<?php echo base_url();?>admin/venue/duplicate_venue/<?php echo $venue_id?>"  class="btn btn-danger">Duplicate Venue</a> 
+                    <label class="control-label col-xs-12 ">
+                    <a class="confirm btn btn-danger" href="#" data-type="venue"  data-url="<?php echo base_url();?>admin/venue/delete_venue/<?php echo $venue_id?>" title="Delete">Delete Venue</a>
+	                <a href="<?php echo base_url();?>admin/venue/duplicate_venue/<?php echo $venue_id?>"  class="btn btn-danger">Duplicate Venue</a> 
+               		</label>
                 </div>
               </div> 
            
