@@ -1,0 +1,27 @@
+// Badges
+
+@mixin badge-variant($parent, $background, $text-color) {
+  a#{$parent} {
+    &:hover,
+    &:focus {
+      color: $text-color;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  #{$parent} {
+    background-color: $background;
+    color: $text-color;
+
+    a.list-group-item.active > &,
+    .nav-pills > .active > a > & {
+      color: $text-color;
+      background-color: $background;
+    }
+
+    .nav-pills > li > a > & {
+      margin-left: 3px;
+    }
+  }
+}

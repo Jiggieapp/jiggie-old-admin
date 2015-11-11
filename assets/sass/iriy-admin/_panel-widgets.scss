@@ -1,0 +1,187 @@
+.panel-metric {
+
+  .panel-body {
+    padding: 0;
+  }
+
+  .metric-content {
+    position: relative;
+    min-height: 135px;
+
+    // Metric with icon
+    .metric-icon {
+      padding-top: 40px;
+      .value {
+        line-height: 50px;
+      }
+    }
+
+    .value,
+    .icon,
+    .trend,
+    header {
+      z-index: 1;
+      position: absolute;
+    }
+
+    .value {
+      top: 0;
+      left: 0;
+
+      margin: 25px 0 0 20px;
+
+      color: $brand-primary;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 1em;
+    }
+
+    .icon,
+    .trend {
+      top: 0;
+      right: 0;
+
+      margin: 25px 15px 0 0;
+    }
+
+    .icon {
+      color: $brand-primary;
+      .fa {
+        font-size: 60px;
+        line-height: 50px;
+      }
+    }
+
+    .trend {
+      text-align: center;
+
+      > p {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1em;
+        margin: 0 0 2px;
+
+        .fa {
+          margin-right: -3px;
+          margin-top: -5px;
+
+          font-size: 0.8em;
+          vertical-align: middle;
+        }
+      }
+      strong {
+        text-transform: uppercase;
+        line-height: 1em;
+        color: #888;
+        font-weight: 600;
+      }
+    }
+
+    .chart {
+      height: 135px;
+    }
+
+    header {
+      left: 0;
+      right: 0;
+
+      bottom: 0;
+      text-align: center;
+
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 2px 0 12px;
+      }
+    }
+  }
+}
+
+.panel-metric-sm {
+
+  .metric-content {
+    min-height: 110px;
+
+    .metric-icon {
+      padding-top: 20px;
+      .value {
+        line-height: 36px;
+      }
+    }
+
+    .value {
+      font-size: 26px;
+    }
+
+    .icon {
+      .fa {
+        font-size: 48px;
+        line-height: 36px;
+      }
+    }
+
+    .trend {
+      > p {
+        font-size: 16px;
+        .fa {
+          margin-top: -3px;
+        }
+      }
+      strong {
+        font-size: 0.8em;
+      }
+    }
+    .chart {
+      height: 110px;
+    }
+  }
+}
+
+// Panel Default. Use one of:
+// * class="panel panel-metric panel-default panel-full"
+// * class="panel panel-metric panel-body-default"
+@include panel-metric-variat('default', $panel-default-body-text, $panel-default-body-text, lighten($panel-default-body-text, 20%));
+
+// Panel Primary. Use one of:
+// * class="panel panel-metric panel-primary panel-full"
+// * class="panel panel-metric panel-body-primary"
+@include panel-metric-variat('primary', #FFF, #FFF, darken(#FFF, 10%));
+
+// Panel Success. Use one of:
+// * class="panel panel-metric panel-success panel-full"
+// * class="panel panel-metric panel-body-success"
+@include panel-metric-variat('success', #FFF, #FFF, darken(#FFF, 10%));
+
+// Panel Info. Use one of:
+// * class="panel panel-metric panel-info panel-full"
+// * class="panel panel-metric panel-body-info"
+@include panel-metric-variat('info', #FFF, #FFF, darken(#FFF, 10%));
+
+// Panel Warning. Use one of:
+// * class="panel panel-metric panel-warning panel-full"
+// * class="panel panel-metric panel-body-warning"
+@include panel-metric-variat('warning', #FFF, #FFF, darken(#FFF, 10%));
+
+// Panel Danger. Use one of:
+// * class="panel panel-metric panel-danger panel-full"
+// * class="panel panel-metric panel-body-danger"
+@include panel-metric-variat('danger', #FFF, #FFF, darken(#FFF, 10%));
+
+// Panel Inverse. Use one of:
+// * class="panel panel-metric panel-inverse panel-full"
+// * class="panel panel-metric panel-body-inverse"
+@include panel-metric-variat('inverse', #FFF, #FFF, darken(#FFF, 10%));
+
+// Panel Black. Use one of:
+// * class="panel panel-metric panel-black panel-full"
+// * class="panel panel-metric panel-body-black"
+@include panel-metric-variat('black', #FFF, #FFF, darken(#FFF, 10%));
+
+// Panel Light. Use one of:
+// * class="panel panel-metric panel-light panel-full"
+// * class="panel panel-metric panel-body-light"
+@include panel-metric-variat('light', $panel-light-body-text, $panel-light-body-text, lighten($panel-light-body-text, 20%));
+
+// Panel Gray. Use one of:
+// * class="panel panel-metric panel-gray panel-full"
+// * class="panel panel-metric panel-body-gray"
+@include panel-metric-variat('gray', $panel-gray-body-text, $panel-gray-body-text, lighten($panel-gray-body-text, 20%));

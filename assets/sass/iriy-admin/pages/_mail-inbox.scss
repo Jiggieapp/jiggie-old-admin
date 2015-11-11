@@ -1,0 +1,77 @@
+.table-mail {
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        padding: $table-mail-cell-padding;
+        background-color: $table-mail-bg-read;
+      }
+    }
+  }
+
+  .mail-check {
+    width: 52px;
+    padding-left: 20px;
+  }
+  .mail-star {
+    width: 32px;
+  }
+  .mail-from {
+    max-width: 190px;
+    cursor: pointer;
+  }
+  .mail-subject {
+    cursor: pointer;
+
+    .label {
+      margin-right: 4px;
+      padding: 2px 6px;
+
+      font-size: 11px;
+    }
+  }
+  .mail-attachment {
+    width: 32px;
+    cursor: pointer;
+  }
+  .mail-date {
+    width: 90px;
+    padding-right: 20px;
+
+    text-align: right;
+    cursor: pointer;
+  }
+
+  > tbody > tr.unread {
+    > th,
+    > td {
+      background-color: $table-mail-bg-unread;
+    }
+  }
+
+  .unread {
+    .mail-from, .mail-subject {
+      font-weight: 700;
+    }
+    .mail-date {
+      font-weight: 600;
+    }
+  }
+
+  .starred .mail-star .m-star {
+    @extend .m-star.starred;
+  }
+}
+
+// Fix hover color
+.table-mail.table-hover {
+  > tbody > tr.unread:hover {
+    > td,
+    > th {
+      background-color: $table-bg-hover;
+    }
+  }
+}
+

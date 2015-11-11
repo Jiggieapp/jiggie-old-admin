@@ -1,0 +1,44 @@
+.popover {
+  @include box-shadow(0 0 5px rgba(100, 100, 100, 0.2));
+}
+
+.popover-primary {
+  @include popover-variant(inherit, $popover-bg, $popover-primary-title-text, $popover-primary-title-bg, $popover-arrow-color);
+}
+.popover-success {
+  @include popover-variant(inherit, $popover-bg, $popover-success-title-text, $popover-success-title-bg, $popover-arrow-color);
+}
+.popover-info {
+  @include popover-variant(inherit, $popover-bg, $popover-info-title-text, $popover-info-title-bg, $popover-arrow-color);
+}
+.popover-warning {
+  @include popover-variant(inherit, $popover-bg, $popover-warning-title-text, $popover-warning-title-bg, $popover-arrow-color);
+}
+.popover-danger {
+  @include popover-variant(inherit, $popover-bg, $popover-danger-title-text, $popover-danger-title-bg, $popover-arrow-color);
+}
+.popover-inverse {
+  @include popover-variant(inherit, $popover-bg, $popover-inverse-title-text, $popover-inverse-title-bg, $popover-arrow-color);
+}
+
+
+.popover-solid{
+  &.popover-primary {
+    @include popover-variant($popover-primary-text, $popover-primary-bg, $popover-primary-title-text, $popover-primary-title-bg, $popover-primary-arrow-color);
+  }
+  &.popover-success {
+    @include popover-variant($popover-success-text, $popover-success-bg, $popover-success-title-text, $popover-success-title-bg, $popover-success-arrow-color);
+  }
+  &.popover-info {
+    @include popover-variant($popover-info-text, $popover-info-bg, $popover-info-title-text, $popover-info-title-bg, $popover-info-arrow-color);
+  }
+  &.popover-warning {
+    @include popover-variant($popover-warning-text, $popover-warning-bg, $popover-warning-title-text, $popover-warning-title-bg, $popover-warning-arrow-color);
+  }
+  &.popover-danger {
+    @include popover-variant($popover-danger-text, $popover-danger-bg, $popover-danger-title-text, $popover-danger-title-bg, $popover-danger-arrow-color);
+  }
+  &.popover-inverse {
+    @include popover-variant($popover-inverse-text, $popover-inverse-bg, $popover-inverse-title-text, $popover-inverse-title-bg, $popover-inverse-arrow-color);
+  }
+}

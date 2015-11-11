@@ -1,0 +1,23 @@
+//== Sidebar
+
+
+// Basics of a sidebar
+$sidebar-width:         240px !default;
+$sidebar-condensed-width:  50px !default;
+$sidebar-top:           $navbar-height !default;
+
+// Default Sidebar
+$sidebar-default-bg:              #f8f8f8 !default;
+$sidebar-default-border:           darken($navbar-default-bg, 6.5%) !default;
+
+// Navbar links
+$sidebar-default-link-color:                #777 !default;
+$sidebar-default-link-hover-color:          #333 !default;
+$sidebar-default-link-hover-bg:             transparent !default;
+$sidebar-default-link-active-color:         #555 !default;
+$sidebar-default-link-active-bg:            darken($navbar-default-bg, 6.5%) !default;
+$sidebar-default-link-disabled-color:       #ccc !default;
+$sidebar-default-link-disabled-bg:          transparent !default;
+
+//$sidebar-bg:            #234 !default; // #1D2939
+

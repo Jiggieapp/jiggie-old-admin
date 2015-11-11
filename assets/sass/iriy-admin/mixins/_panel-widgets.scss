@@ -1,0 +1,24 @@
+@mixin panel-metric-variat($class, $header-color, $base-color, $trend-color) {
+
+  .panel-#{$class}.panel-full.panel-metric,
+  .panel-metric .panel-body-#{$class},
+  {
+    .value {
+      color: $base-color;
+    }
+
+    .icon {
+      color: $base-color;
+    }
+
+    .trend {
+      strong {
+        color: $trend-color;
+      }
+    }
+
+    header {
+      color: $header-color;
+    }
+  }
+}

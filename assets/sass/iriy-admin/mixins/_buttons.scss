@@ -1,0 +1,25 @@
+// Buttons
+
+
+@mixin button-flat($shadow-width, $shadow-hover-width, $background, $shadow) {
+  position: relative;
+  @include box-shadow(0 $shadow-width $shadow);
+
+  &,
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    background: $background;
+  }
+
+  &:hover {
+    @include box-shadow(0 $shadow-hover-width $shadow);
+    top: ($shadow-width - $shadow-hover-width);
+  }
+  &:active {
+    top: $shadow-width;
+    @include box-shadow(0 0.1px $shadow);
+  }
+}

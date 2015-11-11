@@ -1,0 +1,104 @@
+.mail-pagination {
+  line-height: 30px;
+  margin-right: 13px;
+}
+
+.mail-navigation {
+  margin-top: 10px;
+
+  > h5:first-child {
+    margin-top: 5px;
+  }
+}
+
+.mail-navigation {
+  .mail-navigation-empty {
+    display: none;
+  }
+
+  @media (max-width: $screen-sm-max) {
+    height: 49px;
+    padding: 49px 0px 0px;
+
+    position: relative;
+    overflow: hidden;
+
+    &.open {
+      height: auto;
+    }
+
+    .active {
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+    .active a {
+      padding-right: 30px;
+    }
+
+    .active a:after {
+      position: absolute;
+      margin-top: -2px;
+      right: 12px;
+
+      content: "\f105";
+      font-family: FontAwesome;
+      font-size: 16px;
+      font-weight: 300;
+      height: auto;
+      text-shadow: none;
+      @include transition(all 0.3s ease 0s);
+    }
+
+    &.open .active a:after {
+      @include rotate(90deg);
+    }
+
+    .mail-navigation-empty {
+      display: block;
+    }
+    .nav-pills > li.mail-navigation-empty.active > a {
+      &,
+      &:focus,
+      &:hover {
+        background: #000;
+      }
+    }
+  }
+}
+
+.nav-mail a {
+  color: $text-color;
+}
+
+.nav-mail .label {
+  font-size: 10px;
+}
+
+.nav-mail .label.pull-right {
+  margin-top: 1px;
+}
+
+.m-star {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  cursor: pointer;
+  font-size: 1.1em;
+
+  &:before {
+    content: "\f006";
+  }
+}
+
+.m-star.starred {
+  color: #FFAA00;
+  &:before {
+    content: "\f005";
+  }
+}

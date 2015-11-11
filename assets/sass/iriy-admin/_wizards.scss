@@ -1,0 +1,50 @@
+.wizard-container {
+  margin-bottom: 26px;
+
+  .nav-tabs {
+    > li > a {
+      font-weight: 600;
+
+      > span {
+        font-weight: normal;
+      }
+    }
+  }
+
+  .tab-content,
+  .tab-pane {
+    border-radius: 0;
+  }
+
+  .tab-content {
+    margin: 0;
+    @include box-shadow(none);
+  }
+
+  .pager.wizard {
+    margin: 0;
+    padding: $line-height-computed $tab-pane-padding;
+    border-radius: 0 0 $border-radius-base $border-radius-base;
+    background: $wizard-pager-bg;
+    border-top: 1px solid $wizard-pager-border;
+
+    @include box-shadow(0 3px 0 rgba(9, 9, 9, 0.03));
+  }
+}
+
+.panel {
+  > .wizard-container {
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .nav-tabs {
+      border-radius: 0;
+
+      > li > a {
+        border-radius: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.help-block.jq-validate-error {
+  display: block !important
+}
+// Fix not hiding error element
+.help-block.jq-validate-error:empty {
+  display: block !important
+}

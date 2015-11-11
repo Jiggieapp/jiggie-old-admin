@@ -1,0 +1,67 @@
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin: 10px 0;
+}
+
+.thin {
+  font-weight: 300;
+}
+
+.normal {
+  font-weight: 400;
+}
+
+.semi-bold {
+  font-weight: 600;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.smaller {
+  font-size: 0.7em;
+}
+
+.smaller-sm {
+  font-size: 0.9em;
+}
+
+.bigger-sm {
+  font-size: 1.1em;
+}
+
+.bigger {
+  font-size: 1.3em;
+}
+
+.asterisk {
+  color: $state-danger-text;
+  font-size: 0.8em
+}
+
+.text-no-decoration,
+a.text-no-decoration {
+  text-decoration: none;
+}
+.text-underline {
+  text-decoration: underline;
+}
+
+@include text-emphasis-variant('.text-primary', $brand-primary);
+@include text-emphasis-variant('.text-primary-dark', darken($brand-primary, 20%));
+@include text-emphasis-variant('.text-info-dark', darken($state-info-text, 20%));
+@include text-emphasis-variant('.text-white', #fff);
+@include text-emphasis-variant('.text-black', #000);
+@include text-emphasis-variant('.text-light', $gray-lighter);
+@include text-emphasis-variant('.text-gray-dark', darken(mix($gray-dark, $brand-primary, 80%), 5%));
+@include text-emphasis-variant('.text-gray', darken(mix($gray, $brand-primary, 80%), 5%));
+
+@include bg-variant('.bg-primary', $brand-primary, #fff);
+@include bg-variant('.bg-success', $state-success-bg, $success-text);
+@include bg-variant('.bg-info', $state-info-bg, $info-text);
+@include bg-variant('.bg-warning', $state-warning-bg, $warning-text);
+@include bg-variant('.bg-danger', $state-danger-bg, $danger-text);
+@include bg-variant('.bg-inverse', $panel-inverse-style-bg, $panel-inverse-body-text);
+@include bg-variant('.bg-white', #fff, $text-color);
+@include bg-variant('.bg-gray-dark', darken(mix($gray-dark, $brand-primary, 80%), 5%), #fff);

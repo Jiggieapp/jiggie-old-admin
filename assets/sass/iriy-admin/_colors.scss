@@ -1,0 +1,291 @@
+$navbar-default-color:             #333;
+$navbar-default-bg:                #fff;
+$navbar-default-border:            #EEE;
+
+// Navbar links
+$navbar-default-link-color:                #333;
+$navbar-default-link-hover-color:          #333;
+$navbar-default-link-hover-bg:             #F9F9F9;
+$navbar-default-link-active-color:         darken($navbar-default-link-color, 10%);
+$navbar-default-link-active-bg:            #EEEFEF;
+$navbar-default-link-disabled-color:       #ccc;
+$navbar-default-link-disabled-bg:          transparent;
+
+// Navbar brand label
+$navbar-default-brand-color:               $navbar-default-link-color;
+$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%);
+$navbar-default-brand-hover-bg:            transparent;
+
+// Navbar toggle
+$navbar-default-toggle-hover-bg:           #ddd;
+$navbar-default-toggle-icon-bar-bg:        #888;
+$navbar-default-toggle-border-color:       #ddd;
+
+// Default Sidebar
+$sidebar-default-bg:                        #23272D;
+$sidebar-default-border:                    darken($navbar-default-bg, 6.5%);
+
+// Navbar links
+$sidebar-default-link-color:                #8F939E;
+$sidebar-default-link-hover-color:          #FFF;
+$sidebar-default-link-hover-bg:             transparent;
+$sidebar-default-link-active-color:         #FFF;
+$sidebar-default-link-active-bg:            transparent;
+$sidebar-default-link-disabled-color:       darken($sidebar-default-link-color, 20%);
+$sidebar-default-link-disabled-bg:          transparent;
+$sidebar-default-nav-link-color:                #8F939E;
+$sidebar-default-nav-link-hover-color:          #1D2939;
+$sidebar-default-nav-link-hover-bg:             #FFF;
+$sidebar-default-nav-link-focus-color:          #FFF;
+$sidebar-default-nav-link-focus-bg:             transparent;
+$sidebar-default-nav-link-active-color:         #FFF;
+$sidebar-default-nav-link-active-bg:            #428BCA;
+$sidebar-default-nav-link-disabled-color:       darken($sidebar-default-nav-link-color, 20%);
+$sidebar-default-nav-link-disabled-bg:          transparent;
+
+.navbar-default {
+  background-color: $navbar-default-bg;
+  border-color: $navbar-default-border;
+
+  .navbar-brand {
+    color: $navbar-default-brand-color;
+    &:hover,
+    &:focus {
+      color: $navbar-default-brand-hover-color;
+      background-color: $navbar-default-brand-hover-bg;
+    }
+  }
+
+  .navbar-text {
+    color: $navbar-default-color;
+  }
+
+  .navbar-nav {
+    > li > a {
+      color: $navbar-default-link-color;
+
+      &:hover,
+      &:focus {
+        color: $navbar-default-link-hover-color;
+        background-color: $navbar-default-link-hover-bg;
+      }
+    }
+    > .active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: $navbar-default-link-active-color;
+        background-color: $navbar-default-link-active-bg;
+      }
+    }
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: $navbar-default-link-disabled-color;
+        background-color: $navbar-default-link-disabled-bg;
+      }
+    }
+  }
+
+  .navbar-sidebar-toggle {
+    color: $navbar-default-link-color;
+    &:hover,
+    &:focus {
+      color: $navbar-default-link-hover-color;
+      background-color: $navbar-default-link-hover-bg;
+    }
+  }
+
+  .navbar-toggle {
+    border-color: $navbar-default-toggle-border-color;
+    &:hover,
+    &:focus {
+      background-color: $navbar-default-toggle-hover-bg;
+    }
+    .icon-bar {
+      background-color: $navbar-default-toggle-icon-bar-bg;
+    }
+  }
+
+  .navbar-collapse,
+  .navbar-form {
+    border-color: $navbar-default-border;
+  }
+
+  // Dropdown menu items
+  .navbar-nav {
+    // Remove background color from open dropdown
+    > .open > a {
+      &,
+      &:hover,
+      &:focus {
+        background-color: $navbar-default-link-active-bg;
+        color: $navbar-default-link-active-color;
+      }
+    }
+
+    @media (max-width: $grid-float-breakpoint-max) {
+      // Dropdowns get custom display when collapsed
+      .open .dropdown-menu {
+        > li > a {
+          color: $navbar-default-link-color;
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-hover-color;
+            background-color: $navbar-default-link-hover-bg;
+          }
+        }
+        > .active > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-active-color;
+            background-color: $navbar-default-link-active-bg;
+          }
+        }
+        > .disabled > a {
+          &,
+          &:hover,
+          &:focus {
+            color: $navbar-default-link-disabled-color;
+            background-color: $navbar-default-link-disabled-bg;
+          }
+        }
+      }
+    }
+  }
+
+  // Links in navbars
+  //
+  // Add a class to ensure links outside the navbar nav are colored correctly.
+
+  .navbar-link {
+    color: $navbar-default-link-color;
+    &:hover {
+      color: $navbar-default-link-hover-color;
+    }
+  }
+
+  .btn-link {
+    color: $navbar-default-link-color;
+    &:hover,
+    &:focus {
+      color: $navbar-default-link-hover-color;
+    }
+    &[disabled],
+    fieldset[disabled] & {
+      &:hover,
+      &:focus {
+        color: $navbar-default-link-disabled-color;
+      }
+    }
+  }
+}
+
+// Alternate sidebars
+// --------------------------------------------------
+.sidebar-default {
+  background-color: $sidebar-default-bg;
+
+  // Link default styles
+  a {
+    color: $sidebar-default-link-color;
+
+    &:hover,
+    &:focus {
+      color: $sidebar-default-link-hover-color;
+      background-color: $sidebar-default-link-hover-bg;
+    }
+
+
+  }
+  .active > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $sidebar-default-link-active-color;
+    }
+  }
+  .disabled > a {
+     &,
+     &:hover,
+     &:focus {
+       color: $sidebar-default-link-disabled-color;
+       text-decoration: none;
+       background-color: transparent;
+       cursor: not-allowed;
+     }
+   }
+
+  .sidebar-profile {
+    .media-body h4 {
+      color: #f5f5f5;
+    }
+  }
+
+  // Sidebar Condensed
+  .sidebar-condensed & .nav {
+    // reset open state
+    > li.open > a {
+      color: $sidebar-default-nav-link-color;
+      background-color: transparent;
+    }
+
+    > li:hover,
+    > li.nav-dropdown-open {
+      > a {
+        color: $sidebar-default-nav-link-hover-color;
+        background-color: $sidebar-default-nav-link-hover-bg;
+      }
+
+      // Subnav background
+      > .nav-sub {
+        background-color: $sidebar-default-bg;
+      }
+    }
+  }
+
+  // Main nav
+  .nav {
+    > li > a:focus {
+      color: $sidebar-default-nav-link-focus-color;
+      background-color: $sidebar-default-nav-link-focus-bg;
+    }
+
+    > li > a:hover,
+    > li.open > a {
+      color: $sidebar-default-nav-link-hover-color;
+      background-color: $sidebar-default-nav-link-hover-bg;
+    }
+
+    // Main Nav Disabled
+    > .disabled > a {
+      &,
+      &:hover,
+      &:focus {
+        color: $sidebar-default-nav-link-disabled-color;
+        background-color: $sidebar-default-nav-link-disabled-bg;
+      }
+    }
+  }
+
+  // Main Nav Active always is the same
+  .nav,
+  .sidebar-condensed & .nav {
+    > li.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: $sidebar-default-nav-link-active-color;
+        background-color: $sidebar-default-nav-link-active-bg;
+      }
+    }
+  }
+
+  // Subnav opened
+  .nav-sub li.open > a {
+    color: $sidebar-default-link-active-color;
+    background-color: $sidebar-default-link-active-bg;
+  }
+}

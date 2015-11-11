@@ -1,0 +1,39 @@
+@import '../variables';
+
+.morris-hover {
+  position: absolute;
+  z-index: 1000;
+
+  &.morris-default-style {
+    border-radius: $border-radius-base;
+    padding: 6px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: solid 2px rgba(230, 230, 230, 0.8);
+
+    color: #666;
+    font-family: sans-serif;
+    font-size: 12px;
+    text-align: center;
+
+    .morris-hover-row-label {
+      font-weight: bold;
+      margin: 0.25em 0
+    }
+
+    .morris-hover-point {
+      white-space: nowrap;
+      margin: 0.1em 0
+    }
+  }
+}
+
+.morris-hover-dark {
+  .morris-hover {
+    &.morris-default-style {
+      color: $tooltip-color;
+      background: lighten($tooltip-bg, 10%);
+      border: none;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.container-fluid-md {
+  @include container-fixed();
+  padding-left:  25px;
+  padding-right: 25px;
+
+  @media (max-width: $screen-xs-max) {
+    padding-left:  ($grid-gutter-width / 2);
+    padding-right: ($grid-gutter-width / 2);
+  }
+}
+
+
+.page-heading,
+.page-subheading {
+  & + .container-fluid-md {
+    margin-top: 24px;
+  }
+}

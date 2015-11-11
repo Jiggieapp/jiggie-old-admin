@@ -1,0 +1,88 @@
+// Outer container
+.progress {
+  height: $progress-line-height;
+  margin-bottom: $progress-line-height;
+
+  border-radius: 50px;
+  @include box-shadow(none);
+}
+
+// Bar of progress
+.progress-bar {
+  font-size: $progress-bar-font-size;
+  line-height: $progress-line-height;
+  @include box-shadow(none);
+}
+
+// Progress Bar sizes
+.progress-lg {
+  height: $progress-large-line-height;
+
+  .progress-bar {
+    font-size: $progress-bar-large-font-size;
+    line-height: $progress-large-line-height;
+  }
+}
+
+.progress-sm {
+  height: $progress-small-line-height;
+
+  .progress-bar {
+    font-size: $progress-bar-small-font-size;
+    line-height: $progress-small-line-height;
+  }
+}
+
+.progress-xs {
+  height: $progress-xs-line-height;
+
+  .progress-bar {
+    font-size: $progress-bar-xs-font-size;
+    line-height: $progress-xs-line-height;
+  }
+}
+
+.progress-mini {
+  height: $progress-mini-line-height;
+
+  .progress-bar {
+    line-height: $progress-mini-line-height;
+  }
+}
+
+// Progress Group
+.progress-group {
+  @include clearfix();
+
+  .progress-label {
+    margin-bottom: 5px;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    .progress-label {
+      width: 40%;
+      float: left;
+
+      text-align: right;
+      padding-right: 15px;
+      margin-bottom: 0;
+    }
+
+    // used with .progress-lg
+    .progress-label-lg {
+      padding-top: 2px;
+    }
+
+    .progress {
+      width: 60%;
+      float: left;
+    }
+
+    .progress-xs {
+      margin-top: 5px;
+    }
+    .progress-sm {
+      margin-top: 4px;
+    }
+  }
+}

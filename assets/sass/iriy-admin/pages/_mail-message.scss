@@ -1,0 +1,78 @@
+// Clear the floats
+.mail-message,
+.mail-details,
+.mail-meta {
+  overflow: hidden;
+  zoom: 1;
+}
+.mail-thread{
+
+  .mail-subject{
+    font-size: 20px;
+    line-height: 20px;
+
+    .m-star {
+      margin-right: 2px;
+      font-size: 14px;
+    }
+    .fa {
+      margin-right: 2px;
+      font-size: 18px;
+    }
+    .label {
+      margin: 0 2px;
+      font-size: 10px;
+    }
+
+    .fa, .label, .m-star {
+      position: relative;
+      top: -1px;
+      vertical-align: middle;
+      line-height: 20px;
+    }
+  }
+
+}
+
+.mail-message {
+  > .pull-left {
+    margin-right: 10px;
+  }
+  > .pull-right {
+    margin-left: 10px;
+  }
+
+  .mail-sender-image {
+    height: 42px;
+    width: 42px;
+    display: block;
+  }
+
+  .mail-meta {
+    height: 42px;
+    padding: 4px 0;
+
+    h4 {
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+
+  .mail-meta + .mail-body {
+    margin-top: 8px;
+  }
+
+  .mail-body {
+    @media (min-width: $screen-sm-min) {
+      margin-left: 52px;
+    }
+
+    blockquote {
+      font-size: 1em;
+    }
+
+    > p:last-child {
+      margin-bottom: 5px;
+    }
+  }
+}

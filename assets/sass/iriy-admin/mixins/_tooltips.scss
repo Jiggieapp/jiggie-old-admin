@@ -1,0 +1,32 @@
+// Contextual tooltips
+
+@mixin tooltip-variant($text-color, $bg-color, $arrow-color) {
+  .tooltip-inner {
+    color: $text-color;
+    background-color: $bg-color;
+  }
+  &.top .tooltip-arrow {
+    border-top-color: $arrow-color;
+  }
+  &.top-left .tooltip-arrow {
+    border-top-color: $arrow-color;
+  }
+  &.top-right .tooltip-arrow {
+    border-top-color: $arrow-color;
+  }
+  &.right .tooltip-arrow {
+    border-right-color: $arrow-color;
+  }
+  &.left .tooltip-arrow {
+    border-left-color: $arrow-color;
+  }
+  &.bottom .tooltip-arrow {
+    border-bottom-color: $arrow-color;
+  }
+  &.bottom-left .tooltip-arrow {
+    border-bottom-color: $arrow-color;
+  }
+  &.bottom-right .tooltip-arrow {
+    border-bottom-color: $arrow-color;
+  }
+}

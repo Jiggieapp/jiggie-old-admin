@@ -1,0 +1,52 @@
+// Panels
+
+// $border                - panel border color
+// $style-text-color      - text color for heading, footer
+// $style-bg-color        - text color for heading, footer and text color for body if it's panel-full
+// $style-border          - border-color inside panel (between header, body, footer)
+// $full-body-text-color  - text color for body if it's panel-full
+@mixin panel-variant($border, $style-text-color, $style-bg-color, $style-border, $full-body-text-color) {
+  border-color: $border;
+
+  & > .panel-heading, & > form > .panel-heading {
+    color: $style-text-color;
+    background-color: $style-bg-color;
+    border-color: $style-border;
+
+    .panel-title + p {
+      color: lighten($style-text-color, 20%);
+    }
+
+    + .panel-collapse > .panel-body {
+      border-top-color: $border;
+    }
+  }
+
+  & > .panel-footer, & > form > .panel-footer {
+    color: $style-text-color;
+    background-color: $style-bg-color;
+    border-color: $style-border;
+
+    + .panel-collapse > .panel-body {
+      border-bottom-color: $border;
+    }
+  }
+
+  .panel-body + .panel-body {
+    border-top: 1px solid $panel-inner-border;
+  }
+
+  &.panel-full {
+    background-color: $style-bg-color;
+    > .panel-body, & > form > .panel-body {
+      border-color: $style-border;
+      color: $full-body-text-color;
+    }
+  }
+}
+
+@mixin panel-body-variant($style-text-color, $style-bg-color, $style-border){
+  color: $style-text-color;
+  background-color: $style-bg-color;
+  border-color: $style-border;
+}

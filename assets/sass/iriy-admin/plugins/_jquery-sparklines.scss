@@ -1,0 +1,3 @@
+.jqstooltip, .jqstooltip:before, .jqstooltip:after {
+    @include box-sizing(content-box);
+}

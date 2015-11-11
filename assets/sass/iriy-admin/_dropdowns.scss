@@ -1,0 +1,155 @@
+.dropdown-menu {
+
+  padding: 0;
+  @include box-shadow(0 0 5px rgba(100, 100, 100, 0.2));
+
+  .divider {
+    margin: 3px 0;
+  }
+
+  li a {
+    @include transition(all 0.1s ease-out 0s);
+  }
+
+  > li > a {
+    margin: 4px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+
+    border-radius: 3px;
+    line-height: 18px;
+  }
+
+
+  @media (max-width: $screen-xs-max) {
+    &.pull-right-xs {
+      right: 0;
+      left: auto;
+    }
+  }
+
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    &.pull-right-sm {
+      right: 0;
+      left: auto;
+    }
+  }
+
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    &.pull-right-md {
+      right: 0;
+      left: auto;
+    }
+  }
+
+  @media (min-width: $screen-lg-min) {
+    &.pull-right-lg {
+      right: 0;
+      left: auto;
+    }
+  }
+}
+
+.dropdown-title {
+  display: block;
+  font-size: 11px;
+  line-height: 11px;
+  padding: 11px 20px;
+  font-weight: 600;
+
+  border-bottom: none !important;
+}
+
+// Dropdown section footer
+.dropdown-menu > li.dropdown-footer {
+  border-top: 1px solid $dropdown-divider-bg;
+  border-bottom: none;
+
+  > a {
+    margin: 0;
+
+    @include border-top-radius(0);
+
+    font-size: $font-size-small;
+    line-height: 1.42857;
+  }
+}
+
+.dropdown-messages {
+  min-width: 320px;
+
+  @media (max-width: $screen-phone) {
+    min-width: 250px;
+  }
+
+  > li {
+    border-bottom: 1px solid $dropdown-divider-bg;
+
+    > .message {
+      margin: 0;
+      border-radius: 0;
+
+      white-space: normal;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .message-body {
+    font-size: 11px;
+  }
+}
+
+.dropdown-notifications {
+  min-width: 260px;
+
+  > li {
+    border-bottom: 1px solid $dropdown-divider-bg;
+  }
+  .notification {
+    margin: 0;
+    border-radius: 0;
+
+    padding: 7px;
+    overflow: hidden;
+    zoom: 1;
+    white-space: normal;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .notification-thumb {
+      display: block;
+      margin-right: 10px;
+
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+
+      .fa {
+        line-height: 33px;
+      }
+    }
+
+    .notification-body {
+      font-size: 11px;
+      overflow: hidden;
+      zoom: 1;
+
+      line-height: 16px;
+    }
+  }
+
+  .notification {
+    > .pull-left {
+      margin-right: 10px;
+    }
+    > .pull-right {
+      margin-left: 10px;
+    }
+  }
+}

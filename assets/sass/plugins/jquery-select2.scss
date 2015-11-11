@@ -1,0 +1,623 @@
+/*
+ * Version: 3.4.8
+ */
+@import '../variables';
+@import "../libs/bootstrap/bootstrap/mixins/vendor-prefixes";
+
+.select2-container {
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  /* inline-block for ie7 */
+  zoom: 1;
+  *display: inline;
+  vertical-align: middle;
+
+  &.form-control {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .select2-choice {
+    display: block;
+    width: 100%;
+    height: $input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+    padding: $padding-base-vertical $padding-base-horizontal;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $input-color;
+    background-color: $input-bg;
+    background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+    border: 1px solid $input-border;
+    border-radius: $input-border-radius;
+
+    @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+    @include user-select(none);
+    -webkit-touch-callout: none;
+    overflow: hidden;
+    position: relative;
+
+    white-space: nowrap;
+    text-decoration: none;
+
+    background-clip: padding-box;
+
+    .select2-arrow {
+      display: inline-block;
+      width: 18px;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      border-radius: 0 $input-border-radius $input-border-radius 0;
+
+      b {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: url('../../assets/plugins/jquery-select2/select2.png') no-repeat 0 4px;
+      }
+    }
+
+    > .select2-chosen {
+      margin-right: 26px;
+      display: block;
+      overflow: hidden;
+
+      white-space: nowrap;
+
+      text-overflow: ellipsis;
+      float: none;
+      width: auto;
+    }
+
+    abbr {
+      display: none;
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      right: 24px;
+      top: 8px;
+
+      font-size: 1px;
+      text-decoration: none;
+
+      border: 0;
+      background: url('../../assets/plugins/jquery-select2/select2.png') right top no-repeat;
+      cursor: pointer;
+      outline: 0;
+      &:hover {
+        background-position: right -11px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &.select2-drop-above .select2-choice {
+    border-bottom-color: $input-border;
+
+    border-radius: 0 0 $input-border-radius $input-border-radius;
+  }
+
+  &.select2-allowclear .select2-choice {
+    abbr {
+      display: inline-block;
+    }
+    .select2-chosen {
+      margin-right: 42px;
+    }
+  }
+
+  // disabled styles
+  &.select2-container-disabled {
+    .select2-choice {
+      background-color: $input-bg-disabled;
+      cursor: default;
+      .select2-arrow {
+        background-color: $input-bg-disabled;
+        border-left: 0;
+      }
+      abbr {
+        display: none;
+      }
+    }
+  }
+}
+
+.select2-container-active {
+  .select2-choice,
+  .select2-choices {
+    border: 1px solid $input-border-focus;
+    outline: none;
+  }
+}
+
+.select2-drop-mask {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  min-height: 100%;
+  min-width: 100%;
+  height: auto;
+  width: auto;
+  opacity: 0;
+  z-index: 9998;
+  /* styles required for IE to work */
+  background-color: #fff;
+  filter: alpha(opacity=0);
+}
+
+.select2-drop {
+  width: 100%;
+  margin-top: -1px;
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+
+  background: $input-bg;
+  color: $input-color;
+  border: 1px solid $input-border;
+  border-top: 0;
+
+  border-radius: 0 0 $input-border-radius $input-border-radius;
+
+  &.select2-drop-above {
+    margin-top: 1px;
+    border-top: 1px solid $input-border;
+    border-bottom: 0;
+
+    border-radius: $input-border-radius $input-border-radius 0 0;
+
+    .select2-search input {
+      margin-top: 4px;
+    }
+  }
+}
+
+.select2-drop-active {
+  border: 1px solid $input-border-focus;
+  border-top: none;
+}
+
+.select2-drop.select2-drop-above.select2-drop-active {
+  border-top: 1px solid $input-border-focus;
+}
+
+.select2-drop-auto-width {
+  border-top: 1px solid $input-border;
+  width: auto;
+  .select2-search {
+    padding-top: 4px;
+  }
+}
+
+.select2-dropdown-open {
+
+  .select2-choice,
+  .select2-choices {
+    border-color: $input-border-focus !important;
+  }
+
+  .select2-choice {
+    border-bottom-color: transparent;
+
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    .select2-arrow {
+      background: transparent;
+      border-left: none;
+      b {
+        background-position: -18px 4px;
+      }
+    }
+  }
+  &.select2-drop-above {
+    .select2-choice,
+    .select2-choices {
+      border-top-color: transparent;
+    }
+  }
+}
+
+.select2-search {
+  display: inline-block;
+  width: 100%;
+  min-height: 26px;
+  margin: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+
+  position: relative;
+  z-index: 10000;
+
+  white-space: nowrap;
+
+  input {
+    width: 100%;
+    height: auto !important;
+    min-height: 26px;
+    padding: 4px 20px 4px 5px;
+    margin: 0;
+
+    outline: 0;
+    font-family: sans-serif;
+    font-size: 1em;
+
+    border: 1px solid $input-border;
+    border-radius: $input-border-radius;
+
+    background: $input-bg url('../../assets/plugins/jquery-select2/select2.png') no-repeat 100% -22px;
+
+    @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+
+    &.select2-active {
+      background: $input-bg url('../../assets/plugins/jquery-select2/select2-spinner.gif') no-repeat 100%;
+    }
+  }
+}
+
+.select2-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+//
+// Results
+//
+.select2-results {
+  max-height: 200px;
+  padding: 0 0 0 4px;
+  margin: 4px 4px 4px 0;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  ul.select2-result-sub {
+    margin: 0;
+    padding-left: 0;
+  }
+
+  li {
+    list-style: none;
+    display: list-item;
+
+    em {
+      background: #feffde;
+      font-style: normal;
+    }
+
+    &.select2-result-with-children > .select2-result-label {
+      font-weight: bold;
+    }
+  }
+
+  .select2-result-label {
+    padding: 3px 7px 4px;
+    margin: 0;
+    cursor: pointer;
+
+    min-height: 1em;
+
+    @include user-select(none);
+    -webkit-touch-callout: none;
+  }
+
+  .select2-highlighted {
+    background: $component-active-bg;
+    color: $component-active-color;
+
+    em {
+      background: transparent;
+    }
+
+    ul {
+      background: #fff;
+      color: $text-color;
+    }
+  }
+
+  .select2-no-results,
+  .select2-searching,
+  .select2-selection-limit {
+    background: #f4f4f4;
+    display: list-item;
+    padding-left: 5px;
+  }
+
+  // disabled look for disabled choices in the results dropdown
+  .select2-disabled
+  .select2-disabled {
+    background: $input-bg-disabled;
+    display: list-item;
+    cursor: default;
+
+    &.select2-highlighted {
+      color: #666;
+      background: $input-bg-disabled;
+      display: list-item;
+      cursor: default;
+    }
+  }
+
+  .select2-selected {
+    display: none;
+  }
+}
+
+.select2-results-dept-1 .select2-result-label {
+  padding-left: 20px
+}
+
+.select2-results-dept-2 .select2-result-label {
+  padding-left: 40px
+}
+
+.select2-results-dept-3 .select2-result-label {
+  padding-left: 60px
+}
+
+.select2-results-dept-4 .select2-result-label {
+  padding-left: 80px
+}
+
+.select2-results-dept-5 .select2-result-label {
+  padding-left: 100px
+}
+
+.select2-results-dept-6 .select2-result-label {
+  padding-left: 110px
+}
+
+.select2-results-dept-7 .select2-result-label {
+  padding-left: 120px
+}
+
+.select2-more-results
+.select2-more-results {
+  background: #f4f4f4;
+  display: list-item;
+  &.select2-active {
+    background: #f4f4f4 url('../../assets/plugins/jquery-select2/select2-spinner.gif') no-repeat 100%;
+  }
+}
+
+//
+// Multiselect
+//
+.select2-container-multi {
+  height: auto !important;
+  .select2-choices {
+    height: auto !important;
+    height: 1%;
+    min-height: 26px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+    border: 1px solid $input-border;
+    border-radius: $input-border-radius;
+    cursor: text;
+    overflow: hidden;
+
+    background-color: $input-bg;
+
+    @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+
+    li {
+      float: left;
+      list-style: none;
+      html[dir="rtl"] & {
+        float: right;
+      }
+    }
+
+    .select2-search-field {
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
+
+      input {
+        display: block;
+        width: 100%;
+
+        padding: $padding-base-vertical $padding-base-horizontal;
+        margin: 0;
+
+        font-size: $font-size-base;
+        line-height: $line-height-base;
+        color: $input-color;
+        outline: 0;
+        border: 0;
+        background: transparent !important;
+
+        &.select2-active {
+          background: $input-bg url('../../assets/plugins/jquery-select2/select2-spinner.gif') no-repeat 100% !important;
+        }
+      }
+    }
+
+    .select2-search-choice-focus {
+      background: #d4d4d4;
+    }
+  }
+
+  .select2-search-choice {
+    padding: 4px 20px 4px 8px;
+    margin: 5px 3px 5px 5px;
+    position: relative;
+
+    line-height: 14px;
+    color: #fff;
+    cursor: default;
+
+    border-radius: $input-border-radius;
+
+    background-clip: padding-box;
+
+    @include user-select(none);
+    -webkit-touch-callout: none;
+
+    background-color: $brand-info;
+    html[dir="rtl"] & {
+      padding: 3px 8px 3px 20px;
+      margin-left: 0;
+      margin-right: 5px;
+    }
+
+    .select2-chosen {
+      cursor: default;
+    }
+  }
+
+  &.select2-dropdown-open .select2-choices {
+    border-radius: $input-border-radius $input-border-radius 0 0;
+  }
+  &.select2-drop-above .select2-choices {
+    border-radius: 0 0 $input-border-radius $input-border-radius;
+  }
+
+  &.select2-container-disabled {
+    .select2-choices {
+      background-color: $input-bg-disabled;
+      cursor: default;
+      .select2-search-choice {
+        padding: 6px 5px 6px 5px;
+
+        opacity: 0.6;
+
+        .select2-search-choice-close:before {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.select2-locked {
+  padding: 3px 5px 3px 5px !important;
+}
+
+.select2-container-multi.select2-container-active .select2-choices {
+  border: 1px solid $input-border-focus;
+  outline: none;
+}
+
+.select2-default {
+  color: $input-color-placeholder !important;
+}
+
+.select2-search-choice-close:before {
+  content: "x";
+  display: block;
+  width: 12px;
+  height: 13px;
+  position: absolute;
+  right: 0px;
+  top: 2px;
+  color: #fff;
+
+  outline: none;
+  html[dir="rtl"] & {
+    right: auto;
+    left: 0px;
+  }
+}
+
+// End multi select
+
+.select2-result-selectable .select2-match,
+.select2-result-unselectable .select2-match {
+  text-decoration: underline;
+}
+
+.select2-offscreen,
+.select2-offscreen:focus {
+  clip: rect(0 0 0 0) !important;
+  width: 1px !important;
+  height: 1px !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  outline: 0 !important;
+  left: 0px !important;
+  top: 0px !important;
+}
+
+.select2-display-none {
+  display: none;
+}
+
+.select2-measure-scrollbar {
+  position: absolute;
+  top: -10000px;
+  left: -10000px;
+  width: 100px;
+  height: 100px;
+  overflow: scroll;
+}
+
+/* Retina-ize icons */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx) {
+  .select2-search input,
+  .select2-search-choice-close,
+  .select2-container .select2-choice abbr,
+  .select2-container .select2-choice .select2-arrow b {
+    background-image: url('../../assets/plugins/jquery-select2/select2x2.png') !important;
+    background-repeat: no-repeat !important;
+    background-size: 60px 40px !important;
+  }
+
+  .select2-search input {
+    background-position: 100% -21px !important;
+  }
+}
+
+// States
+
+.has-success {
+  .select2-choice,
+  .select2-choices {
+    border-color: $state-success-text;
+  }
+}
+
+.has-warning {
+  .select2-choice,
+  .select2-choices {
+    border-color: $state-warning-text;
+  }
+}
+
+.has-error {
+  .select2-choice,
+  .select2-choices {
+    border-color: $state-danger-text;
+  }
+}
+
+// Sizing
+.select2-container.input-sm {
+  .select2-choice {
+    height: $input-height-small;
+    padding: $padding-small-vertical $padding-small-horizontal;
+    font-size: $font-size-small;
+    line-height: $line-height-small;
+    .select2-arrow b {
+      background-position: 0 1px;
+    }
+  }
+}

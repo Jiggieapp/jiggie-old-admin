@@ -1,0 +1,28 @@
+.badge {
+  padding: 3px 5px;
+}
+
+.badge-small {
+  font-size: 0.8em;
+  padding: 2px 4px;
+}
+
+.badge.badge-up {
+  position: relative;
+
+  top: -12px;
+  margin-left: -12px;
+
+  &.badge-small {
+    top: -10px;
+    margin-left: -10px;
+  }
+}
+
+
+@include badge-variant('.badge-primary', $badge-primary-bg, $badge-primary-text);
+@include badge-variant('.badge-success', $badge-success-bg, $badge-success-text);
+@include badge-variant('.badge-info', $badge-info-bg, $badge-info-text);
+@include badge-variant('.badge-warning', $badge-warning-bg, $badge-warning-text);
+@include badge-variant('.badge-danger', $badge-danger-bg, $badge-danger-text);
+@include badge-variant('.badge-dark', $badge-dark-bg, $badge-dark-text);

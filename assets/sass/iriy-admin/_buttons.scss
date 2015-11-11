@@ -1,0 +1,170 @@
+.btn-lg {
+  line-height: 21px;
+}
+.btn {
+  line-height: 18px;
+}
+.btn-sm {
+  line-height: 16px;
+}
+.btn-xs, .btn-mini {
+  @include button-size($padding-xs-vertical, $padding-xs-horizontal, $btn-mini-font-size, 16px, $border-radius-small);
+}
+
+.btn-text-normal {
+  font-size: $font-size-base;
+}
+.btn-group-text-normal {
+  &.btn-group-xs > .btn,
+  &.btn-group-sm > .btn,
+  &.btn-group-lg > .btn {
+    font-size: $font-size-base;
+  }
+}
+
+.btn.btn-round {
+  border-radius: 1000px;
+}
+
+// Additional button colors
+.btn-inverse {
+  @include button-variant($btn-inverse-color, $btn-inverse-bg, $btn-inverse-border);
+}
+
+.btn-white {
+  @include button-variant($btn-white-color, $btn-white-bg, $btn-white-border);
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open > &.dropdown-toggle {
+    background-color: darken($btn-white-bg, 3%);
+    border-color: darken($btn-white-border, 5%);
+  }
+}
+
+.btn-no-border {
+  border-color: transparent;
+}
+
+// Make a button look and behave like a link
+.btn-link-dark {
+  color: $btn-link-dark-color;
+  font-weight: normal;
+  cursor: pointer;
+  border-radius: 0;
+
+  &,
+  &:active,
+  &[disabled],
+  fieldset[disabled] & {
+    background-color: transparent;
+    @include box-shadow(none);
+  }
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: transparent;
+  }
+  &:hover,
+  &:focus {
+    color: darken($btn-link-dark-color, 10%);
+  }
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus {
+      color: $btn-link-disabled-color;
+      text-decoration: none;
+    }
+  }
+}
+
+// Flat buttons
+.btn-flat {
+  border-width: 0;
+
+  @include button-flat(6px, 4px, #FFF, #FEFEFE);
+
+  &.btn-default {
+    @include button-flat(5px, 3.5px, $btn-default-bg, $btn-default-shadow);
+  }
+  &.btn-primary {
+    @include button-flat(5px, 3.5px, $btn-primary-bg, $btn-primary-shadow);
+  }
+  &.btn-success {
+    @include button-flat(5px, 3.5px, $btn-success-bg, $btn-success-shadow);
+  }
+  &.btn-info {
+    @include button-flat(5px, 3.5px, $btn-info-bg, $btn-info-shadow);
+  }
+  &.btn-warning {
+    @include button-flat(5px, 3.5px, $btn-warning-bg, $btn-warning-shadow);
+  }
+  &.btn-danger {
+    @include button-flat(5px, 3.5px, $btn-danger-bg, $btn-danger-shadow);
+  }
+  &.btn-inverse {
+    @include button-flat(5px, 3.5px, $btn-inverse-bg, $btn-inverse-shadow);
+  }
+  &.btn-white {
+    border-width: 1px;
+    @include button-flat(5px, 3.5px, $btn-white-bg, $btn-white-shadow);
+  }
+
+  &.btn-sm {
+    &.btn-default {
+      @include button-flat(4px, 3px, $btn-default-bg, $btn-default-shadow);
+    }
+    &.btn-primary {
+      @include button-flat(4px, 3px, $btn-primary-bg, $btn-primary-shadow);
+    }
+    &.btn-success {
+      @include button-flat(4px, 3px, $btn-success-bg, $btn-success-shadow);
+    }
+    &.btn-info {
+      @include button-flat(4px, 3px, $btn-info-bg, $btn-info-shadow);
+    }
+    &.btn-warning {
+      @include button-flat(4px, 3px, $btn-warning-bg, $btn-warning-shadow);
+    }
+    &.btn-danger {
+      @include button-flat(4px, 3px, $btn-danger-bg, $btn-danger-shadow);
+    }
+    &.btn-inverse {
+      @include button-flat(4px, 3px, $btn-inverse-bg, $btn-inverse-shadow);
+    }
+    &.btn-white {
+      @include button-flat(4px, 3px, $btn-white-bg, $btn-white-shadow);
+    }
+  }
+
+  &.btn-xs, &.btn-mini {
+    &.btn-default {
+      @include button-flat(3px, 2px, $btn-default-bg, $btn-default-shadow);
+    }
+    &.btn-primary {
+      @include button-flat(3px, 2px, $btn-primary-bg, $btn-primary-shadow);
+    }
+    &.btn-success {
+      @include button-flat(3px, 2px, $btn-success-bg, $btn-success-shadow);
+    }
+    &.btn-info {
+      @include button-flat(3px, 2px, $btn-info-bg, $btn-info-shadow);
+    }
+    &.btn-warning {
+      @include button-flat(3px, 2px, $btn-warning-bg, $btn-warning-shadow);
+    }
+    &.btn-danger {
+      @include button-flat(3px, 2px, $btn-danger-bg, $btn-danger-shadow);
+    }
+    &.btn-inverse {
+      @include button-flat(3px, 2px, $btn-inverse-bg, $btn-inverse-shadow);
+    }
+    &.btn-white {
+      @include button-flat(3px, 2px, $btn-white-bg, $btn-white-shadow);
+    }
+  }
+}

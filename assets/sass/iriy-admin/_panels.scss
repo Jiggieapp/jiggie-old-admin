@@ -1,0 +1,209 @@
+.panel {
+  margin-bottom: 26px;
+  border: none;
+  @include box-shadow(0 3px 0 rgba(9, 9, 9, 0.03));
+
+  &.collapsed .panel-heading {
+    border-bottom: none;
+  }
+
+  > .panel-body {
+    &:first-child {
+      @include border-top-radius(inherit);
+    }
+    &:last-child {
+      @include border-bottom-radius(inherit);
+    }
+  }
+}
+
+.panel-clean {
+  @include box-shadow(none);
+}
+
+.panel-heading {
+  position: relative;
+
+  .panel-title + p {
+    margin-top: 10px;
+  }
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.panel-options {
+  position: absolute;
+  top:    10px;
+  right:  15px;
+
+  a {
+    color: inherit;
+  }
+}
+
+.panel-lg {
+  .panel-body {
+    padding: 20px;
+  }
+  .panel-heading {
+    padding: 20px;
+  }
+  .panel-footer {
+    padding: 20px;
+  }
+  .panel-options {
+    top: 20px;
+    right: 20px;
+  }
+}
+
+.panel-sm {
+  .panel-body {
+    padding: 10px;
+  }
+  .panel-heading {
+    padding: 7px 10px;
+  }
+  .panel-footer {
+    padding: 7px 10px;
+  }
+  .panel-options {
+    top: 7px;
+    right: 10px;
+  }
+}
+
+h1, h2, h3 {
+  &.panel-title {
+    font-size: 18px;
+  }
+}
+
+.panel-group {
+  .panel {
+    border-radius: 0;
+    border-bottom: 1px solid $panel-inner-border;
+    overflow: hidden;
+    @include box-shadow(none);
+
+    &:first-child {
+      border-radius: $panel-border-radius $panel-border-radius 0 0;
+    }
+    &:last-child {
+      border-radius: 0 0 $panel-border-radius $panel-border-radius;
+      border-bottom: 0;
+    }
+
+    + .panel {
+      margin-top: 0;
+    }
+    .panel-heading {
+      border-radius: 0;
+      padding: 0;
+
+      .panel-title {
+        margin-top: 0;
+      }
+
+      a {
+        display: block;
+        padding: 15px 15px;
+        text-decoration: none;
+
+        &.collapsed {
+          background: $panel-group-panel-link-bg;
+          color: $panel-group-panel-link-color;
+
+          &:hover,
+          &:active {
+            color: $panel-group-panel-link-hover-color;
+            background: $panel-group-panel-link-hover-bg;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Contextual variations
+.panel-default {
+  @include panel-variant($panel-default-border, $panel-default-text, $panel-default-style-bg, $panel-default-style-border, $panel-default-body-text);
+}
+
+.panel-primary {
+  @include panel-variant($panel-primary-border, $panel-primary-text, $panel-primary-style-bg, $panel-primary-style-border, $panel-primary-body-text);
+}
+
+.panel-success {
+  @include panel-variant($panel-success-border, $panel-success-text, $panel-success-style-bg, $panel-success-style-border, $panel-success-body-text);
+}
+
+.panel-info {
+  @include panel-variant($panel-info-border, $panel-info-text, $panel-info-style-bg, $panel-info-style-border, $panel-info-body-text);
+}
+
+.panel-warning {
+  @include panel-variant($panel-warning-border, $panel-warning-text, $panel-warning-style-bg, $panel-warning-style-border, $panel-warning-body-text);
+}
+
+.panel-danger {
+  @include panel-variant($panel-danger-border, $panel-danger-text, $panel-danger-style-bg, $panel-danger-style-border, $panel-danger-body-text);
+}
+
+.panel-gray {
+  @include panel-variant($panel-gray-border, $panel-gray-text, $panel-gray-style-bg, $panel-gray-style-border, $panel-gray-body-text);
+}
+
+.panel-light {
+  @include panel-variant($panel-light-border, $panel-light-text, $panel-light-style-bg, $panel-light-style-border, $panel-light-body-text);
+}
+
+.panel-inverse {
+  @include panel-variant($panel-inverse-border, $panel-inverse-text, $panel-inverse-style-bg, $panel-inverse-style-border, $panel-inverse-body-text);
+}
+
+.panel-black {
+  @include panel-variant($panel-black-border, $panel-black-text, $panel-black-style-bg, $panel-black-style-border, $panel-black-body-text);
+}
+
+// Panel body variations
+.panel-body-default {
+  @include panel-body-variant($panel-default-body-text, $panel-default-style-bg, $panel-default-border);
+}
+
+.panel-body-primary {
+  @include panel-body-variant($panel-primary-body-text, $panel-primary-style-bg, $panel-primary-border);
+}
+
+.panel-body-success {
+  @include panel-body-variant($panel-success-body-text, $panel-success-style-bg, $panel-success-border);
+}
+
+.panel-body-info {
+  @include panel-body-variant($panel-info-body-text, $panel-info-style-bg, $panel-info-border);
+}
+
+.panel-body-warning {
+  @include panel-body-variant($panel-warning-body-text, $panel-warning-style-bg, $panel-warning-border);
+}
+
+.panel-body-danger {
+  @include panel-body-variant($panel-danger-body-text, $panel-danger-style-bg, $panel-danger-border);
+}
+
+.panel-body-gray {
+  @include panel-body-variant($panel-gray-body-text, $panel-gray-style-bg, $panel-gray-border);
+}
+
+.panel-body-light {
+  @include panel-body-variant($panel-light-body-text, $panel-light-style-bg, $panel-light-border);
+}
+
+.panel-body-inverse {
+  @include panel-body-variant($panel-inverse-body-text, $panel-inverse-style-bg, $panel-inverse-border);
+}
+
+.panel-body-black {
+  @include panel-body-variant($panel-black-body-text, $panel-black-style-bg, $panel-black-border);
+}
