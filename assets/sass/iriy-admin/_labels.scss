@@ -1,0 +1,8 @@
+.label{
+  font-weight: 600;
+  padding: 3px 8px;
+}
+
+.label-dark {
+  @include label-variant($label-dark-bg);
+}

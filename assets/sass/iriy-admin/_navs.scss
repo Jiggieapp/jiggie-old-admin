@@ -1,0 +1,357 @@
+.nav-dropdown > a {
+  position: relative;
+  padding-right: 30px;
+
+  &:after {
+    position: absolute;
+    margin-top: -2px;
+    right: 12px;
+
+    content: "\f105";
+    font-family: FontAwesome;
+    font-size: 16px;
+    font-weight: 300;
+    height: auto;
+    text-shadow: none;
+    @include transition(all 0.3s ease 0s);
+  }
+}
+
+.nav-dropdown.open > a:after {
+  @include rotate(90deg);
+}
+
+.nav .nav-sub {
+  display: none;
+  padding: 0;
+
+  list-style: none;
+  i {
+    margin-left: -1.538461538em;
+    //    margin-left: -20px;
+  }
+  > .badge,
+  > .label {
+    float: right;
+  }
+
+  > .badge + .badge,
+  > .badge + .label,
+  > .label + .badge,
+  > .label + .label, {
+    margin-right: 5px;
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.nav > li > .nav-sub {
+  margin-top: 2px;
+
+  li > a {
+    position: relative;
+    display: block;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
+
+.nav > li.active, .nav > li.expand {
+  > .nav-sub {
+    display: block;
+  }
+}
+
+// Multi level nav support
+.nav > li > .nav-sub > li {
+  > a {
+    padding-left: $nav-sub-padding-base + $nav-sub-padding-level *2;
+  }
+
+  > .nav-sub > li {
+    > a {
+      padding-left: $nav-sub-padding-base + $nav-sub-padding-level *3;
+    }
+
+    > .nav-sub > li {
+      > a {
+        padding-left: $nav-sub-padding-base + $nav-sub-padding-level *4;
+      }
+
+      > .nav-sub > li {
+        > a {
+          padding-left: $nav-sub-padding-base + $nav-sub-padding-level *5;
+        }
+
+        > .nav-sub > li {
+          > a {
+            padding-left: $nav-sub-padding-base + $nav-sub-padding-level *6;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Tabs
+// -------------------------
+.nav-tabs {
+  background: $nav-tabs-bg;
+  border: none;
+  border-radius: $border-radius-base $border-radius-base 0 0;
+  > li {
+    margin-bottom: -1px; // Fix subpixels troubles
+
+    > a {
+      color: $nav-tabs-link-color;
+      border: none;
+      padding: $nav-tabs-link-padding;
+
+      &:hover,
+      &:focus {
+        color: $nav-tabs-link-hover-color;
+        background-color: $nav-tabs-link-hover-bg;
+      }
+
+      > span {
+        display: block;
+        font-size: 0.9em;
+      }
+    }
+
+    &.pull-right > a {
+      margin-right: 0;
+      margin-left: 2px;
+    }
+  }
+
+  // Open dropdowns
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $nav-tabs-link-hover-color;
+      background-color: $nav-tabs-open-link-hover-bg;
+    }
+  }
+
+  &.nav-justified {
+    @extend .nav-tabs-justified-override;
+  }
+}
+.nav-tabs.nav-justified {
+  > li > a {
+    margin-bottom: -1px; // Fix subpixels troubles
+  }
+}
+
+.tab-content {
+  background: $tab-content-bg;
+  border-radius: $border-radius-base;
+  margin-bottom: 20px;
+
+  @include clearfix();
+  @include box-shadow(0 3px 0 rgba(9, 9, 9, 0.03));
+
+  .nav-tabs + & {
+    @include border-top-radius(0);
+  }
+}
+
+.tab-content-clean {
+  @include box-shadow(none);
+}
+
+.tab-pane {
+  padding: $tab-pane-padding;
+  border-radius: 0 0 $border-radius-base $border-radius-base;
+
+  address:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.tab-pane-table {
+  padding: 0;
+
+  > .table,
+  > .table-responsive > .table {
+    margin-bottom: 0;
+  }
+  // Add border top radius for first one
+  > .table:first-child,
+  > .table-responsive:first-child > .table:first-child {
+    @include border-top-radius(($panel-border-radius - 1));
+
+    > thead:first-child,
+    > tbody:first-child {
+      > tr:first-child {
+        td:first-child,
+        th:first-child {
+          border-top-left-radius: ($panel-border-radius - 1);
+        }
+        td:last-child,
+        th:last-child {
+          border-top-right-radius: ($panel-border-radius - 1);
+        }
+      }
+    }
+  }
+  // Add border bottom radius for last one
+  > .table:last-child,
+  > .table-responsive:last-child > .table:last-child {
+    @include border-bottom-radius(($panel-border-radius - 1));
+
+    > tbody:last-child,
+    > tfoot:last-child {
+      > tr:last-child {
+        td:first-child,
+        th:first-child {
+          border-bottom-left-radius: ($panel-border-radius - 1);
+        }
+        td:last-child,
+        th:last-child {
+          border-bottom-right-radius: ($panel-border-radius - 1);
+        }
+      }
+    }
+  }
+  > .panel-body + .table,
+  > .panel-body + .table-responsive {
+    border-top: 1px solid $table-border-color;
+  }
+  > .table > tbody:first-child > tr:first-child th,
+  > .table > tbody:first-child > tr:first-child td {
+    border-top: 0;
+  }
+  > .table-bordered,
+  > .table-responsive > .table-bordered {
+    border: 0;
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th:first-child,
+        > td:first-child {
+          border-left: 0;
+        }
+        > th:last-child,
+        > td:last-child {
+          border-right: 0;
+        }
+      }
+    }
+    > thead,
+    > tbody {
+      > tr:first-child {
+        > td,
+        > th {
+          border-bottom: 0;
+        }
+      }
+    }
+    > tbody,
+    > tfoot {
+      > tr:last-child {
+        > td,
+        > th {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+  > .table-responsive {
+    border: 0;
+    margin-bottom: 0;
+  }
+}
+
+// Pills
+// -------------------------
+.nav-pills {
+  margin-bottom: 10px;
+
+  > li {
+    // Hover, Focus state
+    & > a {
+      &:hover,
+      &:focus {
+        color: $nav-pills-link-hover-color;
+        background-color: $nav-pills-link-hover-bg;
+      }
+    }
+  }
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $nav-pills-link-hover-color;
+      background-color: $nav-pills-open-link-hover-bg;
+    }
+  }
+}
+
+
+//
+// Nav Dark
+// -------------------------
+.nav-dark {
+  background: $nav-dark-bg;
+  > li {
+    > a {
+      & {
+        color: $nav-dark-link-color;
+      }
+
+      &:hover,
+      &:focus {
+        color: $nav-dark-link-hover-color;
+        background-color: $nav-dark-link-hover-bg;
+      }
+    }
+
+    // Disabled state sets text to gray and nukes hover/tab effects
+    &.disabled > a {
+      color: $nav-dark-disabled-link-color;
+
+      &:hover,
+      &:focus {
+        color: $nav-dark-disabled-link-hover-color;
+      }
+    }
+  }
+
+  // Open dropdowns
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      color: $nav-dark-open-link-hover-color;
+      background-color: $nav-dark-open-link-hover-bg;
+    }
+  }
+}
+
+// Mixin for removing borders from anchors
+.nav-tabs-justified-override {
+  > li > a,
+  > li.pull-right > a {
+    margin-right: 0;
+  }
+
+  > .active > a,
+  > .active > a:hover,
+  > .active > a:focus {
+    border: none;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    > li > a {
+      border-bottom: none;
+    }
+  }
+}
+

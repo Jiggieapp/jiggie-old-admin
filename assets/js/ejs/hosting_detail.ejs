@@ -1,0 +1,175 @@
+<div class="host-details">
+    <form class="form-horizontal form-bordered" role="form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Hosting Details</h4>
+                
+                <div class="panel-options">
+                    
+                   
+                    <a href="#" class="detail_close" data-rel="close">
+                        <i class="fa fa-fw fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="panel-body" id="selected_hosting" hosting_id="<%= _id %>"  >
+                <p id="data_error" class="error1"></p>
+                 <div class="form-group">
+                    <label class="control-label col-xs-3  ">Profile pic</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">
+                    	<a target="_blank" class="user_image"  data-user_id="<%= host.fb_id %>"  href="<%= base_url +'admin/user/users/#/details='+ host.fb_id %>">                 	       
+                             
+                             <img   alt="image"  src="https://graph.facebook.com/<%=  user_fb_id %>/picture?width=200&height=150" />
+                            
+                        </a> 
+                    </p>
+                   </div>
+                </div> 
+                
+                 
+                <div class="form-group">
+                    <label class="control-label col-xs-3  ">Name</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">
+                    	<a target="_blank"  data-user_id="<%= host.fb_id %>"  href="<%= base_url +'admin/user/users/#/details='+ host.fb_id %>" style="color:blue"  >
+                    		  <%= host.first_name+' '+host.last_name%> 
+                    	</a>                                             
+                        <span id="p_userselect"></span>
+                    </p>
+                   </div>
+                </div>
+                    
+                <div class="form-group">
+                    <label class="control-label col-xs-3  ">Venue</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">                        
+                        <a style="color:blue" target="_blank" href="<%= base_url +'admin/venue/venues/#/venue-details='+event.venue_id %>" >  
+                            <%=  event.venue_name %>
+                        </a>                       
+                        <span id="p_venue"></span>
+                    </p>                      
+                   </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-3  ">Event</label>
+                    <div class="controls col-xs-9">
+                    <p class="form-control-static">                        
+                        
+                         <a  style="color:blue" target="_blank"  class="" href="<%=base_url+'admin/events/#/event-special='+ event._id%>"  ><%= event.title %></a>                       
+                        <span id="p_venue"></span>
+                    </p>                      
+                   </div>
+                </div>
+                
+                <div class="form-group" id="view_description">
+                        <label class="control-label col-xs-3  ">Description</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">
+                                <a data-title="Enter comments" data-placeholder="Your comments here..." data-pk="<%= _id %>" data-type="textarea" data-name="description" id="host_description" href="#" class="editable editable-pre-wrapped editable-click" >
+                                    <%= description %>
+                                </a>
+                               
+                            </p>
+                        </div>
+                </div>
+                
+                <div class="form-group" id="view_date">
+                    <label class="control-label col-xs-3  ">Start time</label>
+                    <div class="controls col-xs-9">
+                        <p class="form-control-static">
+                           <%= start_datetime_str %>
+                            <!--a id="host_date" data-title="Select Date" data-pk="0" data-template="MMM / D / YYYY HH:mm:ss" data-viewformat="MM/DD/YYYY , HH:mm:ss" data-format="YYYY-MM-DD HH:mm:ss" data-value="<%= start_datetime_str %>" data-type="combodate" href="#" class="editable editable-click" style="display: inline;">
+                                   
+                            </a-->
+                            
+                        </p>
+                   </div>
+                </div>
+                
+                <div class="form-group" id="view_date">
+                    <label class="control-label col-xs-3  ">End time</label>
+                    <div class="controls col-xs-9">
+                        <p class="form-control-static">
+                         	<%= end_datetime_str %>
+                            <!--a id="host_date" data-title="Select Date" data-pk="0" data-template="MMM / D / YYYY HH:mm:ss" data-viewformat="MM/DD/YYYY , HH:mm:ss" data-format="YYYY-MM-DD HH:mm:ss" data-value="<%= end_datetime_str %>" data-type="combodate" href="#" class="editable editable-click" style="display: inline;">
+                                   
+                            </a-->
+                            
+                        </p>
+                   </div>
+                </div>
+                  
+                <!--div class="form-group" id="view_recurring">
+                    <label class="control-label col-xs-3  ">Recurring</label>
+                    <div class="controls col-xs-9">
+                         <input type="checkbox" name="is_recurring" id="is_recurring" data-pk="<%= _id %>"  data-off-text="NO"  data-on-text="YES" data-size="small" data-off-color="success" data-on-color="primary" value ="1" <%= is_recurring == 'true' ? "checked" : "" %> class="boot-switch"/>
+                         <span id="p_recurring"></span>
+                    </div>
+                </div-->
+                
+                <div class="form-group" id="view_is_verified_table">
+                    <label class="control-label col-xs-3  ">Verified Table</label>
+                    <div class="controls col-xs-9">
+                    	 <% 
+                    	 
+                    	  if (typeof(is_verified_table) == "undefined"){
+                    	 	obj_is_verified_table= 'false';
+                    	  }else{
+                    	 	 obj_is_verified_table= is_verified_table;
+                    	  }
+                    	  
+                    	 %>
+                         <input type="checkbox" name="is_verified_table" id="is_verified_table" data-pk="<%= _id %>"  data-off-text="NO"  data-on-text="YES" data-size="small" data-off-color="success" data-on-color="primary" value ="1" <%= obj_is_verified_table == true ? "checked" : "" %> class="boot-switch"/>
+                         <span id="p_promoter"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="view_rank">
+                    <label class="control-label col-xs-3  ">Rank</label>
+                    <div class="controls col-xs-9">
+                        <p class="form-control-static">              
+                              <% if (typeof(rank) == "undefined"){
+	                    	 	obj_rank= 0;
+	                    	  }else{
+	                    	 	 obj_rank= rank;
+	                    	  } %>              
+                            <a id="rank" data-pk="<%=   %>"   data-value="<%= obj_rank %>"  data-type="select"  class=""><%= obj_rank  %></a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="view_hstatus">
+                    <label class="control-label col-xs-3 ">Active</label>
+                    <div class="controls col-xs-9">
+                    		<% 
+                    	  if (typeof(visible) == "undefined"){
+                    	 	obj_active= true;
+                    	  }else{
+                    	 	 obj_active= visible;
+                    	  }
+                    	  
+                    	 %>
+                         <input type="checkbox" name="visible" data-name="visible" id="visible" data-pk="<%= _id %>"  data-off-text="NO"  data-on-text="YES" data-size="small"  data-off-color="success" data-on-color="primary" value ="1" <%= obj_active == true ? "checked" : "" %> class="boot-switch"/>
+                         <span id="p_hstatus"></span>
+                    </div>
+                </div>
+                
+              
+               
+                
+                <div class="form-group">
+                    <label class="control-label col-xs-12  ">
+                    <a class="confirm btn btn-danger btn-sm" href="#" data-type="hosting" data-url="<%= base_url+'admin/hostings/delete_hosting/'+ _id %>" title="Delete">Delete hosting</a>
+   
+                    <!--a  href="<%= base_url+'admin/hostings/duplicate_hosting/'+ _id %>" class="btn btn-danger btn-sm">Duplicate hosting</a-->  
+               	</label>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+</div>
+
+

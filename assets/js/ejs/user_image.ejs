@@ -1,0 +1,17 @@
+<div class="us-listing table-responsive"> 
+  <% 
+	 if(user.photos.length){  
+	 for(var i=0; i< user.photos.length; i++) {%>
+            <div class="col-md-6 img-box-live mb-15"  id="update_cnt_imageform<%= i %>">
+				<img src="<%= user.photos[i]%>" class="img-responsive" />		 
+				
+			</div>	 
+         <% } 
+     } else { %>
+          <div colspan="11 alert alert-warning">No Photos.</div> 
+     <%
+     }
+     %>   
+ 
+</div>
+ 

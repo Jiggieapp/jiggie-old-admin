@@ -1,0 +1,35 @@
+// Contextual breadcrumbs
+
+
+@mixin breadcrumb-variant($text-color, $bg-color, $link-color, $link-hover-color, $active-color, $active-link-color) {
+  background-color: $bg-color;
+  color: $text-color;
+
+  > li {
+    + li:before {
+      color: $text-color;
+    }
+  }
+
+  li > a {
+    color: $link-color;
+
+    &:hover,
+    &:focus {
+      color: $link-hover-color;
+    }
+  }
+
+  > .active {
+    color: $active-color;
+
+    a {
+      color: $active-color;
+
+      &:hover,
+      &:focus {
+        color: $active-link-color;
+      }
+    }
+  }
+}

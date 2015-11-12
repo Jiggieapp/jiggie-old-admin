@@ -1,0 +1,31 @@
+.page-content {
+  border-top: 1px solid #E6E8EA;
+
+  > .container-fluid-md:first-child {
+    margin-top: 24px;
+  }
+  > .container-fluid:first-child {
+    margin-top: 20px;
+  }
+}
+
+.sidebar + .page-content {
+  width: 100%;
+
+  @media (min-width: $grid-float-breakpoint) {
+    margin-left: $sidebar-width;
+    width: auto;
+  }
+}
+
+@media (max-width: $grid-float-breakpoint-max) {
+  .sidebar-opened .sidebar + .page-content {
+    margin-left: $sidebar-width;
+  }
+}
+
+@media (min-width: $grid-float-breakpoint) {
+  .sidebar-condensed .sidebar + .page-content {
+    margin-left: $sidebar-condensed-width;
+  }
+}

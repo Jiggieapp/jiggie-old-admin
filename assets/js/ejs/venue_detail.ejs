@@ -1,0 +1,240 @@
+<div class="venue-details">
+    <form class="form-horizontal form-bordered" role="form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    Venue                     
+                </h4>
+
+                <div class="panel-options">                   
+                    <a href="#" class="detail_close" data-rel="close">
+                        <i class="fa fa-fw fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body " id="selected_venue" venue_id="<%= venue_id  %>">
+               
+                    
+                    <div class="col-sm-6 col-md-5 mbsm" style="overflow-x: hidden">                       
+                                                   	       
+                            <% image = data.photos[0] ? data.photos[0]: siteurl+'assets/images/default.png' %>
+                            
+                            <img width="200"  alt="image"  src="<%=  image %>" />
+                          
+                    </div>
+                    <div class="col-sm-6  col-md-7 profile-details">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                Name  
+                            </div>
+                            <div class="col-xs-9"> 
+                                <p id="view_name">                                                
+                                    <a id="name" class="edit_venue"><%= data.name  %></a>
+                                            
+                                </p>
+                            </div>
+                        </div>
+                        
+                       
+                        
+                        <div class="row">
+                            <div class="col-xs-3">
+                                Address  
+                            </div>
+                            <div class="col-xs-9"> 
+                                <p id="view_address">                                    
+                                    <a id="address" class="edit_venue"><%= data.address  %></a>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                Address 2  
+                            </div>
+                            <div class="col-xs-9"> 
+                                <p id="view_zip">                                    
+                                    <a id="address2" class="edit_venue"><%= data.address2  %></a>
+                                   
+                                </p>
+                            </div>
+                        </div>   
+                        <div class="row">
+                            <div class="col-xs-3">
+                                City  
+                            </div>
+                            <div class="col-xs-9">
+                                <p id="view_city">                                    
+                                    <a id="city" class="edit_venue1"><%= data.city  %></a>                                    
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                State  
+                            </div>
+                            <div class="col-xs-9">
+                                <p id="view_state">                                   
+                                    <a id="state" class="edit_venue1"><%= data.state  %></a>
+                                                                     </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                Zip  
+                            </div>
+                            <div class="col-xs-9"> 
+                                <p id="view_zip">                                    
+                                    <a id="zip" class="edit_venue_zip"><%= data.zip  %></a>
+                                   
+                                </p>
+                            </div>
+                        </div>                          
+                    </div>
+                </div>
+                <div class="panel-body">
+                	<div class="form-group" id="view_neighborhood1">
+                        <label class="control-label col-xs-3">Rank</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                                
+                                 <a id="rank"  data-value="<%= data.rank  %>", data-type="select"  class="edit_venue"><%= data.rank  %></a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group" id="view_neighborhood">
+                        <label class="control-label col-sm-3 col-xs-4 ">Neighborhood</label>
+                        <div class="controls col-sm-9 col-xs-8">
+                            <p class="form-control-static">
+                                 <a class="" id="neighborhood" data-name="neighborhood" data-type="select" data-title="Select Neighborhood"><%= data.neighborhood  %></a>
+                                 
+                            </p>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="form-group" id="view_phone">
+                        <label class="control-label col-xs-3">Phone</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a id="phone" class="edit_venuephone"><%= data.phone  %></a>                               
+                            </p>
+                        </div>
+                    </div> 
+
+                    <div class="form-group" id="view_lat">
+                        <label class="control-label col-xs-3">Latitude</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                              
+                                <!--a id="lat" class="edit_venuelat"></a-->
+                                <span id="v_e_lat"><%= data.lat  %></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="view_lng">
+                        <label class="control-label col-xs-3">Longitude</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <!--a id="long" class="edit_venuelat"></a-->
+                                <span id="v_e_long"><%= data.long  %></span>
+                            </p>
+                        </div>
+                    </div>  
+					<div class="form-group" id="view_lng">
+                        <label class="control-label col-xs-3"></label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="btn  btn-primary" id="btnUpdateLongLat" href="#">Update coordinates</a>
+                                <span id="invalidaddress" style="color: red"></span>
+                            </p>
+                        </div>
+                    </div> 
+                    <div class="form-group" id="view_url">
+                        <label class="control-label col-xs-3">URL</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                              
+                                <a id="url" class="edit_venue_url"><%= data.url  %></a>
+                               
+                            </p>
+                        </div>
+                    </div> 
+
+                    <div class="form-group" id="view_description">
+                        <label class="control-label col-xs-3">Description</label>
+                        <div class="controls col-xs-9">
+                             
+                               
+                                <a data-title="Enter comments" data-cols="100" data-name="description" data-placeholder="Your comments here..." data-pk="1" data-type="textarea" id="venue_description" href="#" class="editable editable editable-click" ><%= data.description  %></a>
+                            
+                        </div>
+                    </div> 
+                 
+                 <div class="form-group" id="view_recurring">
+                    <label class="control-label col-xs-3">Venue status</label>
+                    <div class="controls col-xs-9">
+                    	 <% 
+                    	  if (typeof(data.visible) == "undefined"){
+                    	 	obj_active= true;
+                    	  }else{
+                    	 	 obj_active= data.visible;
+                    	  }
+                    	  
+                    	 %>
+                         <input type="checkbox" name="venue_status" data-name="active" id="venue_status" data-pk="<%= data._id %>"  data-off-text="INACTIVE"  data-on-text="ACTIVE" data-size="small"  data-off-color="success" data-on-color="primary" value ="1" <%= obj_active == true ? "checked" : "" %> class="boot-switch"/>
+                         
+                         <span id="p_venue_status"></span>
+                    </div>
+                </div>
+              <div class="us-listing table-responsive"> 
+				  <% 
+					 if(data.photos.length){  
+					 for(var i=0; i< data.photos.length; i++) {%>
+				            <div class="item col-xs-12 col-sm-6 col-md-3 img-box-live "  id="update_cnt_imageform<%= i %>">
+				            	<div class="thumbnail">	            			 
+					                    <img width="200" alt="image" class="img-responsive" src="<%= data.photos[i] %>" />
+					                 
+					                
+					                <div class="caption">
+					                     	<div class="file-actions">
+											    <div class="file-footer-buttons">
+											        <button type="button" class="venue-file-remove btn btn-xs btn-default" data-type="special" title="Remove image" data-url="<%= data.photos[i]%>"><i class="glyphicon glyphicon-trash text-danger"></i></button>
+											    </div>									   
+											    <div class="clearfix"></div>
+											</div>	                    
+					                </div>		                
+			            		</div>
+								  
+								
+							</div>	 
+				         <% } 
+				     } else { %>
+				          <div   alert alert-warning">No Photos.</div> 
+				     <%
+				     }
+				     %>   
+				 
+				</div>   
+                 
+              </div> 
+           
+            
+        </div> 
+    </form>
+    <form enctype="multipart/form-data" id="formUploadGallery">
+        <div class="col-md-12 col-sm-12">
+        <p class="f11">Allowed file types :png</p>
+            <div class="form-group">
+          
+                <input id="filevenue" name="photo" type="file"  multiple=true class="file-loading">
+            </div>
+        </div>
+    </form>
+    <div class="form-group">
+        <label class="control-label col-xs-12 ">
+        <a class="confirm btn btn-danger" href="#" data-type="venue"  data-url="<%=  siteurl+ 'admin/venue/delete_venue/'+venue_id %>" title="Delete">Delete Venue</a>
+        <!--a href="<%= siteurl+'admin/venue/duplicate_venue/'+venue_id %>"  class="btn btn-danger">Duplicate Venue</a--> 
+        </label>
+    </div>
+</div>  
+

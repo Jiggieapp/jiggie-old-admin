@@ -1,0 +1,167 @@
+/*!
+ * jQuery UI Slider 1.10.4
+ * http://jqueryui.com
+ *
+ * Copyright 2014 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://api.jqueryui.com/slider/#theming
+ */
+@mixin slider-variation($color) {
+  &.ui-slider {
+    .ui-slider-range {
+      background-color: $color;
+    }
+
+    .ui-slider-handle {
+      &.ui-state-hover {
+        background-color: mix($gray-light, $color, 60%);
+        @include box-shadow(0 1px 5px rgba(9, 9, 9, 0.4));
+      }
+
+      &.ui-state-active {
+        background-color: $color;
+        @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125), 0 1px 5px rgba(9, 9, 9, 0.4));
+      }
+    }
+  }
+}
+
+.ui-slider {
+  position: relative;
+  text-align: left;
+  background-color: $progress-bg;
+  border-radius: $border-radius-base;
+  font-size: 14px;
+
+  .ui-slider-handle {
+    position: absolute;
+    z-index: 2;
+    width: 1.5em;
+    height: 1.5em;
+    cursor: pointer;
+
+    border-radius: 50%;
+    background-color: $gray-light;
+    border: 0.5em solid #fff;
+
+    @include box-shadow(0 1px 2px rgba(9, 9, 9, 0.4));
+    @include transition(background ease-in-out .15s, box-shadow ease-in-out .15s);
+
+    &.ui-state-hover {
+      @include box-shadow(0 1px 5px rgba(9, 9, 9, 0.4));
+    }
+
+    &.ui-state-active {
+      @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125), 0 1px 5px rgba(9, 9, 9, 0.4));
+    }
+
+    .ie8 & {
+      border-color: #E5E5E5;
+
+      &.ui-state-hover {
+        border-color: #E7E7E7;
+      }
+
+      &.ui-state-hover {
+        border-color: #E1E5E7;
+      }
+    }
+  }
+
+  .ui-slider-range {
+    position: absolute;
+    z-index: 1;
+    font-size: .7em;
+    display: block;
+    border: 0;
+    background: $gray-light 0 0;
+  }
+}
+
+/* For IE8 - See #6727 */
+.ui-slider.ui-state-disabled {
+  .ui-slider-handle,
+  .ui-slider-range {
+    filter: inherit;
+  }
+}
+
+.ui-slider-horizontal {
+  height: .6em;
+  margin: 15px 0;
+
+  .ui-slider-handle {
+    top: -.45em;
+    margin-left: -.75em;
+  }
+
+  .ui-slider-range {
+    top: 0;
+    height: 100%;
+  }
+
+  .ui-slider-range-min {
+    left: 0;
+
+    border-radius: $border-radius-base 0 0 $border-radius-base;
+  }
+
+  .ui-slider-range-max {
+    right: 0;
+
+    border-radius: 0 $border-radius-base $border-radius-base 0;
+  }
+}
+
+.ui-slider-vertical {
+  width: .6em;
+  height: 100px;
+  margin: 0 15px;
+
+  .ui-slider-handle {
+    left: -.45em;
+    margin-left: 0;
+    margin-bottom: -.75em;
+  }
+
+  .ui-slider-range {
+    left: 0;
+    width: 100%;
+  }
+
+  .ui-slider-range-min {
+    bottom: 0;
+
+    border-radius: 0 0 $border-radius-base $border-radius-base;
+  }
+
+  .ui-slider-range-max {
+    top: 0;
+
+    border-radius: $border-radius-base $border-radius-base 0 0;
+  }
+}
+
+// Variations
+// -------------------------
+.slider-primary {
+  @include slider-variation($brand-primary);
+}
+
+.slider-success {
+  @include slider-variation($brand-success);
+}
+
+.slider-info {
+  @include slider-variation($brand-info);
+}
+
+.slider-warning {
+  @include slider-variation($brand-warning);
+}
+
+.slider-danger {
+  @include slider-variation($brand-danger);
+}

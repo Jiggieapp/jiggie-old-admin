@@ -1,0 +1,49 @@
+<div class="modal-dialog chat-box">
+	<div class="modal-content">
+		<div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Chat Detail
+	         
+	        ( <a target="_blank" href="<%= siteurl+'admin/user/users/#/details='+to%>" class="f12"><%=toname%></a> - <a target="_blank" href="<%= siteurl+'admin/user/users/#/details='+from%>" class="f12"><%=fromname%></a> )
+	        </h4>
+      	</div>
+      	<div class="modal-body"> 
+      	    <%
+            if(messages.length) {            	 
+                for(var i=0; i<messages.length; i++) { 
+                	
+                    if(messages[i].from_id == from) {                        
+                        var color = "#EFF3F4";						
+                    }
+                    else {                        
+                        var color = "#FFFFFF";						
+                    }
+                    %>
+                    <div class="panel-body npxx" style="background-color: <%= color %>">
+                        <div class="form-group ">
+                            <label for="inputEmail3" class="col-sm-4 npxx control-label">
+                              
+                            	<a href= "<%= siteurl+'admin/user/users/#/details='+messages[i].from_id%> " target="_blank"><%= messages[i].from_name %></a>
+                        	</label>
+                            <div class="col-sm-5 npxx"> <%= messages[i].message.split("\n").join("<br>") %>
+                            </div>
+                            <div class="col-sm-3 npxx">
+                            <% var created_at = new TimeShift.OriginalDate(messages[i].created_at );	%>
+	                 		  <%=  dateFormats(created_at, "mmm dd h:MM tt")  %>  
+                           
+                            </div>
+                        </div>                                
+                    </div> 
+            <%    
+            }
+            } else { %>
+                <div class="panel-body">
+                       <div class="form-group">No chats available</div>
+                </div> 
+            <%  } %>
+        </div>
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    	</div>
+	</div>
+</div>

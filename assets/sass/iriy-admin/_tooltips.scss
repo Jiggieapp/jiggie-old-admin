@@ -1,0 +1,15 @@
+.tooltip-primary {
+  @include tooltip-variant($tooltip-primary-text, $tooltip-primary-bg, $tooltip-primary-arrow-color);
+}
+.tooltip-success {
+  @include tooltip-variant($tooltip-success-text, $tooltip-success-bg, $tooltip-success-arrow-color);
+}
+.tooltip-info {
+  @include tooltip-variant($tooltip-info-text, $tooltip-info-bg, $tooltip-info-arrow-color);
+}
+.tooltip-warning {
+  @include tooltip-variant($tooltip-warning-text, $tooltip-warning-bg, $tooltip-warning-arrow-color);
+}
+.tooltip-danger {
+  @include tooltip-variant($tooltip-danger-text, $tooltip-danger-bg, $tooltip-danger-arrow-color);
+}

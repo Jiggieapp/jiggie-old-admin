@@ -1,0 +1,36 @@
+.mini-chart {
+    display: inline-block;
+
+    .chart, .chart-details {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .chart-details {
+        margin: 0 2px;
+    }
+    .chart {
+        margin: 6px 2px 2px;
+    }
+    .chart-name {
+        color: $text-muted;
+        font-size: 0.75em;
+        text-transform: uppercase;
+        line-height: 2em;
+    }
+    .chart-value {
+        color: $headings-color;
+        font-family: $headings-font-family;
+        font-size: 1.2em;
+    }
+}
+
+.mini-chart-block {
+  @include clearfix();
+  display: block;
+
+  .chart, .chart-details {
+    display: block;
+    float: left;
+  }
+}
+

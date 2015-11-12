@@ -1,0 +1,82 @@
+<div class="table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>
+    <tr>
+        <th class="sorting" data-field="customer.first_name">Cust Name</th>
+        <th class="sorting" data-field="event.title">Event</th>
+        <th class="sorting" data-field="event.start_datetime">Event Time</th>
+        <th class="sorting" data-field="created_at">Created At</th>
+        <!--<th class="sorting" data-field="event.start_datetime">Order Date/Time</th>-->
+        <th class="sorting" data-field="tickettype.ticket_type">Type</th>         
+        <th class="sorting" data-field="tickettype.cname">Ticket</th>        
+        <th class="sorting min70" data-field="tickettype.price_num">Price</th>        
+        <th class="sorting min70" data-field="tickettype.total_num">Paid</th>    
+        <th class=" min60" data-field="">Guest</th>
+        <th class="sorting min60" data-field="status">Status</th>         
+    </tr>
+</thead>
+
+<tbody > 
+ <% 
+	 if(orders.length){  
+	 for(var i=0; i<orders.length; i++) {%>
+        <tr class="odd gradeA">
+            <td> 
+                <a  href="<%= siteurl+'admin/orders/#/order-details='+orders[i]._id%>"> <%= orders[i].customer.first_name %>  </a>         	
+            </td>
+            <td class=" ">
+            <% 
+            event_url = siteurl+'admin/events/#/event-special='+orders[i].event._id;
+            %>
+                 <a       href="<%=event_url%>"   ><%= orders[i].event.title %></a>
+            </td>
+             <% 
+                    	 
+        	  if (typeof(orders[i].event) == "undefined"){
+        	 	obj_time= 'n/a';
+        	  }else{
+        	 	 obj_time=  convertToServerDate(orders[i].event.start_datetime,'mm/dd h:MM tt');
+        	  }
+        	  
+        	 %>
+            <!--<td class=" "><%= obj_time %> </td> -->
+             <% 
+                    	 
+        	   //obj_order_time=  convertToServerDate(orders[i].created_at,'mm/dd h:MM tt');
+        	  
+        	 %>
+            <td><%= obj_time %></td>
+            <td><%= convertToServerDate(orders[i].created_at,'mm/dd h:MM tt') %></td>
+            <td class="capitalize">  <%= orders[i].ticket.ticket_type.ticket_type %>  </td>         
+           
+            <td>  
+            	<%= orders[i].ticket.ticket_type.name %> 
+            </td>
+			<td class="min60"><%= orders[i].ticket.ticket_type.price %></td>
+			<td class="min60"><%= orders[i].ticket.ticket_type.total %></td>
+			 
+			<td class="min60">
+			  <% if (typeof(orders[i].confirmation_count) == "undefined"){
+            	 	obj_confirmation_count= 0;
+            	  }else{
+            	 	 obj_confirmation_count= orders[i].confirmation_count;
+            	  } %> 
+			  <%= obj_confirmation_count+'/'+orders[i].ticket.ticket_type.guest  %>
+			</td>
+			<td class="min60 capitalize "><%= orders[i].status %></td>		 
+			 	  
+           
+        </tr>
+     <% } 
+     } else { %>
+          <tr class="odd gradeA noresult"><td colspan="11 alert alert-warning">No data matching your search.</td></tr>
+     <%
+     }
+     %> 
+ </tbody>
+</table>
+</div>
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id="paginate_count"><%=i%></span> out of <%=  paginate.total_rows%> results</span>
+</div>

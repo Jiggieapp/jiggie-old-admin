@@ -1,0 +1,24 @@
+.analytics-stream {
+  padding-left: 0;
+  list-style: none;
+  line-height: 1.6em;
+
+  > li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .label {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-right: 5px
+  }
+}
+
+.panel-body {
+  > .analytics-stream:first-child {
+    margin-top: -7px;
+  }
+  > .analytics-stream:last-child {
+    margin-bottom: -4px;
+  }
+}

@@ -1,0 +1,215 @@
+.valign-top {
+  vertical-align: top !important;
+}
+
+.valign-middle {
+  vertical-align: middle !important;
+}
+
+.valign-bottom {
+  vertical-align: bottom !important;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+// No Margin. Avaiable Classes
+// .no-margin,
+// .no-margin-top, .no-margin-right, .no-margin-bottom, .no-margin-left,
+// .no-margin-vertical, .no-margin-horizontal
+@include margin-variations('.no-margin', 0);
+
+// Extra Small Margin. Avaiable Classes
+// .margin-xs,
+// .margin-xs-top, .margin-xs-right, .margin-xs-bottom, .margin-xs-left,
+// .margin-xs-vertical, .margin-xs-horizontal
+@include margin-variations('.margin-xs', 3px);
+
+// Small Margin. Avaiable Classes
+// .margin-sm,
+// .margin-sm-top, .margin-sm-right, .margin-sm-bottom, .margin-sm-left,
+// .margin-sm-vertical, .margin-sm-horizontal
+@include margin-variations('.margin-sm', 6px);
+
+// Normal Margin. Avaiable Classes
+// .margin,
+// .margin-top, .margin-right, .margin-bottom, .margin-left,
+// .margin-vertical, .margin-horizontal
+@include margin-variations('.margin', 10px);
+
+
+// Medium Margin. Avaiable Classes
+// .margin-md,
+// .margin-md-top, .margin-md-right, .margin-md-bottom, .margin-md-left,
+// .margin-md-vertical, .margin-md-horizontal
+@include margin-variations('.margin-md', 16px);
+
+// Large Margin. Avaiable Classes
+// .margin-lg,
+// .margin-lg-top, .margin-lg-right, .margin-lg-bottom, .margin-lg-left,
+// .margin-lg-vertical, .margin-lg-horizontal
+@include margin-variations('.margin-lg', 22px);
+
+// Extra Large Margin. Avaiable Classes
+// .margin-xl,
+// .margin-xl-top, .margin-xl-right, .margin-xl-bottom, .margin-xl-left,
+// .margin-xl-vertical, .margin-xl-horizontal
+@include margin-variations('.margin-xl', 32px);
+
+// No Padding. Avaiable Classes
+// .no-padding,
+// .no-padding-top, .no-padding-right, .no-padding-bottom, .no-padding-left,
+// .no-padding-vertical, .no-padding-horizontal
+@include padding-variations('.no-padding', 0);
+
+// Extra Small Padding. Avaiable Classes
+// .padding-xs,
+// .padding-xs-top, .padding-xs-right, .padding-xs-bottom, .padding-xs-left,
+// .padding-xs-vertical, .padding-xs-horizontal
+@include padding-variations('.padding-xs', 3px);
+
+// Small Padding. Avaiable Classes
+// .padding-sm,
+// .padding-sm-top, .padding-sm-right, .padding-sm-bottom, .padding-sm-left,
+// .padding-sm-vertical, .padding-sm-horizontal
+@include padding-variations('.padding-sm', 6px);
+
+// Normal Padding. Avaiable Classes
+// .padding,
+// .padding-top, .padding-right, .padding-bottom, .padding-left,
+// .padding-vertical, .padding-horizontal
+@include padding-variations('.padding', 10px);
+
+
+// Medium Padding. Avaiable Classes
+// .padding-md,
+// .padding-md-top, .padding-md-right, .padding-md-bottom, .padding-md-left,
+// .padding-md-vertical, .padding-md-horizontal
+@include padding-variations('.padding-md', 16px);
+
+// Large Padding. Avaiable Classes
+// .padding-lg,
+// .padding-lg-top, .padding-lg-right, .padding-lg-bottom, .padding-lg-left,
+// .padding-lg-vertical, .padding-lg-horizontal
+@include padding-variations('.padding-lg', 22px);
+
+// Extra Large Padding. Avaiable Classes
+// .padding-xl,
+// .padding-xl-top, .padding-xl-right, .padding-xl-bottom, .padding-xl-left,
+// .padding-xl-vertical, .padding-xl-horizontal
+@include padding-variations('.padding-xl', 32px);
+
+
+
+@media (max-width: 360px) {
+  .hidden-xxs {
+    display: none !important;
+  }
+  .page-subheading-xxs {
+  padding-left: 5px;
+  padding-right: 1px;
+  }
+  .npxx{
+    padding:0px;
+  }
+  .plxx{
+    padding-left:15px;
+  }
+  .daterangepicker-buttonpanel{
+    clear: both;
+    text-align: left !important;  
+  }
+  #reportrange{
+    display:inline-block;
+  }
+  .page-subheading {
+    padding-bottom:1.6em !important;
+  }
+  .mbsm{
+    margin-bottom:5px;
+  }
+  .modal-dialog {
+    margin: 0px !important;
+  }
+  .select2-container.select2-allowclear .select2-choice .select2-chosen{margin-right:30% !important; }
+  .select2-container .select2-choice abbr{right:30% !important;}
+  .range_inputs .form-control{
+      padding:4px 2px !important;
+  }
+
+}
+
+.grid-float-breakpoint {
+  display: none !important;
+}
+
+@media (min-width: $grid-float-breakpoint){
+  .grid-float-breakpoint {
+    display: block !important;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .pull-right-xs {
+    float: right;
+  }
+  .mbsm{
+    margin-bottom:5px;
+  }
+  .hidden-xxs {
+    display: none !important;
+  }
+  .page-subheading-xxs {
+  padding-left: 5px;
+  padding-right: 1px;
+  }
+  .npxx{
+    padding:0px;
+  }
+  .daterangepicker-buttonpanel{
+    clear: both;
+    text-align: left !important;  
+  }
+  #reportrange{
+    display:inline-block;
+  }
+  .page-subheading {
+    padding-bottom:1.6em !important;
+  }
+  .mbsm{
+    margin-bottom:5px;
+  }
+  .modal-dialog {
+    margin: 0px !important;
+  }
+  .select2-container.select2-allowclear .select2-choice .select2-chosen{margin-right:30% !important; }
+  .select2-container .select2-choice abbr{right:30% !important;}
+  .range_inputs .form-control{
+      padding:4px 2px !important;
+  }
+}
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .pull-right-sm {
+    float: right;
+  }
+  .mbsm{
+    margin-bottom:5px;
+  }
+}
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .pull-right-md {
+    float: right;
+  }
+  .p5{
+  padding-left: 5px;
+  }
+}
+
+@media (min-width: $screen-lg-min) {
+  .pull-right-lg {
+    float: right;
+  }
+}

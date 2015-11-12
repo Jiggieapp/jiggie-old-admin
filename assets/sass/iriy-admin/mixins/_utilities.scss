@@ -1,0 +1,54 @@
+@mixin margin-variations($prefix, $size) {
+
+  #{$prefix} {
+    margin: $size !important;
+  }
+  #{$prefix}-top {
+    margin-top: $size !important;
+  }
+  #{$prefix}-right {
+    margin-right: $size !important;
+  }
+  #{$prefix}-bottom {
+    margin-bottom: $size !important;
+  }
+  #{$prefix}-left {
+    margin-left: $size !important;
+  }
+
+  #{$prefix}-vertical {
+    margin-top: $size !important;
+    margin-bottom: $size !important;
+  }
+  #{$prefix}-horizontal {
+    margin-left: $size !important;
+    margin-right: $size !important;
+  }
+}
+@mixin padding-variations($prefix, $size) {
+
+  #{$prefix} {
+    padding: $size !important;
+  }
+  #{$prefix}-top {
+    padding-top: $size !important;
+  }
+  #{$prefix}-right {
+    padding-right: $size !important;
+  }
+  #{$prefix}-bottom {
+    padding-bottom: $size !important;
+  }
+  #{$prefix}-left {
+    padding-left: $size !important;
+  }
+
+  #{$prefix}-vertical {
+    padding-top: $size !important;
+    padding-bottom: $size !important;
+  }
+  #{$prefix}-horizontal {
+    padding-left: $size !important;
+    padding-right: $size !important;
+  }
+}

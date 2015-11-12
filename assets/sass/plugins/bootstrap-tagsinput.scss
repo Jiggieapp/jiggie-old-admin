@@ -1,0 +1,67 @@
+@import '../variables';
+
+.bootstrap-tagsinput {
+  background-color: $input-bg;
+  border: 1px solid $input-border;
+  display: inline-block;
+  padding: 0;
+  margin-bottom: 10px;
+  color: $input-color;
+  vertical-align: middle;
+  border-radius: $input-border-radius;
+  max-width: 100%;
+  line-height: 22px;
+  width: 100%;
+
+  input {
+    display: block;
+    float: left;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+    padding: $padding-base-vertical $padding-base-horizontal;
+    margin: 0;
+
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $input-color;
+
+    width: auto !important;
+    max-width: inherit;
+
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  .tag {
+    line-height: 14px;
+    margin: 4px 3px;
+    padding: 5px 2px 5px 8px;
+    font-size: 10px;
+    color: white;
+    display: block;
+    float: left;
+
+    &.badge {
+      border-radius: 20px;
+    }
+
+    [data-role="remove"] {
+      margin-left:8px;
+      cursor:pointer;
+      &:after{
+        content: "x";
+        padding:0px 2px;
+      }
+      &:hover {
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+        &:active {
+          box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
+        }
+      }
+    }
+  }
+}

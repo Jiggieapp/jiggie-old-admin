@@ -1,0 +1,126 @@
+.table {
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        > .list-group:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  > tfoot > tr > th {
+    border-top: 2px solid $table-border-color;
+  }
+}
+.table th {
+  color: $table-th-color;
+  font-weight: 600;
+}
+
+// Zebra-striping
+// remove border
+.table-striped {
+  > tbody {
+    > tr {
+      > th,
+      > td {
+        border-top: none;
+      }
+    }
+  }
+}
+
+
+// Progress bar in table
+.table {
+  th, td {
+    .progress:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Table issues
+.table-issues {
+  th, td {
+    &.issue-type {
+      width: 60px;
+      text-align: center;
+
+      .fa {
+        cursor: pointer;
+      }
+    }
+
+    &.priority {
+      width: 40px;
+      text-align: center;
+
+      span, .fa {
+        cursor: pointer;
+      }
+    }
+
+    &.issue-key {
+      width: 80px;
+    }
+  }
+}
+// Table in panels
+.table {
+  .panel > & {
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          padding: 10px 15px;
+        }
+      }
+    }
+  }
+  .panel-lg > & {
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          padding: 20px;
+        }
+      }
+    }
+  }
+  .panel-sm > & {
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          padding: 7px 10px;
+        }
+      }
+    }
+  }
+
+  // No margin if last child inside .panel-body
+  .panel-body > &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+
+// Table backgrounds
+//
+// Exact selectors below required to override `.table-striped` and prevent
+// inheritance to nested tables.
+
+// Generate the contextual variants
+@include table-row-variant('inverse', $panel-inverse-style-bg, #fff);

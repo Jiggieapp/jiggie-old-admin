@@ -1,0 +1,232 @@
+
+
+<div id="errorBar" style="display:none;">
+</div>
+<div class="user-detail">
+    <form class="form-horizontal form-bordered" role="form" id="eventdetailfrom" enctype="multipart/form-data">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Event Details</h4>
+                <div class="panel-options">
+                    <!--a href="#" data-rel="collapse"><i class="fa fa-fw fa-minus"></i></a>
+                    <a href="#" data-rel="reload"><i class="fa fa-fw fa-refresh"></i></a-->
+                   
+                    <a href="#" class="detail_close" data-rel="close">
+                        <i class="fa fa-fw fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body" id="selected_event" event_id="<%= event_id  %>" _id="<%= _id  %>">
+                    <div class="form-group" id="view_fbid">
+                        <label class="control-label col-xs-3  ">Title</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="edit_event" id="title"><%= title  %></a>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" id="view_fbid">
+                        <label class="control-label col-xs-3  ">Fulfillment Type</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="edit_fufill" id="edit_fufill" data-name="fullfillment_type" data-type="select" data-title="Select Fufillment Type" ><%= capFLSplit(fullfillment_type)  %></a>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" id="view_fbid">
+                        <label class="control-label col-xs-3  ">Fulfillment Value</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="edit_fufill_value" id="edit_fufill_value" data-name="fullfillment_value" data-title="Select Fufillment Value" ><%= fullfillment_value  %></a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="view_venue">
+                    	<label class="control-label col-xs-3  ">Venue</label>
+                    	<div class="controls col-xs-4">
+                    		<p class="form-control-static">
+                                <a class="venue_id" id="venue_id" data-name="venue_id" data-type="select" data-title="Select Venue" ><%= venue.name  %></a>
+		                         
+	                    	</p>                      
+	                   </div>
+
+
+
+
+	                   <div class="controls col-xs-3">
+                    		<p class="form-control-static">
+                       			<a id="edit_venue_details_link" href="<%=base_url+'admin/venue/#/venue-details='+ venue._id %>"  style="color: blue;"  title="Venue details">
+                           			Venue details
+		                        </a> 
+	                    	</p>                      
+	                   </div>
+	                </div>
+
+                    <div class="form-group" id="view_location">
+                        <label class="control-label col-xs-3  ">Location</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="edit_event1c" id="location"><%= location  %></a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group" id="view_type">
+                        <label class="control-label col-xs-3  ">Event Type</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="" id="event_type"><%= event_type  %></a>
+                            </p>
+                        </div>
+                    </div>
+                   <div class="form-group" id="view_date">
+                        <label class="control-label col-xs-3  ">Event Start Time</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <!--a class="special_event_date" id="start_time" data-name="start_datetime_str" data-title="Select Date" data-pk="0" data-template="MMM D YYYY h: mm a" data-viewformat="MMM D YYYY h: mm a" data-format="MMM D YYYY h: mm a" data-value="<%= start_datetime_str %>" data-type="combodate" href="#"  style="display: inline;">
+                                <%= start_datetime_str  %></a-->
+                                <%= start_datetime_str  %>
+                            </p>
+                        </div>
+                    </div>
+                    
+                   <div class="form-group" id="view_date">
+                        <label class="control-label col-xs-3  ">Event End Time</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                    
+                                
+                               <!--a class="special_event_date" id="end_time" data-name="end_datetime_str" data-title="Select Date" data-pk="0" data-template="MMM D YYYY h: mm a" data-viewformat="MMM D YYYY h: mm a" data-format="MMM D YYYY h: mm a" data-value="<%= end_datetime_str %>" data-type="combodate" href="#"  style="display: inline;">
+                                <%= end_datetime_str  %></a-->
+                                 <%= end_datetime_str  %>
+                            </p>
+                        </div>
+                    </div>  
+                     <div class="form-group">
+                     <label class="control-label col-xs-3  ">Event Duration</label>
+                	 <div class="controls col-xs-9">
+                	   <% var tempTime = moment.duration(event_time); %> 
+ 
+                        <p class="form-control-static"><%=tempTime.hours()%> Hrs</p>
+                     </div>
+                    </div>
+                    <div class="form-group" id="view_type">
+                        <label class="control-label col-xs-3  ">Event Status</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="" id="event_status" data-name="status" data-type="select" data-title="Select status"><%= status  %></a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group" id="view_type">
+                        <label class="control-label col-xs-3  ">Event Rank</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="" id="event_rank" data-name="rank" data-type="select" data-title="Select Rank"><%= rank  %></a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group" id="view_type">
+                        <label class="control-label col-xs-3  ">Event Featured</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="" id="event_featured" data-name="source" data-type="select" data-title="Select status"><%= source  %></a>
+                            </p>
+                        </div>
+                    </div>
+                     <div class="form-group" id="view_type">
+                        <label class="control-label col-xs-3  ">Event Tags</label>
+                        <div class="controls col-xs-9">
+                        
+                            <p class="form-control-static">   
+                                <%
+                                tagsList = (tags.toString()=='')? 'Add tags':tags.toString();
+                                %>
+                                <a href="#" id="event_tags" data-name="tags" data-type="select2" data-pk="1" data-value="<%= tags.toString()  %>" data-title="Select tags"><%= tagsList %></a>                            
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group" id="view_start_time">
+                        <label class="control-label col-xs-3  ">Description</label>
+                        <div class="controls col-xs-9">
+                            <p class="form-control-static">                               
+                                <a class="edit_event" id="description" data-type="textarea"   href="#" class="editable editable-pre-wrapped editable-click">
+                                
+                                <%= description  %></a>
+                            </p>
+                             
+                        </div>
+                    </div> 
+                                   
+                    <div class="sec-heading form-group">
+                    	<h4 class="panel-title">Ticket Details</h4>
+                    </div>
+                    <div class="form-group" >
+                    	<div class="col-xs-12" id="ticket_listing">
+                    	<label class="control-label col-xs-3  ">Tickets </label>
+                    	<div class="controls col-xs-9">No tickets found</div>	
+                    	</div>
+                    	
+                    </div>
+                    <div class="sec-heading form-group">
+                    	<h4 class="panel-title">Photos</h4>
+                    </div>
+		            <div class="us-listing table-responsive"> 
+					  <% 
+						 if(photos.length){  
+						 for(var i=0; i< photos.length; i++) {%>
+					            <div class="item col-xs-12 col-sm-6 col-md-3 img-box-live "  id="update_cnt_imageform<%= i %>">
+					            	<div class="thumbnail">	            			 
+						                    <img   alt="image" class="img-responsive" src="<%= siteurl+'timthumb1.php?src='+photos[i]+'&w=200&q=100&h=150' %>" />
+						                 
+						                
+						                <div class="caption">
+						                     	<div class="file-actions">
+												    <div class="file-footer-buttons">
+												        <button type="button" class="event-file-remove btn btn-xs btn-default" data-type="special" title="Remove image" data-url="<%= photos[i]%>"><i class="glyphicon glyphicon-trash text-danger"></i></button>
+												    </div>									   
+												    <div class="clearfix"></div>
+												</div>	                    
+						                </div>		                
+				            		</div>
+									  
+									
+								</div>	 
+					         <% } 
+					     } else { %>
+					          <div   alert alert-warning>No Photos.</div> 
+					     <%
+					     }
+					     %>   
+					 
+					</div>
+					
+					 
+					
+             </div>
+          </div>  
+        
+    </form>
+	<form enctype="multipart/form-data" id="formUploadGallery">
+        <div class="col-md-12 col-sm-12">
+        <p class="f11">Allowed file types :png</p>
+            <div class="form-group">
+          
+                <input id="file-4" name="photo" type="file"  multiple=true class="file-loading">
+            </div>
+        </div>
+    </form>
+</div> 
+<div class="form-group">
+	                    <label class="control-label col-xs-12 ">
+	                    	<a id="delete_event_details" data-event_type="special" class=" btn btn-danger" href="#" data-type="venue"  data-event_id="<%= _id%>" data-mevent_id="<%= event_id%>" title="Delete">Delete Event</a>		                
+	               			<a id="" class=" btn btn-primary" href="<%=siteurl%>admin/events/duplicate/special/<%=_id%>"   data-event_id="<%= _id%>" data-mevent_id="<%= event_id%>" title="Duplicate Event">Duplicate</a> 
+	               			<a id="" class=" btn btn-primary" href="<%=siteurl%>admin/hostings/create/special/<%=_id%>" data-type="venue"  data-event_id="<%= _id%>" data-mevent_id="<%= event_id%>" title="Add Hosting">Add Hosting</a>	
+	               			<!--a id="" class=" btn btn-primary" href="<%=siteurl%>admin/tickets/#event-id=<%= _id%>/is_recurring=0" data-type="venue"  data-event_id="<%= _id%>" data-mevent_id="<%= event_id%>" title="Host here">Tickets</a--> 
+	               			<a id="" class=" btn btn-primary" href="<%=siteurl%>admin/tickets/create/<%=_id%>/0" data-type="venue"  data-event_id="<%= _id%>" data-mevent_id="<%= event_id%>" title="Add Ticket">Add Ticket</a>
+	               		</label>
+	                </div>

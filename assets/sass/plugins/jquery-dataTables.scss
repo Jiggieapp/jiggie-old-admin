@@ -1,0 +1,113 @@
+@import '../variables';
+
+// Length section
+.dataTables_length {
+  label {
+    float: left;
+    color: $text-color;
+    text-align: left;
+    font-weight: normal;
+  }
+  .form-control {
+    margin-right: 5px;
+  }
+}
+
+// Filter Section
+.dataTables_filter {
+  label {
+    float: right;
+    color: $text-color;
+    font-weight: normal;
+  }
+
+  input {
+    margin-left: 5px;
+  }
+}
+
+.dataTable {
+  th:active {
+    outline: none;
+  }
+
+  > tfoot > tr > th {
+    color: lighten($table-th-color, 20%);
+  }
+}
+
+// Table header sorting
+table.table thead {
+  .sorting:before,
+  .sorting_asc:before,
+  .sorting_asc_disabled:before,
+  .sorting_desc:before,
+  .sorting_desc_disabled:before {
+    display: block;
+    float: right;
+    font-family: 'FontAwesome';
+  }
+
+  .sorting {
+    &,
+    &:before {
+      color: lighten($table-th-color, 25%);
+    }
+  }
+
+  .sorting_asc, .sorting_desc {
+    &,
+    &:before {
+      color: $table-th-color;
+    }
+  }
+
+  .sorting_asc_disabled, .sorting_dssc_disabled {
+    &,
+    &:before {
+      color: lighten($table-th-color, 50%);
+    }
+  }
+
+  // Sorting content
+  .sorting:before {
+    content: "\f0dc";
+  }
+  .sorting_asc:before,
+  .sorting_asc_disabled:before {
+    content: "\f0de";
+  }
+  .sorting_desc:before,
+  .sorting_desc_disabled:before {
+    content: "\f0dd";
+  }
+}
+
+.dataTables_info {
+  line-height: 30px;
+}
+
+// Pagination
+.dataTables_paginate {
+  float: right;
+  margin: 0;
+  ul.pagination {
+    margin: 0 4px 0 0;
+  }
+}
+
+// Row details support
+.dt-details-control {
+  width: 30px;
+
+  .dt-details-toggle {
+    cursor: pointer;
+  }
+  .dt-details-toggle:before {
+    content: "\f067";
+    color: lighten($table-th-color, 50%);
+  }
+  tr.details > & .dt-details-toggle:before {
+    content: "\f068";
+  }
+}

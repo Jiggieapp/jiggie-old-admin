@@ -1,0 +1,46 @@
+//
+// Breadcrumbs
+// --------------------------------------------------
+
+.breadcrumb {
+  color: $breadcrumb-color;
+
+  > li {
+    + li:before {
+      font-family: $breadcrumb-font-family;
+    }
+  }
+
+  li > a {
+    color: $breadcrumb-link-color;
+
+    &:hover,
+    &:focus {
+      color: $breadcrumb-link-hover-color;
+    }
+  }
+
+  > .active {
+    a {
+      &,
+      &:hover,
+      &:focus {
+        color: $breadcrumb-active-link-color;
+      }
+    }
+  }
+
+}
+
+.breadcrumb-default {
+  @include breadcrumb-variant($breadcrumb-default-text-color, $breadcrumb-default-bg, $breadcrumb-default-link-color, $breadcrumb-default-link-hover-color, $breadcrumb-default-active-color, $breadcrumb-default-active-link-color);
+}
+
+.breadcrumb-inverse {
+  @include breadcrumb-variant($breadcrumb-inverse-text-color, $breadcrumb-inverse-bg, $breadcrumb-inverse-link-color, $breadcrumb-inverse-link-hover-color, $breadcrumb-inverse-active-color, $breadcrumb-inverse-active-link-color);
+}
+
+// fix collapsing items on IE8
+.ie8 .breadcrumb li {
+  margin-right: 0.01px;
+}

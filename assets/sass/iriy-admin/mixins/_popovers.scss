@@ -1,0 +1,35 @@
+// Contextual popovers
+
+@mixin popover-variant($color, $bg, $title-color, $title-bg,  $arrow-color) {
+  color: $color;
+  background-color: $bg;
+  background-clip: padding-box;
+
+  .popover-title {
+    color: $title-color;
+    background-color: $title-bg;
+    border-bottom: 1px solid darken($title-bg, 5%);
+  }
+
+  &.top > .arrow {
+    &:after {
+      border-top-color: $arrow-color;
+    }
+  }
+  &.right > .arrow {
+    &:after {
+      border-right-color: $arrow-color;
+    }
+  }
+  &.bottom > .arrow {
+    &:after {
+      border-bottom-color: $arrow-color;
+    }
+  }
+
+  &.left > .arrow {
+    &:after {
+      border-left-color: $arrow-color;
+    }
+  }
+}

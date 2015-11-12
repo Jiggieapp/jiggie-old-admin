@@ -1,0 +1,50 @@
+//
+// Search Results
+// -------------------------
+
+.panel-heading .search-form {
+  margin-top: 10px;
+}
+
+// Clear margin if form is first child
+.panel-heading > .search-form:first-child {
+  margin-top: 0;
+}
+
+.search-result-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+// Proper spacing between instances of .media
+.search-result {
+  padding: 22px 0;
+  border-bottom: 1px dashed #E6E8EA;
+
+  &:first-child {
+    padding-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 18px;
+  }
+
+  // Reset margins on headings for tighter default spacing
+  .result-title {
+    margin: 0 0 5px;
+    font-weight: 600;
+    line-height: 1em;
+  }
+
+  .result-link {
+    margin: 0 0 5px;
+    color: #046F2C;
+  }
+  .result-content {
+    margin: 9px 0;
+  }
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+

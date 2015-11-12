@@ -1,0 +1,119 @@
+label {
+  font-weight: normal;
+}
+
+legend {
+  padding: 10px 15px 8px;
+  font-size: 16px;
+  border-width: 0 0 2px;
+  border-color: #EFF2F7;
+}
+
+.form-control {
+  @include box-shadow(none);
+}
+
+.form-control:focus {
+  &,
+  .has-error &,
+  .has-warning &,
+  .has-success & {
+    @include box-shadow(none);
+  }
+}
+
+.form-horizontal {
+  // Form group sizes
+  //
+  // Quick utility class for applying `.input-lg` and `.input-sm` styles to the
+  // inputs and labels within a `.form-group`.
+  .form-group-lg {
+    @media (min-width: $screen-sm-min) {
+      .control-label {
+        padding-top: 13px;
+      }
+    }
+  }
+  .form-group-sm {
+    @media (min-width: $screen-sm-min) {
+      .control-label {
+        padding-top: 4px;
+      }
+    }
+  }
+  .control-label{
+    text-align:left;
+    padding-top:0px;
+  }
+}
+
+// Position radios and checkboxes better
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 2px 0 0;
+  margin-top: 1px \9; // IE8-9
+}
+
+// Fix needless padding on checkbox & radio in form-inline
+.form-inline {
+  // Kick in the inline
+  @media (min-width: $screen-sm-min) {
+    .radio,
+    .checkbox {
+      label {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+// Forms in panels
+.panel-body, .panel-footer {
+  > .form-group:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Form bordered
+.form-bordered {
+  fieldset {
+    position: relative;
+  }
+  fieldset:first-child {
+    margin-top: -15px;
+  }
+
+  .form-legend {
+    padding: 0;
+    border-bottom: none;
+
+    > span {
+      display: block;
+      position: relative;
+      margin-left: -15px;
+      margin-right: -15px;
+      padding: 10px 15px 8px;
+      border-bottom: 2px solid #EFF2F7;
+    }
+  }
+
+  .form-group {
+    border-bottom: 1px solid #EFF2F7;
+    margin-bottom: 7px;
+    padding-bottom: 7px;
+    //    margin-bottom: 0;
+    //    padding: 15px 0;
+    //    border-bottom: 1px solid #E4E4E4;
+    //    border-top: 1px solid #E4E4E4;
+  }
+  .form-group:last-child {
+    margin-bottom: 15px;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .panel-body, .panel-footer {
+    > .form-group:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

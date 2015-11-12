@@ -1,0 +1,209 @@
+@import '../variables';
+@import "../libs/bootstrap/bootstrap/mixins/border-radius";
+@import "../libs/bootstrap/bootstrap/mixins/opacity";
+@import "../libs/bootstrap/bootstrap/mixins/vendor-prefixes";
+
+$bootstrap-switch-radius: 4px;
+$btn-default-bg: #fff;
+$btn-default-color: 333;
+.bootstrap-switch {
+  display: inline-block;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border-radius: $bootstrap-switch-radius;
+  -moz-border-radius:$bootstrap-switch-radius;
+  -webkit-border-radius:$bootstrap-switch-radius;
+  border: 1px solid;
+  border-color: $btn-default-border;
+  position: relative;
+  text-align: left;
+  overflow: hidden;
+  line-height: 8px;
+  @include user-select(none);
+  vertical-align: middle;
+  min-width: 84px;
+  @include transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s);
+
+  // Fix radius with overflow on webkit - caused by translate3d
+  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+
+  &.bootstrap-switch-mini {
+    min-width: 50px;
+
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+      padding-bottom: 4px;
+      padding-top: 4px;
+      font-size: 10px;
+      line-height: 9px;
+    }
+  }
+
+  &.bootstrap-switch-small {
+    min-width: 120px;
+
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+      padding-bottom: 3px;
+      padding-top: 3px;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  &.bootstrap-switch-large {
+    min-width: 100px;
+
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+      padding-bottom: 9px;
+      padding-top: 9px;
+      font-size: 16px;
+      line-height: normal;
+    }
+  }
+
+  &.bootstrap-switch-animate {
+
+    .bootstrap-switch-container {
+      @include transition(margin-left 0.5s);
+    }
+  }
+
+  &.bootstrap-switch-on {
+
+    .bootstrap-switch-container {
+      margin-left: 0%;
+    }
+
+    .bootstrap-switch-label {
+      @include border-right-radius($bootstrap-switch-radius - 1);
+    }
+  }
+
+  &.bootstrap-switch-off {
+
+    .bootstrap-switch-container {
+      margin-left: -50%;
+    }
+
+    .bootstrap-switch-label {
+      @include border-left-radius($bootstrap-switch-radius - 1);
+    }
+  }
+
+  &.bootstrap-switch-indeterminate .bootstrap-switch-container {
+    margin-left: -25%;
+  }
+
+  &.bootstrap-switch-disabled,
+  &.bootstrap-switch-readonly,
+  &.bootstrap-switch.bootstrap-switch-indeterminate {
+    @include opacity(.5);
+    cursor: default !important;
+
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+      cursor: default !important;
+    }
+  }
+
+  &.bootstrap-switch-focused {
+    $color-rgba: rgba(red($input-border-focus), green($input-border-focus), blue($input-border-focus), .6);
+    border-color: $input-border-focus;
+    outline: 0;
+  }
+
+  .bootstrap-switch-container {
+    display: inline-block;
+    width: 150%;
+    top: 0;
+    border-radius: $bootstrap-switch-radius;
+    @include translate3d(0, 0, 0);
+  }
+
+  .bootstrap-switch-handle-on,
+  .bootstrap-switch-handle-off,
+  .bootstrap-switch-label {
+    @include box-sizing(border-box);
+    cursor: pointer;
+    display: inline-block !important;
+    height: 100%;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .bootstrap-switch-handle-on,
+  .bootstrap-switch-handle-off {
+    text-align: center;
+    z-index: 1;
+    width: 33.333333333%;
+
+    &.bootstrap-switch-primary {
+      color: #fff;
+      background: $btn-primary-bg;
+    }
+
+    &.bootstrap-switch-info {
+      color: #fff;
+      background: $btn-info-bg;
+    }
+
+    &.bootstrap-switch-success {
+      color: #fff;
+      background: $btn-success-bg;
+    }
+
+    &.bootstrap-switch-warning {
+      background: $btn-warning-bg;
+      color: #fff;
+    }
+
+    &.bootstrap-switch-danger {
+      color: #fff;
+      background: $btn-danger-bg;
+    }
+
+    &.bootstrap-switch-default {
+      color: #000;
+      background: $gray-lighter;
+    }
+  }
+
+  .bootstrap-switch-handle-on {
+    @include border-left-radius($bootstrap-switch-radius - 1);
+  }
+
+  .bootstrap-switch-handle-off {
+    @include border-right-radius($bootstrap-switch-radius - 1);
+  }
+
+  .bootstrap-switch-label {
+    text-align: center;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    z-index: 100;
+    width: 33.333333333%;
+    color: $btn-default-color;
+    background: $btn-default-bg;
+  }
+
+  input[type='radio'],
+  input[type='checkbox'] {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    @include opacity(0);
+    z-index: -1;
+
+    &.form-control {
+      height: auto;
+    }
+  }
+}

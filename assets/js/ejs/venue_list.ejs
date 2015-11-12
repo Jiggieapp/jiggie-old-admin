@@ -1,0 +1,53 @@
+<div class="table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>
+    <tr>
+        <th class="sorting " data-field="name">Name</th>
+        <th class="sorting  " data-field="address">Address</th>
+        <th class="sorting  " data-field="neighborhood">Neighborhood</th>
+        <th class="sorting  " data-field="city">City</th>
+        <th class="sorting  " data-field="description">Description</th>
+        <th class="min60" data-field="">Image</th>
+        <th class="sorting min70" data-field="host_cnt">Hostings</th>
+    </tr>
+</thead>
+<tbody > 
+ <% 
+	 if(venues.length){  
+	 for(var i=0; i<venues.length; i++) {%>
+        <tr class="odd gradeA">
+            <td>
+                <a  data-venue_id="<%= venues[i]._id %>" class="venue_detail" href="<%= siteurl+'admin/venue/venues/#/venue-details='+venues[i]._id%>"  ><%= venues[i].name %></a>    
+                          	
+            </td>
+            <td class=" ">
+            		<%= venues[i].address %>            		
+            </td>
+            <td class=" "><%= venues[i].neighborhood %> </td>
+            <td class=" "><%= venues[i].city %> </td>
+            <td class=" "><%= venues[i].description.replace(/^(.{80}[^\s]*).*/, "$1"+'...') %></td>
+				 <% if(venues[i].photos[0]){
+					var image = venues[i].photos[0]
+				} else {
+				    var image = base_url+'assets/images/default.png'
+					 
+				}%>
+            <td class="min60"><img src="<%= image %>" width="60" height="60"/></td>
+            <td class="min70">
+            	<%= venues[i].host_cnt ? venues[i].host_cnt:0 %>
+            	
+            </td>
+        </tr>
+     <% } 
+     } else { %>
+          <tr class="odd gradeA noresult"><td colspan="11 alert alert-warning">No data matching your search.</td></tr>
+     <%
+     }
+     %> 
+ </tbody>
+</table>
+</div>
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id="paginate_count"><%=i%></span> out of <%=  total_count%> results</span>
+</div>

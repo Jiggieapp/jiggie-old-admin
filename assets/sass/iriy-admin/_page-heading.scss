@@ -1,0 +1,92 @@
+.page-heading,
+.page-subheading
+{
+  border-bottom: 1px solid #DDDEE0;
+  margin-bottom: 20px;
+  padding: 16px;
+
+  + .page-heading,
+  + .page-subheading {
+    margin-top: -20px;
+  }
+}
+.page-heading-md,
+.page-subheading-md {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.page-heading {
+  background: #FFF;
+
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin: 0;
+    color: #353F49;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+  * + p {
+    margin-top: 9px;
+  }
+}
+
+.page-subheading {
+  $subheading-breadcrumb-link-color:              #88888F;
+  $subheading-breadcrumb-active-color:            #333;
+  $subheading-breadcrumb-text-color:              lighten($link-color, 10%);
+  $subheading-breadcrumb-link-hover-color:        $subheading-breadcrumb-active-color;
+  $subheading-breadcrumb-active-link-color:       #111;
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  background: #f8f9fa;
+  font-size: 12px;
+  line-height: 1em;
+
+  .breadcrumb {
+    padding: 0;
+    margin-bottom: 0;
+    display:inline;  
+    @include breadcrumb-variant($subheading-breadcrumb-text-color, transparent, $subheading-breadcrumb-link-color, $subheading-breadcrumb-link-hover-color, $subheading-breadcrumb-active-color, $subheading-breadcrumb-active-link-color);
+
+    li > a {
+      font-weight: 400;
+
+      @include transition(all 0.1s ease-out 0s);
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+    > li {
+      + li:before {
+        color: $subheading-breadcrumb-link-color;
+      }
+    }
+  }
+  .reportrange{   
+    cursor: pointer; 
+    padding: 0px 10px; 
+    
+  }
+}
+
+.page-heading,
+.page-subheading {
+
+  .progress {
+    margin: 0;
+  }
+
+  .progress-group {
+    .progress-label {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .progress-xs {
+      margin-top: 3px;
+    }
+  }
+}

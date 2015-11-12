@@ -1,0 +1,90 @@
+<div class="table-responsive">
+<table  class="table table-striped dataTable" >
+<thead>
+    <tr>
+        <th class="sorting" data-field="title">Title</th>
+        <th class="sorting" data-field="start_datetime">Start time</th>
+        <th class="sorting" data-field="end_datetime">End time</th>
+        <th class="sorting" data-field="venue_name">Venue</th>         
+        <th class="sorting" data-field="status">Status</th>        
+        <th class="sorting min70" data-field="orders_count">Orders</th>        
+        <th class="sorting min70" data-field="hosting_count">Hostings</th>        
+        <th class="sorting min60" data-field="view_count">Views</th>
+        <th class="sorting min50" data-field="event_chat_count">Chats</th>
+        <th class="sorting min50" data-field="num_cnfm">Cnfm</th>
+        <th class="min50" data-field="">Action</th>
+    </tr>
+</thead>
+<tbody > 
+ <% 
+	 if(events.length){  
+	 for(var i=0; i<events.length; i++) {%>
+        <tr class="odd gradeA">
+            <td> 
+                <a  data-event_id="<%= events[i].event_id %>" data-_id="<%= events[i]._id %>" data-event_type=<%= events[i].event_type %> class="event_detail" href="#"  ><%= events[i].title %></a>            	
+            </td>
+            <td class=" ">
+            	<% var startime = new TimeShift.OriginalDate(events[i].start_datetime_str );	%>
+                <%=  dateFormats(startime, "mmm dd h:MM tt") %>
+           </td>
+            <td class=" ">
+            	<% var startime = new TimeShift.OriginalDate(events[i].end_datetime_str );	%>
+                <%=  dateFormats(startime, "mmm dd h:MM tt") %>
+            	 
+            </td>
+            <td class=" "><%= events[i].venue_name %></td>         
+            <td ><% color ='#000000';
+            	if(events[i].status=='published')
+            		color = '#009900';
+            	else if(events[i].status=='draft')
+            		color = '#999966';
+            	else if(events[i].status=='soldout')
+            		color = '#FF0000';
+            	else if(events[i].status=='passed')
+            		color = '#000000';
+            	else if(events[i].status=='inactive')
+            		color = '#000000';
+            %>
+            	<span style="color:<%=color%>"><%= events[i].status %></span>
+            </td>
+			<td class="min70">
+                <% 
+                orders_url = siteurl+'admin/orders/#/search_filter=event_id/search_name='+events[i]._id;
+                %>
+                <a target="_blank" href="<%=orders_url%>"   ><%= events[i].orders_count %></a>
+            </td>
+			<td class="min70">
+                <% 
+                hostings_url = siteurl+'admin/hostings/hosting/#/search_filter=event_id/search_name='+events[i]._id;
+                %>
+                <a target="_blank" href="<%=hostings_url%>"   ><%= events[i].hosting_count %></a>
+            </td>
+			<td class="min60"><%= events[i].view_count %></td>
+			<td class="min50">
+            
+            <% 
+                chat_url = siteurl+'admin/chat/chat_list/#/search_filter=messages.event_id/search_name='+events[i]._id;
+                %>
+                <a target="_blank" href="<%=chat_url%>"   ><%= events[i].event_chat_count %></a>
+            </td>
+			<td class="min50"><%= events[i].num_cnfm %></td>
+			<td class="min50">				 
+				<a class="event_ticket_list" title="Ticket" id="event_ticket" href="<%= siteurl+'admin/tickets/#event-id='+events[i]._id+'is_recurring=0'%>"  data-_id="<%= events[i]._id %>" data-event_id="<%= events[i].event_id %>" data-event_type=<%= events[i].event_type %>><i class="fa fa-lg fa-fw fa-ticket"></i></a>
+				<a title="Orders" id="event_order" href="<%=siteurl+'/admin/orders/#/event_id='+events[i]._id%>"><i class="fa fa-lg fa-fw fa-shopping-cart"></i></a>
+				<a title="Copy"  id="event_copy"href="<%= siteurl+'admin/events/duplicate/special/'+events[i]._id%>"><i class="fa fa-lg fa-fw fa-copy"></i></a>
+			</td>	  
+           
+        </tr>
+     <% } 
+     } else { %>
+          <tr class="odd gradeA noresult"><td colspan="11 alert alert-warning">No data matching your search.</td></tr>
+     <%
+     }
+     %> 
+ </tbody>
+</table>
+</div>
+<div class="pagination col-md-12">
+	<span class="col-md-6" id="paginate_link"></span>
+	<span class="col-md-6 text-right">Displaying <span id="paginate_count"><%=i%></span> out of <%=  paginate.total_rows%> results</span>
+</div>
