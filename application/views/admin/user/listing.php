@@ -2,7 +2,7 @@
 <table  class="table table-striped dataTable" >
 <thead>   
     <tr>
-        <th class="sorting " data-field="name">Full name</th>
+        <th class="sorting " data-field="name">Full name (by Arman)</th>
         <th class="sorting" data-field="age">Age</th>
         <th class="sorting" data-field="gender">Sex</th>
         <th class="sorting" data-field="location">Location</th>
