@@ -2358,9 +2358,9 @@ function getEventDetailPage(url,type){
                 $('#edit_startdatetime').editable({
                     format: 'yyyy-mm-dd hh:ii',    
                     viewformat: 'dd/mm/yyyy hh:ii',    
-                    datetimepicker: {
-                            weekStart: 1
-                       }
+                    datetimepicker:
+                    {
+                        weekStart: 1
                     }
                 });
 
