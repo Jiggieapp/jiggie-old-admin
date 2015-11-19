@@ -2355,10 +2355,10 @@ function getEventDetailPage(url,type){
                 });
 
 
-                $('#edit_startdatetime').editable({
-                    firstItem: 'name', 
-                    minuteStep: 30,   
-                    type:'combodate'
+                $('#edit_startdatetime').editable({  
+                    type:'combodate',
+                    value: resp.start_datetime,
+                    minuteStep:30
                 });
 
 
