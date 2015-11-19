@@ -2356,7 +2356,8 @@ function getEventDetailPage(url,type){
 
 
                 $('#edit_startdatetime').editable({
-                    format: 'hh:ii',    
+                    firstItem: 'name', 
+                    minuteStep: 30,   
                     type:'combodate'
                 });
 
