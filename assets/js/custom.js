@@ -438,9 +438,6 @@ $("#VenueForm").validate({
         },
         lng: {
             latlong: true
-        },
-        url: {
-            url: true
         }
     },
     submitHandler: function(form) {
