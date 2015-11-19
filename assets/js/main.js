@@ -2354,10 +2354,11 @@ function getEventDetailPage(url,type){
                      
                 });
 
-
+                console.log("resp.start_time " + resp.start_time)
+                console.log("resp.start_datetime " + resp.start_datetime)
                 $('#edit_startdatetime').editable({  
                     type:'combodate',
-                    value: convertToServerTimeZone(resp.start_datetime),
+                    value: resp.start_time,
                     minuteStep:10,
                     url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
                     pk: 1
