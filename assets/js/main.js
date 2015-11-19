@@ -2357,7 +2357,7 @@ function getEventDetailPage(url,type){
 
                 $('#edit_startdatetime').editable({  
                     type:'combodate',
-                    value: convertToServerDate(resp.start_datetime),
+                    value: convertToServerTimeZone(resp.start_datetime),
                     minuteStep:10,
                     url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
                     pk: 1
