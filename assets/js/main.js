@@ -2356,12 +2356,24 @@ function getEventDetailPage(url,type){
 
 
                 $('#edit_startdatetime').editable({
-                type: 'datetime',
+                    format: 'yyyy-mm-dd hh:ii',    
+                    viewformat: 'dd/mm/yyyy hh:ii',    
+                    datetimepicker: {
+                            weekStart: 1
+                       }
+                    }
+                });
+
+
+                /*
+                $('#edit_startdatetime').editable({
+                type: 'time',
                 pk: 1,
                 value: resp.start_datetime,
                 url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
                      
                 });
+                */
 
                 console.log("is_recurring :: " + type)
 
