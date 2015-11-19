@@ -2358,7 +2358,7 @@ function getEventDetailPage(url,type){
                 $('#edit_startdatetime').editable({  
                     type:'combodate',
                     value: resp.start_datetime,
-                    minuteStep:30
+                    minuteStep:10
                 });
 
 
