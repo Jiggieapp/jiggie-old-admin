@@ -2356,7 +2356,7 @@ function getEventDetailPage(url,type){
 
 
                 $('#edit_startdatetime').editable({
-                type: 'combodate',
+                type: 'datetime',
                 pk: 1,
                 value: resp.start_datetime,
                 url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
