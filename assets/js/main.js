@@ -2087,8 +2087,8 @@ function getVenueDetailPage(url,type){
 					    if(!(value+"").match(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/) && value !=''  ) {
 					        return 'Please enter valid url. eg http://google.com';
 					    }
-					    */
-					}
+					   
+					} */
 		   });
 		   $('#neighborhood').editable({
 			   	type: 'text',
