@@ -2356,7 +2356,7 @@ function getEventDetailPage(url,type){
 
 
                 $('#edit_startdatetime').editable({
-                    format: 'yyyy-mm-dd hh:ii',    
+                    format: 'hh:ii',    
                     type:'combodate'
                 });
 
