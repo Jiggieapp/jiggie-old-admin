@@ -2354,6 +2354,15 @@ function getEventDetailPage(url,type){
                      
                 });
 
+
+                $('#edit_startdatetime').editable({
+                type: 'combodate',
+                pk: 1,
+                value: resp.start_datetime,
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
+                     
+                });
+
                 console.log("is_recurring :: " + type)
 
 				$.ajax({
