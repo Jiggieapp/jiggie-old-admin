@@ -2081,14 +2081,14 @@ function getVenueDetailPage(url,type){
 		            type: 'text',
 		            pk: 1,
 		            url: base_url+'admin/venue/'+'save'+'/'+$("#selected_venue").attr("venue_id"),
-		            emptytext: 'Url',
+		            emptytext: 'Url'/*,
 			         validate: function(value) {         	
-					    /*
+					    
                         if(!(value+"").match(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/) && value !=''  ) {
 					        return 'Please enter valid url. eg http://google.com';
 					    }
-					    */
-					}
+					    
+					}*/
 		   });
 		   $('#neighborhood').editable({
 			   	type: 'text',
