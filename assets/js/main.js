@@ -2077,6 +2077,7 @@ function getVenueDetailPage(url,type){
 		            } 
 		            
 		   });
+           /*
 		   $(".edit_venue_url").editable({
 		            type: 'text',
 		            pk: 1,
@@ -2089,6 +2090,7 @@ function getVenueDetailPage(url,type){
 					    
 					}
 		   });
+           */
 		   $('#neighborhood').editable({
 			   	type: 'text',
 		        pk: 1,
