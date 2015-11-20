@@ -810,8 +810,7 @@ $(document).ready(function() {
 
 
 
-        //$('#basicExample .date_start').attr("value",defaultStartDate);
-        //$('#basicExample .date_end').attr("value",defaultEndDate);
+
 
         $('#basicExample .date_start').datepicker({
             'format': 'M dd, yyyy',
@@ -827,16 +826,8 @@ $(document).ready(function() {
             "minDate":window.cEditEventData.end_date
         });
 
-        $('#basicExample .date_start').datepicker({"startDate":window.cEditEventData.start_date});
-        $('#basicExample .date_end').datepicker({"startDate":window.cEditEventData.end_date});
-
-        $('#basicExample .date_start').datepicker({startDate:new Date("2015-11-24T12:00:00.000Z")});
-
-        setTimeout(function()
-        {
-            $('#basicExample .date_start').datepicker({startDate:new Date("2015-11-24T12:00:00.000Z")});
-        },3000)
-
+        $('#basicExample .date_start').attr("value",defaultStartDate);
+        $('#basicExample .date_end').attr("value",defaultEndDate);
 
         $("#btnEditEvenTimeUpdate").click(function()
         {
