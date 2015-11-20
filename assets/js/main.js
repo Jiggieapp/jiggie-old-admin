@@ -801,15 +801,27 @@ $(document).ready(function() {
         $('#basicExample .time_end').attr("value",defaultEndTime);
 
 
+        defaultStartTime = defaultStartTime.slice(0,defaultStartTime.length - 2);
+        var defaultStartDate = window.cEditEventData.start_datetime_str.split(defaultStartTime)[0]
+
+
+        defaultEndTime = defaultEndTime.slice(0,defaultEndTime.length - 2);
+        var defaultEndDate = window.cEditEventData.end_datetime_str.split(defaultEndTime)[0]
+
+
+
+        $('#basicExample .date_start').attr("value",defaultStartDate);
+        $('#basicExample .date_end').attr("value",defaultEndDate);
+
         $('#basicExample .date_start').datepicker({
-            'format': 'M dd yyyy',
+            'format': 'M dd, yyyy',
             'autoclose': true,
             'startDate':window.cEditEventData.start_datetime,
             "minDate":new Date()
         });
 
         $('#basicExample .date_end').datepicker({
-            'format': 'm/d/yyyy',
+            'format': 'M dd, yyyy',
             'autoclose': true
         });
 
