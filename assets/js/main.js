@@ -789,18 +789,20 @@ $(document).ready(function() {
         defaultEndTime = defaultEndTime.slice(4,defaultEndTime.length);
         
         console.log("defaultStartTime >>>" + defaultEndTime)
-        
+
         $('#basicExample .time_start').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:ia',
-            defaultTime: defaultStartTime
+            'timeFormat': 'g:ia'
         });
 
         $('#basicExample .time_end').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:ia',
-            defaultTime:defaultEndTime 
+            'timeFormat': 'g:ia'
         });
+
+        $('#basicExample .time_start').attr("value",defaultStartTime);
+        $('#basicExample .time_end').attr("value",defaultEndTime);
+
 
         $('#basicExample .date_start').datepicker({
             'format': 'm/d/yyyy',
