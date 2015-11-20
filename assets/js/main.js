@@ -886,7 +886,7 @@ $(document).ready(function() {
                 console.log("RESP");
                 console.log(resp)
 
-                var resp = jQuery.parseJSON(o.responseText);
+                var resp = jQuery.parseJSON(resp);
                 if(resp.success)
                 {
                     location.reload();
