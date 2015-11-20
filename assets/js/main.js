@@ -826,6 +826,10 @@ $(document).ready(function() {
             "minDate":new Date()
         });
 
+        $("#btnEditEvenTimeUpdate").click(function()
+        {
+            console.log("update yah!!!")
+        });
 
     
         });
