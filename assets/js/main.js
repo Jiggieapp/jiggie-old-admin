@@ -816,15 +816,15 @@ $(document).ready(function() {
         $('#basicExample .date_start').datepicker({
             'format': 'M dd, yyyy',
             'autoclose': true,
-            'startDate':window.cEditEventData.start_datetime,
-            "minDate":new Date()
+            'startDate':window.cEditEventData.start_date,
+            "minDate":window.cEditEventData.start_date
         });
 
         $('#basicExample .date_end').datepicker({
             'format': 'M dd, yyyy',
             'autoclose': true,
-            'startDate':window.cEditEventData.end_datetime,
-            "minDate":new Date()
+            'startDate':window.cEditEventData.end_date,
+            "minDate":window.cEditEventData.end_date
         });
 
         $("#btnEditEvenTimeUpdate").click(function()
