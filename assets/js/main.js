@@ -883,10 +883,11 @@ $(document).ready(function() {
             dataType: "json",         
             success : function(resp){
                                      
-                 
+                console.log("RESP");
+                console.log(resp)
             },
              complete : function (){
-                location.reload();
+                //location.reload();
              }
         });    
 
