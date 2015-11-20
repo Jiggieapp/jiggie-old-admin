@@ -832,11 +832,13 @@ $(document).ready(function() {
         $('#basicExample .date_start').datepicker('update', defaultStartDate);
         $('#basicExample .date_end').datepicker('update', defaultEndDate);
 
-        $('#basicExample .date_start').datepicker().on('changeDate', function(ev)
+        $('#basicExample .date_end').datepicker().on('changeDate', function(ev)
         {
             var start_date = new Date( $('#basicExample .date_start').attr("value") );
             var end_date = new Date( $('#basicExample .date_end').attr("value") );
-
+            console.log("here!!!")
+            console.log(start_date)
+            console.log(end_date)
             if(end_date < start_date)
             {
                 $('#basicExample .date_end').datepicker('update', $('#basicExample .date_start').attr("value"));
