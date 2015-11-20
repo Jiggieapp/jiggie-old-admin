@@ -830,6 +830,8 @@ $(document).ready(function() {
         $('#basicExample .date_start').datepicker({"startDate":window.cEditEventData.start_date});
         $('#basicExample .date_end').datepicker({"startDate":window.cEditEventData.end_date});
 
+        $('#basicExample .date_start').datepicker({startDate:new Date("2015-11-24T12:00:00.000Z")});
+        
         $("#btnEditEvenTimeUpdate").click(function()
         {
             console.log("update yah!!!")
