@@ -107,6 +107,11 @@
         <script src="<?php echo $this->config->item('assets_url')?>js/main.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/jquery.datepair.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/custom.js"></script>
+        <script src="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.js"></script>
+        <script src="<?php echo $this->config->item('assets_url')?>js/jquery.timepicker.js"></script>
+
+
+
         <script src="<?php echo $this->config->item('assets_url')?>plugins/jquery-validation/additional-methods.min.js"></script>
         <!--[if lt IE 9]>
         <script src="<?php echo $this->config->item('assets_css_url')?>/plugins/flot/excanvas.min.js"></script>
