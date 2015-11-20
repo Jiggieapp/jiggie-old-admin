@@ -859,6 +859,18 @@ $(document).ready(function() {
             console.log(end_date);
 
 
+            if(end_date.getTime() < start_date.getTime())
+            {
+                alert("end date must be after start date");
+                return;
+            }
+
+            if(start_date.getTime() + 3600000 > end_date.getTime())
+            {
+                alert("event time less than hour");
+                return;
+            }
+
         });
 
     
