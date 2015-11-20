@@ -27,7 +27,7 @@
 
 
 
- 		<link rel="stylesheet" href="/assets/js/jquery-ui.min">
+ 		<link rel="stylesheet" href="/assets/js/jquery-ui.min.css">
 		<link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>plugins/bootstrap-daterangepicker/daterangepicker-bs3.css">
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_css_url')?>plugins/bootstrap-switch.css" rel="stylesheet">  		
   		<link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>plugins/morris/morris.css">
