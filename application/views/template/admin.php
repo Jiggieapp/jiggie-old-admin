@@ -105,6 +105,7 @@
         <script src="<?php echo $this->config->item('assets_js_url')?>imagesloaded.pkgd.min.js" type="text/javascript"></script>
         <script src="<?php echo $this->config->item('assets_js_url')?>fullcalendar.min.js" type="text/javascript"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/main.js"></script>
+        <script src="<?php echo $this->config->item('assets_url')?>js/jquery.datepair.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/custom.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>plugins/jquery-validation/additional-methods.min.js"></script>
         <!--[if lt IE 9]>
