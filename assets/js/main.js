@@ -784,7 +784,7 @@ $(document).ready(function() {
         $('.ui-timepicker-wrapper').css("z-index",10000000);
 
         $('.ui-timepicker-wrapper').css("opacity",0.5);
-
+        window.Datepair = Datepair;
         $('#basicExample .time').timepicker({
         'showDuration': true,
         'timeFormat': 'g:ia'
