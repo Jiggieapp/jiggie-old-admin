@@ -834,11 +834,11 @@ $(document).ready(function() {
 
         $('#ModalEventEdit .date_end').datepicker().on('changeDate', function(ev)
         {
-            var start_date = new Date( $('#ModalEventEdit .date_start').attr("value") );
+            var start_date = new Date( $('#ModalEventEdit .date_start').val() );
             var end_date = ev.dates[0];
             if(end_date < start_date)
             {
-                $('#ModalEventEdit .date_end').datepicker('update', $('#ModalEventEdit .date_start').attr("value"));
+                $('#ModalEventEdit .date_end').datepicker('update', $('#ModalEventEdit .date_start').val());
             }
         });
 
@@ -847,11 +847,11 @@ $(document).ready(function() {
         $("#btnEditEvenTimeUpdate").click(function()
         {
  
-            var start_date = $('#ModalEventEdit .date_start').attr("value") + " " + $('#ModalEventEdit .time_start').attr("value");
+            var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').attr("value");
             console.log(">>>" + start_date + "<<<<")
             start_date = new Date(start_date);
 
-            var end_date = $('#ModalEventEdit .date_end').attr("value") + " " + $('#ModalEventEdit .time_end').attr("value");
+            var end_date = $('#ModalEventEdit .date_end').val() + " " + $('#ModalEventEdit .time_end').attr("value");
             console.log(">>>" + end_date + "<<<<")
             end_date = new Date(end_date);
             console.log("*****************")
