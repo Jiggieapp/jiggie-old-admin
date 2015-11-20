@@ -796,7 +796,7 @@ $(document).ready(function() {
         });
 
     
-
+        });
 
     $('#section_list').on("click",'#delete_ticket_details', function(e) {  	 
     	 e.preventDefault(); 
