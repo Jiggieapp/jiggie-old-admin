@@ -834,8 +834,13 @@ $(document).ready(function() {
 
         $('#basicExample .date_start').datepicker().on('changeDate', function(ev)
         {
-            console.log("changeDate :: ");
-            console.log(ev)
+            var start_date = new Date( $('#basicExample .date_start').attr("value") );
+            var end_date = new Date( $('#basicExample .date_end').attr("value") );
+
+            if(end_date < start_date)
+            {
+                $('#basicExample .date_end').datepicker('update', $('#basicExample .date_start').attr("value"));
+            }
         });
 
         //$('#basicExample .date_start').datepicker("update")
