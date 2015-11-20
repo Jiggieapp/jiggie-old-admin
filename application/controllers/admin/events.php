@@ -462,6 +462,12 @@ class Events extends CI_Controller {
 		curl_close($ch);
 		$result =  json_decode($result_set);
 		var_dump($result);
+
+		$arrayName = array('success' => false, 'reason'=>'incorrect');
+		//echo json_encode($arrayName);
+
+		echo $result_set;
+
 		exit;  
 	}
 	
@@ -497,8 +503,7 @@ class Events extends CI_Controller {
 		$result_set = curl_exec($ch);
 		curl_close($ch);
 		$result =  json_decode($result_set);
-		$arrayName = array('success' => false, 'reason'=>'incorrect');
-		echo json_encode($arrayName);
+		var_dump($result);
 		exit;  
           
 	}
