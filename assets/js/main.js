@@ -849,10 +849,13 @@ $(document).ready(function() {
  
             var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').val();
             console.log(">>>" + start_date + "<<<<")
+            var start_datetime_str = start_date;
             start_date = new Date(start_date);
 
             var end_date = $('#ModalEventEdit .date_end').val() + " " + $('#ModalEventEdit .time_end').val();
             console.log(">>>" + end_date + "<<<<")
+            var end_datetime_str = end_date;
+
             end_date = new Date(end_date);
             console.log("*****************")
             console.log(start_date);
@@ -870,6 +873,22 @@ $(document).ready(function() {
                 alert("event time less than hour");
                 return;
             }
+
+            var path = base_url+'admin/events/editdatetime/'+$("#selected_event").attr("_id");
+
+            $.ajax({
+            type        : "POST",
+            url     : path, 
+            data        : {'start_datetime_str':start_datetime_str,'end_datetime_str':end_datetime_str},
+            dataType: "json",         
+            success : function(resp){
+                                     
+                 
+            },
+             complete : function (){
+                location.reload();
+             }
+        });    
 
         });
 
