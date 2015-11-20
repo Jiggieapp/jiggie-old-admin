@@ -829,6 +829,8 @@ $(document).ready(function() {
         $('#basicExample .date_start').attr("value",defaultStartDate);
         $('#basicExample .date_end').attr("value",defaultEndDate);
 
+        $('#basicExample .date_start').datepicker("update")
+
         $("#btnEditEvenTimeUpdate").click(function()
         {
             console.log("update yah!!!")
