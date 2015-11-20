@@ -802,7 +802,7 @@ $(document).ready(function() {
 
 
         $('#basicExample .date_start').datepicker({
-            'format': 'm/d/yyyy',
+            'format': 'mmm dd yyyy',
             'autoclose': true,
             'startDate':window.cEditEventData.start_datetime,
             "minDate":new Date()
