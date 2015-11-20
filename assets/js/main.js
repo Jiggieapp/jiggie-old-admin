@@ -897,6 +897,7 @@ $(document).ready(function() {
              complete : function (o){
                 console.log("---------")
                 //console.log(o.responseText)
+                /*
                 var resp = jQuery.parseJSON(o.responseText);
                 if(resp.success)
                 {
@@ -904,6 +905,7 @@ $(document).ready(function() {
                 }else{
                     alert(resp.reason)
                 }
+                */
                 //
              }
         });    
