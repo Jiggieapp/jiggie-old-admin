@@ -835,7 +835,7 @@ $(document).ready(function() {
         $('#basicExample .date_end').datepicker().on('changeDate', function(ev)
         {
             var start_date = new Date( $('#basicExample .date_start').attr("value") );
-            var end_date = new Date( $('#basicExample .date_end').attr("value") );
+            var end_date = ev.dates[0];
             console.log("here!!!")
             console.log(start_date)
             console.log(end_date)
