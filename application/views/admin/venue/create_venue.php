@@ -100,7 +100,8 @@
                     <div class="controls col-sm-4">
                         <!--<input name="city" type="text" class="form-control" placeholder="City" value="<?php //echo $this->input->post('city'); ?>" />-->
                         <select name="city" id="venue_city" class="form-control" required>
-                           <option value="jakarta">Jakarta</option>                            
+                           <option value="jakarta">Jakarta</option>
+                           <option value="west jakarta">West Java</option>
                         </select>
 
                     </div>
