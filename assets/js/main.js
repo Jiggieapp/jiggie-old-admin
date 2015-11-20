@@ -773,9 +773,10 @@ $(document).ready(function() {
 
          console.log("done!!!");
 
+         var html =  new EJS({url: base_url+'assets/js/ejs/edit_event_time.ejs?v='+ $.now()}).render(resp);
 
-        $modal = $('<div class="modal " id="conversation"></div>');
-        //$modal.html(html)               
+        $modal = $('<div class="modal " id="edit_event_time"></div>');
+        $modal.html(html);
         $('body').append($modal);
         $modal.modal({backdrop: 'static', keyboard: true});
         $modal.show();
