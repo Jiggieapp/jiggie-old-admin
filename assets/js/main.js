@@ -782,11 +782,11 @@ $(document).ready(function() {
         $modal.show();
 
         var defaultStartTime = window.cEditEventData.start_datetime_str.split(",")[1];
-        defaultStartTime = defaultStartTime.slice(4,defaultStartTime.length);
+        defaultStartTime = defaultStartTime.slice(6,defaultStartTime.length);
         console.log("defaultStartTime >>>" + defaultStartTime)
 
         var defaultEndTime = window.cEditEventData.end_datetime_str.split(",")[1];
-        defaultEndTime = defaultEndTime.slice(4,defaultEndTime.length);
+        defaultEndTime = defaultEndTime.slice(6,defaultEndTime.length);
         
         console.log("defaultStartTime >>>" + defaultEndTime)
 
