@@ -885,6 +885,14 @@ $(document).ready(function() {
                                      
                 console.log("RESP");
                 console.log(resp)
+
+                var resp = jQuery.parseJSON(o.responseText);
+                if(resp.success)
+                {
+                    location.reload();
+                }else{
+                    alert(resp.reason)
+                }
             },
              complete : function (o){
                 console.log("---------")
