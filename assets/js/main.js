@@ -785,13 +785,13 @@ $(document).ready(function() {
         $('#basicExample .time_start').timepicker({
             'showDuration': true,
             'timeFormat': 'g:ia',
-            defaultTime: window.cEditEventData.starttime
+            defaultTime: window.cEditEventData.start_datetime_str
         });
 
         $('#basicExample .time_end').timepicker({
             'showDuration': true,
             'timeFormat': 'g:ia',
-            defaultTime: window.cEditEventData.endtime
+            defaultTime: window.cEditEventData.end_datetime_str
         });
 
         $('#basicExample .date_start').datepicker({
