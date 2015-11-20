@@ -773,7 +773,7 @@ $(document).ready(function() {
 
          console.log("done!!!");
 
-         var html =  new EJS({url: base_url+'assets/js/ejs/edit_event_time.ejs?v='+ $.now()}).render(resp);
+         var html =  new EJS({url: base_url+'assets/js/ejs/event_edit_time.ejs?v='+ $.now()}).render(resp);
 
         $modal = $('<div class="modal " id="edit_event_time"></div>');
         $modal.html(html);
