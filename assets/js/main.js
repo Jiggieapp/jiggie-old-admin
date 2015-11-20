@@ -2358,11 +2358,17 @@ function getEventDetailPage(url,type){
                 console.log("resp.start_datetime " + resp.start_datetime)
                 $('#edit_startdatetime').editable({  
                     type:'combodate',
-                    value: resp.start_datetime,
+                    value: new Date(resp.start_datetime),
                     minuteStep:10,
                     url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
                     pk: 1
                 });
+
+                $('<div class="confirmation-modal modal in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title">Confirmation required</h4></div><div class="modal-body">Do you want to delete this event ?</div><div class="modal-footer"><button class="confirm btn btn-primary" type="button" data-dismiss="modal">Delete Event</button><button class="cancel btn btn-default" type="button" data-dismiss="modal">Cancel</button></div></div></div></div>').appendTo(document.body);
+
+                /*
+                
+                */
 
 
                 /*
