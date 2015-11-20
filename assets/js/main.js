@@ -847,11 +847,11 @@ $(document).ready(function() {
         $("#btnEditEvenTimeUpdate").click(function()
         {
  
-            var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').attr("value");
+            var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').val();
             console.log(">>>" + start_date + "<<<<")
             start_date = new Date(start_date);
 
-            var end_date = $('#ModalEventEdit .date_end').val() + " " + $('#ModalEventEdit .time_end').attr("value");
+            var end_date = $('#ModalEventEdit .date_end').val() + " " + $('#ModalEventEdit .time_end').val();
             console.log(">>>" + end_date + "<<<<")
             end_date = new Date(end_date);
             console.log("*****************")
