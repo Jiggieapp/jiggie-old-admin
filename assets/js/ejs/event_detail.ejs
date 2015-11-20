@@ -93,7 +93,7 @@
                                 -->
 
 
-                                <a class="" id="edit_startdatetime" data-name="start_datetime_str" data-type="combodate" data-format="MMM D YYYY H:mm" data-template="hh:mm a" name="datetime" data-minuteStep="30" data-title="Select Time"> <%= start_datetime_str  %></a>
+                                <a class="" style="cursor:pointer;" id="edit_startdatetime" data-name="start_datetime_str" data-type="combodate" data-format="MMM D YYYY H:mm" data-template="hh:mm a" name="datetime" data-minuteStep="30" data-title="Select Time"> <%= start_datetime_str  %></a>
 
                                <!--<%= start_datetime_str  %>-->
                             </p>
@@ -236,3 +236,22 @@
 	               			<a id="" class=" btn btn-primary" href="<%=siteurl%>admin/tickets/create/<%=_id%>/0" data-type="venue"  data-event_id="<%= _id%>" data-mevent_id="<%= event_id%>" title="Add Ticket">Add Ticket</a>
 	               		</label>
 	                </div>
+
+
+
+
+<div class="modal eventTime" id="eventTimeModal" tabindex="-1" role="dialog" aria-labelledby="eventTimeModal" aria-hidden="true">
+  <div class="modal-dialog chat-box">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Chat Details</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

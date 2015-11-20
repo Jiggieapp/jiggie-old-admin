@@ -771,7 +771,15 @@ $(document).ready(function() {
          e.preventDefault(); 
          event_details = this;
 
-         console.log("done!!!")
+         console.log("done!!!");
+
+
+        $modal = $('<div class="modal " id="conversation"></div>');
+        //$modal.html(html)               
+        $('body').append($modal);
+        $modal.modal({backdrop: 'static', keyboard: true});
+        $modal.show();
+
 
      });
 
