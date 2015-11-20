@@ -789,12 +789,12 @@ $(document).ready(function() {
 
         $('#ModalEventEdit .time_start').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:ia'
+            'timeFormat': 'g:i A'
         });
 
         $('#ModalEventEdit .time_end').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:ia'
+            'timeFormat': 'g:i A'
         });
 
         $('#ModalEventEdit .time_start').attr("value",defaultStartTime);
