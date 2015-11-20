@@ -781,7 +781,7 @@ $(document).ready(function() {
         $modal.modal({backdrop: 'static', keyboard: true});
         $modal.show();
 
-        $('.ui-timepicker-positioned-top').css({"zIndex":10000000})
+        $('.ui-timepicker-wrapper').css("z-index","10000000")
 
         $('#basicExample .time').timepicker({
         'showDuration': true,
