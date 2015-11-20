@@ -783,12 +783,9 @@ $(document).ready(function() {
 
         var defaultStartTime = window.cEditEventData.start_datetime_str.split(",")[1];
         defaultStartTime = defaultStartTime.slice(6,defaultStartTime.length);
-        console.log("defaultStartTime >>>" + defaultStartTime)
 
         var defaultEndTime = window.cEditEventData.end_datetime_str.split(",")[1];
         defaultEndTime = defaultEndTime.slice(6,defaultEndTime.length);
-        
-        console.log("defaultStartTime >>>" + defaultEndTime)
 
         $('#basicExample .time_start').timepicker({
             'showDuration': true,
@@ -807,7 +804,8 @@ $(document).ready(function() {
         $('#basicExample .date_start').datepicker({
             'format': 'm/d/yyyy',
             'autoclose': true,
-            'defaultDate':window.cEditEventData.start_datetime
+            'startDate':window.cEditEventData.start_datetime,
+            "minDate":new Date()
         });
 
         $('#basicExample .date_end').datepicker({
