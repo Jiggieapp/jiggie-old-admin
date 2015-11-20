@@ -497,7 +497,7 @@ class Events extends CI_Controller {
 		$result_set = curl_exec($ch);
 		curl_close($ch);
 		$result =  json_decode($result_set);
-		var_dump($result);
+		echo $result_set;
 		exit;  
           
 	}
