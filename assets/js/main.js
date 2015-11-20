@@ -879,7 +879,7 @@ $(document).ready(function() {
             $.ajax({
             type        : "POST",
             url     : path, 
-            data        : {'start_datetime_str':start_datetime_str,'end_datetime_str':end_datetime_str},
+            data        : {'start_datetime_str':start_datetime_str,'end_datetime_str':end_datetime_str,'venue_id':window.cEditEventData.venue_id},
             dataType: "json",         
             success : function(resp){
                                      

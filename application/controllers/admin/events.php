@@ -446,8 +446,9 @@ class Events extends CI_Controller {
 
 		$post_data["start_datetime_str"] = $this->input->post("start_datetime_str");
 		$post_data["end_datetime_str"] = $this->input->post("end_datetime_str");
+		$post_data["venue_id"] = $this->input->post("venue_id");
 
-
+		
 		$url =APIURL."admin/admin/event/datetime/update/".$event_id."?".TOKEN;
 
 		$ch = curl_init($url);					 
