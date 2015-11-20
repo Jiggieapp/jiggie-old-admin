@@ -787,18 +787,18 @@ $(document).ready(function() {
         var defaultEndTime = window.cEditEventData.end_datetime_str.split(",")[1];
         defaultEndTime = defaultEndTime.slice(6,defaultEndTime.length);
 
-        $('#basicExample .time_start').timepicker({
+        $('#ModalEventEdit .time_start').timepicker({
             'showDuration': true,
             'timeFormat': 'g:ia'
         });
 
-        $('#basicExample .time_end').timepicker({
+        $('#ModalEventEdit .time_end').timepicker({
             'showDuration': true,
             'timeFormat': 'g:ia'
         });
 
-        $('#basicExample .time_start').attr("value",defaultStartTime);
-        $('#basicExample .time_end').attr("value",defaultEndTime);
+        $('#ModalEventEdit .time_start').attr("value",defaultStartTime);
+        $('#ModalEventEdit .time_end').attr("value",defaultEndTime);
 
 
         defaultStartTime = defaultStartTime.slice(0,defaultStartTime.length - 2);
@@ -812,44 +812,51 @@ $(document).ready(function() {
 
 
 
-        $('#basicExample .date_start').datepicker({
+        $('#ModalEventEdit .date_start').datepicker({
             'format': 'M dd, yyyy',
             'autoclose': true,
             'startDate':window.cEditEventData.start_date,
             "minDate":new Date()
         });
 
-        $('#basicExample .date_end').datepicker({
+        $('#ModalEventEdit .date_end').datepicker({
             'format': 'M dd, yyyy',
             'autoclose': true,
             'startDate':window.cEditEventData.end_date,
             "minDate":new Date()
         });
 
-        $('#basicExample .date_start').attr("value",defaultStartDate);
-        $('#basicExample .date_end').attr("value",defaultEndDate);
+        $('#ModalEventEdit .date_start').attr("value",defaultStartDate);
+        $('#ModalEventEdit .date_end').attr("value",defaultEndDate);
 
-        $('#basicExample .date_start').datepicker('update', defaultStartDate);
-        $('#basicExample .date_end').datepicker('update', defaultEndDate);
+        $('#ModalEventEdit .date_start').datepicker('update', defaultStartDate);
+        $('#ModalEventEdit .date_end').datepicker('update', defaultEndDate);
 
-        $('#basicExample .date_end').datepicker().on('changeDate', function(ev)
+        $('#ModalEventEdit .date_end').datepicker().on('changeDate', function(ev)
         {
-            var start_date = new Date( $('#basicExample .date_start').attr("value") );
+            var start_date = new Date( $('#ModalEventEdit .date_start').attr("value") );
             var end_date = ev.dates[0];
-            console.log("here!!!")
-            console.log(start_date)
-            console.log(end_date)
             if(end_date < start_date)
             {
-                $('#basicExample .date_end').datepicker('update', $('#basicExample .date_start').attr("value"));
+                $('#ModalEventEdit .date_end').datepicker('update', $('#ModalEventEdit .date_start').attr("value"));
             }
         });
 
-        //$('#basicExample .date_start').datepicker("update")
+
 
         $("#btnEditEvenTimeUpdate").click(function()
         {
-            console.log("update yah!!!")
+ 
+            var start_date = $('#ModalEventEdit .date_start').attr("value") + " " + $('#ModalEventEdit .time_start').attr("value");
+            start_date = new Date(start_date);
+
+            var end_date = $('#ModalEventEdit .date_end').attr("value") + " " + $('#ModalEventEdit .time_end').attr("value");
+            end_date = new Date(end_date);
+
+            console.log(start_date);
+            console.log(end_date);
+
+
         });
 
     
