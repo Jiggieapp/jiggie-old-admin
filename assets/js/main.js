@@ -781,19 +781,29 @@ $(document).ready(function() {
         $modal.modal({backdrop: 'static', keyboard: true});
         $modal.show();
 
-        $('.ui-timepicker-wrapper').css("z-index",10000000);
-
-        $('.ui-timepicker-wrapper').css("opacity",0.5);
-
-        $('#basicExample .time').timepicker({
+      
+        $('#basicExample .time_start').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:ia'
+            'timeFormat': 'g:ia',
+            defaultTime: window.cEditEventData.starttime
         });
 
-        $('#basicExample .date').datepicker({
+        $('#basicExample .time_end').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:ia',
+            defaultTime: window.cEditEventData.endtime
+        });
+
+        $('#basicExample .date_start').datepicker({
             'format': 'm/d/yyyy',
             'autoclose': true
         });
+
+        $('#basicExample .date_end').datepicker({
+            'format': 'm/d/yyyy',
+            'autoclose': true
+        });
+
 
     
         });
@@ -2386,6 +2396,8 @@ function getEventDetailPage(url,type){
                 url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
                      
                 });
+
+                window.cEditEventData = resp;
 
                 console.log("resp.start_time " + resp.start_time)
                 console.log("resp.start_datetime " + resp.start_datetime)
