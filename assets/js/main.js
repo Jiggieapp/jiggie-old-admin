@@ -806,7 +806,8 @@ $(document).ready(function() {
 
         $('#basicExample .date_start').datepicker({
             'format': 'm/d/yyyy',
-            'autoclose': true
+            'autoclose': true,
+            'defaultDate':window.cEditEventData.start_datetime
         });
 
         $('#basicExample .date_end').datepicker({
