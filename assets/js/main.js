@@ -888,7 +888,7 @@ $(document).ready(function() {
             },
              complete : function (o){
                 console.log("---------")
-                console.log(o)
+                console.log(o.responseText)
                 //location.reload();
              }
         });    
