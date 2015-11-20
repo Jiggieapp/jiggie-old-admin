@@ -781,6 +781,7 @@ $(document).ready(function() {
         $modal.modal({backdrop: 'static', keyboard: true});
         $modal.show();
 
+        window.Datepair = Datepair;
 
 
         $('#basicExample .time').timepicker({
