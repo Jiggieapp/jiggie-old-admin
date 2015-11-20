@@ -886,7 +886,9 @@ $(document).ready(function() {
                 console.log("RESP");
                 console.log(resp)
             },
-             complete : function (){
+             complete : function (o){
+                console.log("---------")
+                console.log(o)
                 //location.reload();
              }
         });    
