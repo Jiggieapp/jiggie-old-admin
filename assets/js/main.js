@@ -827,6 +827,9 @@ $(document).ready(function() {
             "minDate":window.cEditEventData.end_date
         });
 
+        $('#basicExample .date_start').datepicker({"startDate":window.cEditEventData.start_date});
+        $('#basicExample .date_end').datepicker({"startDate":window.cEditEventData.end_date});
+
         $("#btnEditEvenTimeUpdate").click(function()
         {
             console.log("update yah!!!")
