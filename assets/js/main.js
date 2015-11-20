@@ -848,11 +848,13 @@ $(document).ready(function() {
         {
  
             var start_date = $('#ModalEventEdit .date_start').attr("value") + " " + $('#ModalEventEdit .time_start').attr("value");
+            console.log(">>>" + start_date + "<<<<")
             start_date = new Date(start_date);
 
             var end_date = $('#ModalEventEdit .date_end').attr("value") + " " + $('#ModalEventEdit .time_end').attr("value");
+            console.log(">>>" + end_date + "<<<<")
             end_date = new Date(end_date);
-
+            console.log("*****************")
             console.log(start_date);
             console.log(end_date);
 
