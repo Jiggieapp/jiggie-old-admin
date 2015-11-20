@@ -432,7 +432,7 @@
 			list = $('<ul />', { 'class': 'ui-timepicker-list' });
 
 			var wrapped_list = $('<div />', { 'class': 'ui-timepicker-wrapper', 'tabindex': -1 });
-			wrapped_list.css({'display':'none', 'position': 'absolute' }).append(list);
+			wrapped_list.css({'display':'none', 'position': 'absolute','z-index':10000000 }).append(list);
 		}
 
 		if (settings.noneOption) {
