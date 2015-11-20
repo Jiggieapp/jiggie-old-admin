@@ -888,8 +888,15 @@ $(document).ready(function() {
             },
              complete : function (o){
                 console.log("---------")
-                console.log(o.responseText)
-                //location.reload();
+                //console.log(o.responseText)
+                var resp = jQuery.parseJSON(o.responseText);
+                if(resp.success)
+                {
+                    location.reload();
+                }else{
+                    alert(resp.reason)
+                }
+                //
              }
         });    
 
