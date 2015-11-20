@@ -235,12 +235,9 @@ class Venue extends CI_Controller {
             if ($label == "phone") {
                  $res =$this->updateVenue($label, $data, $venue);
             } else if ($label == "url") {
-                if (!filter_var($data, FILTER_VALIDATE_URL) && trim($data)!='') {
-                    throw new Exception("URL is not valid");
-                }
-                else{
+               
                     $res =$this->updateVenue($label, $data, $venue);
-                }
+                
             }else if ($label == "lat" || $label == "long") {
             	 $data ? $data:0;
                   $res = $this->updateVenue($label, $data, $venue);
