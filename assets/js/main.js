@@ -830,6 +830,13 @@ $(document).ready(function() {
         $('#basicExample .date_end').attr("value",defaultEndDate);
 
         $('#basicExample .date_start').datepicker('update', defaultStartDate);
+        $('#basicExample .date_end').datepicker('update', defaultEndDate);
+
+        $('#basicExample .date_start').datepicker().on('changeDate', function(ev)
+        {
+            console.log("changeDate :: ");
+            console.log(ev)
+        });
 
         //$('#basicExample .date_start').datepicker("update")
 
