@@ -781,17 +781,25 @@ $(document).ready(function() {
         $modal.modal({backdrop: 'static', keyboard: true});
         $modal.show();
 
-      
+        var defaultStartTime = window.cEditEventData.start_datetime_str.split(",")[1];
+        defaultStartTime = defaultStartTime.slice(4,defaultStartTime.length);
+        console.log("defaultStartTime >>>" + defaultStartTime)
+
+        var defaultEndTime = window.cEditEventData.end_datetime_str.split(",")[1];
+        defaultEndTime = defaultEndTime.slice(4,defaultEndTime.length);
+        
+        console.log("defaultStartTime >>>" + defaultEndTime)
+        
         $('#basicExample .time_start').timepicker({
             'showDuration': true,
             'timeFormat': 'g:ia',
-            defaultDate: new Date()
+            defaultTime: defaultStartTime
         });
 
         $('#basicExample .time_end').timepicker({
             'showDuration': true,
             'timeFormat': 'g:ia',
-            defaultDate: new Date()
+            defaultTime:defaultEndTime 
         });
 
         $('#basicExample .date_start').datepicker({
