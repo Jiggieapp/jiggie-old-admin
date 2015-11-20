@@ -784,22 +784,18 @@ $(document).ready(function() {
         $('.ui-timepicker-wrapper').css("z-index",10000000);
 
         $('.ui-timepicker-wrapper').css("opacity",0.5);
-        window.Datepair = Datepair;
+
         $('#basicExample .time').timepicker({
-        'showDuration': true,
-        'timeFormat': 'g:ia'
-    });
+            'showDuration': true,
+            'timeFormat': 'g:ia'
+        });
 
-    $('#basicExample .date').datepicker({
-        'format': 'm/d/yyyy',
-        'autoclose': true
-    });
+        $('#basicExample .date').datepicker({
+            'format': 'm/d/yyyy',
+            'autoclose': true
+        });
 
-    // initialize datepair
-    var basicExampleEl = document.getElementById('basicExample');
-    var datepair = new Datepair(basicExampleEl);
-
-     });
+    
 
 
     $('#section_list').on("click",'#delete_ticket_details', function(e) {  	 
