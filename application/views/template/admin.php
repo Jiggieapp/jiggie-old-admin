@@ -110,6 +110,8 @@
         <script src="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/jquery.timepicker.js"></script>
 
+        <script src="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.css"></script>
+
 
 
         <script src="<?php echo $this->config->item('assets_url')?>plugins/jquery-validation/additional-methods.min.js"></script>
