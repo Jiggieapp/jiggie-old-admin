@@ -40,6 +40,8 @@
 
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_css_url')?>/bootstrap-editable.css">
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.css" />
+
+        <link rel="stylesheet" href="/assets/plugins/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css" />
 		<script type="text/javascript">
 		    var base_url 		= "<?php echo base_url(); ?>";
             var start_date              = "<?php echo date("m/d/Y",strtotime($this->session->userdata('startDate'))); ?>";
