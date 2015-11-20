@@ -822,7 +822,8 @@ $(document).ready(function() {
 
         $('#basicExample .date_end').datepicker({
             'format': 'M dd, yyyy',
-            'autoclose': true
+            'autoclose': true,
+            "minDate":new Date()
         });
 
 
