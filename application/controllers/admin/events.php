@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-date_default_timezone_set('America/New_York');
+date_default_timezone_set('Asia/Jakarta');
 class Events extends CI_Controller {
     
     var $gen_contents	=	array();    
@@ -10,7 +10,7 @@ class Events extends CI_Controller {
         $this->msuccess['msg']	= '';
         $this->load->model(array('master_model','admin/permission_model'));
         $this->gen_contents['title']	=	'';
-		$this->config->set_item('site_title', 'Party Host  Admin - Events');
+		$this->config->set_item('site_title', 'Jiggie  Admin - Events');
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         presetfuturedaterange();
 		$this->gen_contents['current_controller'] = $this->router->fetch_class();
@@ -270,6 +270,40 @@ class Events extends CI_Controller {
 					$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
 				    $post_data["end_datetime_str"]   = $this->input->post("end_time");	
 					$post_data["status"]         	 = $this->input->post("event_status");
+
+					$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
+					$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
+
+
+					$pic_total = $this->input->post("pic_total");
+					
+					$post_data["pic_total"] = $pic_total;
+
+					$tmpA = array();
+					
+					for ($i=0; $i < $pic_total ; $i++)
+					{ 
+						if($this->input->post("photo_".$i) != "")
+						{
+							array_push($tmpA, $this->input->post("photo_".$i));
+						}
+					}
+					
+					for ($j=0; $j <$pic_total ; $j++)
+					{
+						$post_data["photo_" . $j] = $tmpA[$j];
+					}
+				
+					//$post_data["pic_total"] = "2";
+					//$post_data["photo_0"] = "https://s3-us-west-2.amazonaws.com/cdnpartyhost/1446789007515.jpg";
+					//$post_data["photo_1"] = "https://s3-us-west-2.amazonaws.com/cdnpartyhost/1446789007515.jpg";
+					
+
+
+
+
+
+					
 					if(is_array($this->input->post("event_tags")))
 						$etags		=implode(",", $this->input->post("event_tags"));
 					else  
@@ -404,6 +438,37 @@ class Events extends CI_Controller {
              sf('error_message', $result->reason);
             redirect("admin/events");
         }
+	}
+
+	public function editdatetime($event_id)
+	{
+		// 
+
+		$post_data["start_datetime_str"] = $this->input->post("start_datetime_str");
+		$post_data["end_datetime_str"] = $this->input->post("end_datetime_str");
+		$post_data["venue_id"] = $this->input->post("venue_id");
+
+		
+		$url =APIURL."admin/admin/event/datetime/update/".$event_id."?".TOKEN;
+
+		$ch = curl_init($url);					 
+		$payload = json_encode( $post_data );	
+					  					
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		# Send request.
+		$result_set = curl_exec($ch);
+		curl_close($ch);
+		$result =  json_decode($result_set);
+		//var_dump($result);
+
+		$arrayName = array('success' => false, 'reason'=>'incorrect');
+		//echo json_encode($arrayName);
+
+		echo $result_set;
+
+		exit;  
 	}
 	
 	public function edit($event_id){

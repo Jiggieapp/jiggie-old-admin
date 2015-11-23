@@ -12,7 +12,7 @@ class Venue extends CI_Controller {
 		 $this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->load->model(array('admin/venue_model','common_model','admin/permission_model','master_model'));
         $this->gen_contents['title']	=	'';
-		$this->config->set_item('site_title', 'Party Host  Admin - Venues');
+		$this->config->set_item('site_title', 'Jiggie  Admin - Venues');
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         presetpastdaterange();
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
@@ -235,12 +235,9 @@ class Venue extends CI_Controller {
             if ($label == "phone") {
                  $res =$this->updateVenue($label, $data, $venue);
             } else if ($label == "url") {
-                if (!filter_var($data, FILTER_VALIDATE_URL) && trim($data)!='') {
-                    throw new Exception("URL is not valid");
-                }
-                else{
+               
                     $res =$this->updateVenue($label, $data, $venue);
-                }
+                
             }else if ($label == "lat" || $label == "long") {
             	 $data ? $data:0;
                   $res = $this->updateVenue($label, $data, $venue);
@@ -354,7 +351,7 @@ class Venue extends CI_Controller {
                     $post_data["city"]              = $this->input->post("city");					 
                     $post_data["state"]             = $this->input->post("state");
                     $post_data["zip"]               = $this->input->post("zip");                    
-                    $post_data["phone"]             = ($this->input->post("phone"))?preg_replace('/[^0-9]/','', $this->input->post("phone")):'';
+                    $post_data["phone"]             = $this->input->post("phone_number");//?preg_replace('/[^0-9]/','', $this->input->post("phone")):'';
                     //$post_data["lat"]               = ($this->input->post("lat"))?preg_replace('/[^0-9\.]/','', $this->input->post("lat")):0;
                     //$post_data["long"]              = ($this->input->post("long"))?preg_replace('/[^0-9\.]/','', $this->input->post("long")):0;
                     $post_data["lat"]               = $this->input->post("lat");

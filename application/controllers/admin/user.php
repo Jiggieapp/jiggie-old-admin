@@ -17,7 +17,7 @@ class User extends CI_Controller {
         $this->gen_contents['title'] = '';
         presetpastdaterange();
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
-        $this->config->set_item('site_title', 'Party Host  Admin - Users');
+        $this->config->set_item('site_title', 'Jiggie  Admin - Users');
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
         $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
         $this->access_permissions = $this->permission_model->get_all_permission();
@@ -112,9 +112,14 @@ class User extends CI_Controller {
 		 $url =APIURL."admin/admin/users/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
 		 $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&start_date=$start_date&end_date=$end_date".$search_string;
 	 
-		 
+		 if($this->input->post('export') == "true")
+         {
+            echo json_encode(array("url" => $url));exit;
+         }else{
+            echo $json = @file_get_contents($url);exit;
+         }
 		
-		echo $json = @file_get_contents($url);exit;
+	
         
         //$this->gen_contents['users'] = $this->user_model->getAllUsers($arr_where, $arr_sort, 'list', $config['per_page'], ($offset-1)*$config['per_page'], $arr_search);
 
@@ -602,11 +607,16 @@ class User extends CI_Controller {
 
     public function export() {
         try {
+            /*
             if(!$this->master_model->checkAccess('export', USERS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
                 return FALSE;
             }
+            */
             $start_date = $this->session->userdata('startDate') . " 00:00:00";
             $end_date = $this->session->userdata('endDate') . " 23:59:59";
+            $urlToLoad = APIURL."admin/admin/csv/customers/".$start_date."/".$end_date."?".TOKEN;
+            header('Location: ' + $urlToLoad);
+            /*
 			$url= $_SERVER['QUERY_STRING'];
 			$pars = explode('/',$url);
 			$data = array();
@@ -622,6 +632,7 @@ class User extends CI_Controller {
 				$arr_sort['value'] = @$data['sort_val'] ;  
 			$arr_search["where"] = mysql_real_escape_string(@$data['search_name']) ;              
             $this->user_model->export($start_date, $end_date,  @$arr_sort,  @$arr_search);
+            */
             exit;
         } catch (Exception $e) {
             

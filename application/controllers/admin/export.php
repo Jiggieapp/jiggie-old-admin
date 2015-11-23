@@ -16,14 +16,16 @@ class Export extends CI_Controller {
         $this->gen_contents['title'] = '';
         presetpastdaterange();
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
-       $this->load->config('cimongo'); 
-		 $this->load->library("cimongo/cimongo");	
+        //$this->load->config('cimongo'); 
+		//$this->load->library("cimongo/cimongo");	
 		  
 		
 	     
     }
 	
 	public function user(){
+
+
 		$querystring = $_SERVER['QUERY_STRING'] ;
 		$var = explode('/', $querystring);		 
 		$params= array();
@@ -64,17 +66,28 @@ class Export extends CI_Controller {
 		 
 		
         
-		$start = new MongoDate(strtotime($params['start_date']));
-		$end = new MongoDate(strtotime($params['end_date']));
+		$start_date = $params['start_date'];
+		$end_date = $params['end_date'];
 		
-		 
-		
+
+
+
+
+		//$start_date = $this->session->userdata('startDate') . " 00:00:00";
+            //$end_date = $this->session->userdata('endDate') . " 23:59:59";
+        $urlToLoad = APIURL."admin/admin/csv/customers/".$start_date."/".$end_date."?".TOKEN;
+        //header('Location: ' + $urlToLoad); 
+		//echo json_encode(array("status" => $urlToLoad));
+		redirect($urlToLoad, 'location');
+		//return;
+           /*
+
 		if($date_string){
 			//$date_clause = array("created_at"=>array('$gte'=>$start,'$lte'=>$end));
 			// $this->cimongo->where($date_clause, TRUE);
 		}
 		  
-	     $this->cimongo->select(array('first_name','last_name','birth_date','gender','location','created_at',
+	     $this->cimongo->select(array('first_name','last_name','email','birth_date','gender','location','created_at',
 		 						'last_login','chat_count','hosting_count','user_ref_name','ref_count','is_verified_host','active'));
  
          $where_clause = array('$or'=>array( array("first_name"=>new MongoRegex("/".$search_value."/i")),
@@ -100,7 +113,7 @@ class Export extends CI_Controller {
 		$firstLineKeys = false;
 		$skip = array('_id'=>'');
 		$p_date = array('last_login'=>'','created_at'=>'');
-		$c_date = array('first_name'=>'First name','last_name'=>'Last Name','birth_date'=>'Age','gender'=>'Sex','location'=>'Location','created_at'=>'Joined','last_login'=>'Last','chat_count'=>'Chat','hosting_count'=> 'Hostings','user_ref_name'=>'Invited By','ref_count'=>'Invites','is_verified_host'=>'Verified','active'=>'Status');
+		$c_date = array('first_name'=>'First name','last_name'=>'Last Name','email'=>'Email','birth_date'=>'Age','gender'=>'Sex','location'=>'Location','created_at'=>'Joined','last_login'=>'Last','chat_count'=>'Chat','hosting_count'=> 'Hostings','user_ref_name'=>'Invited By','ref_count'=>'Invites','is_verified_host'=>'Verified','active'=>'Status');
 		 
 		foreach ($rows as $key => $line)
 		{
@@ -159,6 +172,7 @@ class Export extends CI_Controller {
         } else {
             
         }
+        */
 	}
 	public function venues(){
 		$querystring = $_SERVER['QUERY_STRING'] ;

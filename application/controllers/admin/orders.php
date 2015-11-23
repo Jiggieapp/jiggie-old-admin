@@ -10,7 +10,7 @@ class Orders extends CI_Controller {
         $this->msuccess['msg']	= '';
         $this->load->model(array('master_model','admin/permission_model'));
         $this->gen_contents['title']	=	'';
-		$this->config->set_item('site_title', 'Party Host  Admin - Orders');
+		$this->config->set_item('site_title', 'Jiggie  Admin - Orders');
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         presetfuturedaterange();
 		$this->gen_contents['current_controller'] = $this->router->fetch_class();
