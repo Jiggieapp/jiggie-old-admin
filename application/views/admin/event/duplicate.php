@@ -35,6 +35,35 @@
                     </div>
                 </div>
 
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Select Fulfillment Type <span class="asterisk">*</span></label>
+                    <div class="controls col-sm-4">
+                        <select name="fullfillment_type" id="fullfillment_type" class="form-control">
+                          <option value="none">None</option>
+                          <option value="phone_number">Phone Number</option>
+                          <option value="link">Link</option>
+                          <option value="reservation">Reservation</option>
+                          <option value="purchase">Purchase</option>
+                        </select>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group" id="hosting_name_div">
+                    <label class="control-label col-sm-3">Fulfillment Value</label>
+
+                    <div class="controls col-sm-4" id ="hosting_name_div_err">
+                      <input class="typeahead form-control" name="fullfillment_value" id="fullfillment_value" type="text" placeholder="Fullfillment Value" value="<?php echo $this->input->post('fullfillment_value'); ?>">
+                    </div>
+                </div>
+
+
+
+
+
                 <div class="form-group">
                     <label class="control-label col-sm-3">Location</label>
 
@@ -174,33 +203,84 @@
                        </select>                    
                     </div>
                 </div>
-				<div class="form-group">
+
+                <div class="form-group" id="hosting_name_div">
+                    <label class="control-label col-sm-3">Photos</label>
+
+                    <div class="controls col-sm-4" id ="hosting_name_div_err">
+                      <input class="typeahead form-control" name="fullfillment_value" id="fullfillment_value" type="text" placeholder="Fullfillment Value" value="<?php echo set_post_value('photos', $events->photos[0]) ; ?>">
+                    </div>
+                </div>
+
+
+
+
+
+        <div class="form-group">
                     <label class="control-label col-sm-3">Event Tags</label>
-                    <div class="col-md-3 col-sm-6">                    	 
+                    <div class="col-md-3 col-sm-6">                      
                       <!--input type="checkbox" name="event_status" id="estatus" data-off-color="success" data-off-text="INACTIVE"  data-on-text="ACTIVE" data-size="small" data-on-color="primary" value ="1" checked="true" class="boot-switch"/-->
                       <select id="event_tags" name="event_tags[]" class="form-control" multiple="multiple">
-						  <optgroup label="Music Type">
-						    <option <?php echo in_array('house', $events->tags) ? "selected" : ""; ?> value="house">House / EDM</option>
-						    <option <?php echo in_array('hiphop', $events->tags) ? "selected" : ""; ?> value="hiphop">Hip Hop</option>
-						    <option <?php echo in_array('top40s', $events->tags) ? "selected" : ""; ?> value="top40s">Top 40s</option>
-						   <option  <?php echo in_array('dance', $events->tags) ? "selected" : ""; ?> value="dance">Dance</option>
-						  </optgroup>
-						  <optgroup label="Venue Type">
-						    <option <?php echo in_array('nightclub', $events->tags) ? "selected" : ""; ?> value="nightclub">Nightclub</option>
-						    <option <?php echo in_array('lounge', $events->tags) ? "selected" : ""; ?> value="lounge">Lounge</option>
-						    <option <?php echo in_array('hotellounge', $events->tags) ? "selected" : ""; ?> value="hotellounge">Hotel Lounge</option>
-						    <option <?php echo in_array('rooftop', $events->tags) ? "selected" : ""; ?> value="rooftop">Rooftop</option>
-						    <option <?php echo in_array('restaurant', $events->tags) ? "selected" : ""; ?> value="restaurant">Restaurant</option> 
-						  </optgroup>
-						  <optgroup label="Vibe">
-						    <option <?php echo in_array('redcarpet', $events->tags) ? "selected" : ""; ?> value="redcarpet">Red Carpet</option>
-						    <option <?php echo in_array('upscalechic', $events->tags) ? "selected" : ""; ?> value="upscalechic">Upscale Chic</option>
-						    <option <?php echo in_array('casual', $events->tags) ? "selected" : ""; ?> value="casual">Casual</option> 
-						  </optgroup>
-						</select>                   
+              <optgroup label="Event Tags">
+
+                <option <?php echo in_array('Art & Culture', $events->tags) ? "selected" : ""; ?> value="Art & Culture">Art & Culture</option>
+                <option <?php echo in_array('Fashion', $events->tags) ? "selected" : ""; ?> value="Fashion">Fashion</option>
+                <option <?php echo in_array('Food & Drink', $events->tags) ? "selected" : ""; ?> value="Food & Drink">Food & Drink</option>
+               <option  <?php echo in_array('Family', $events->tags) ? "selected" : ""; ?> value="Family">Family</option>
+                <option <?php echo in_array('Music', $events->tags) ? "selected" : ""; ?> value="Music">Music</option>
+                <option <?php echo in_array('Nightlife', $events->tags) ? "selected" : ""; ?> value="Nightlife">Nightlife</option>
+              </optgroup>
+            </select>                   
                     </div>
                 </div>
                 
+
+
+
+                  <div class="us-listing table-responsive"> 
+                  <?php 
+                   if(count($events->photos) > 0){  
+                   for($i=0; $i< count($events->photos); $i++) { ?>
+                            <div class="item col-xs-12 col-sm-6 col-md-3 img-box-live "  id="update_dupcnt_imageform<?php echo $i; ?>">
+                              <div class="thumbnail">                    
+                                      <img   alt="image" class="img-responsive" src="<?php echo set_post_value('photos', $events->photos[$i]) ; ?>" />
+                                   
+                                  
+                                  <div class="caption">
+                                        <div class="file-actions">
+                                  <div class="file-footer-buttons">
+                                      <button type="button" tag="<?php echo $i; ?>" class="event-file-remove event-dupimage-remove btn btn-xs btn-default" data-type="special" title="Remove image" data-url="<?php echo set_post_value('photos', $events->photos[$i]) ; ?>"><i class="glyphicon glyphicon-trash text-danger"></i></button>
+                                  </div>                     
+                                  <div class="clearfix"></div>
+                              </div>                      
+                                  </div>                    
+                              </div>
+                          
+                        
+                      </div>   
+                         <?php } 
+                     } else { ?>
+                          <div   alert alert-warning>No Photos.</div> 
+                     <?php
+                     }
+                     ?>   
+                 
+                </div>
+
+                <div id="hidden_pics_total" style="display:none;">
+                  <input type="hidden" name="pic_total" value="<?php echo count($events->photos); ?>" />
+                </div>
+
+                <div id="hidden_pics" style="display:none;">
+                  <?php 
+                   if(count($events->photos) > 0){  
+                      for($j=0; $j< count($events->photos); $j++) 
+                      { ?>
+                        <input id="hidden_photo_<?php echo $j; ?>" type="hidden" name="photo_<?php echo $j; ?>" value="<?php echo $events->photos[$j] ?>" />
+                   <?php } 
+                    } ?>
+                </div>
+
                 <!--div class="form-group">
                     <label class="control-label col-sm-3">Event images
                     	<p class="f11">Max allowed size:2MB <br/> Allowed file types :png,jpg</p>
@@ -233,10 +313,11 @@
                     <div class="controls col-sm-4">
                           <input type="file" name="image5" class="file1" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
-                </div---> 
+                </div--> 
 
                
-
+                  <div class="form-group" style="clear:both;">
+                  </div>
                 
 
                 <div class="form-group">

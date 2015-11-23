@@ -32,11 +32,13 @@
                 <i class="fa fa-lg fa-fw fa-users"></i> Users
             </a>  
         </li>
+        <!--
          <li class="nav-dropdown <?php echo strtolower($current_controller) =='hostings' ? 'active':''?>">
             <a href="<?php echo base_url() ?>admin/hostings/hosting/0" title="Hostings">
                 <i class="fa fa-lg fa-fw fa-suitcase"></i> Hostings  
             </a>                
         </li>
+        -->
          <li class="nav-dropdown <?php echo strtolower($current_controller) =='venue' ? 'active':''?>">
             <a href="<?php echo base_url() ?>admin/venue/venues/" title="Venues">
                 <i class="fa fa-lg fa-fw fa-map-marker"></i> Venues  

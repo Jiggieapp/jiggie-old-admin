@@ -13,7 +13,7 @@
 	        </span>
 	    </a>
 	</div>
-	<button class="btn btn-default btn-sm pagebackbtn">Back</button>
+	
 	<ul class="nav navbar-nav navbar-nav-expanded pull-right margin-md-right">
 	    <li class="dropdown">
 	        <a data-toggle="dropdown" class="dropdown-toggle navbar-user" href="javascript:;">

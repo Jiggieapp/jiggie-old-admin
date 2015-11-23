@@ -372,9 +372,6 @@ $("#adminuser_det").validate({
         zip: {
             number: true
         },
-        phone: {
-            phoneUS: true
-        },
         url: {
             url: true
         }
@@ -403,9 +400,6 @@ $("#loginForm").validate({
         },
         zip: {
             number: true
-        },
-        phone: {
-            phoneUS: true
         },
         url: {
             url: true
@@ -444,12 +438,6 @@ $("#VenueForm").validate({
         },
         lng: {
             latlong: true
-        },
-        phone: {
-            phoneUS: true
-        },
-        url: {
-            url: true
         }
     },
     submitHandler: function(form) {
@@ -473,12 +461,6 @@ $("#hosting-form").validate({
     rules: {
         zip: {
             number: true
-        },
-        phone: {
-            phoneUS: true
-        },        
-        phone: {
-            phoneUS: true
         },
         url: {
             url: true

@@ -5,23 +5,25 @@
                 <h4 class="panel-title">Create Venue</h4>
             </div>
             <div class="panel-body">
-                <?php echo showMessage() ?>
+                <?php var_dump($venue);  if (isset($error)) { ?>
+                    <div class="alert alert-block  alert-danger fade in">
+                        <button class="close" type="button" data-dismiss="alert">×</button><?php echo $error; ?></div>
+                <?php } ?>
                 <p class='f11'>All <span class="asterisk">*</span> marked fields are mandatory</p>
                 <div class="form-group" id="venue_name_div">
                     <label class="control-label col-sm-3">Name <span class="asterisk">*</span></label>
 
                     <div class="controls col-sm-4">
-                        <input name="name" id="venue_name_create" type="text" class="form-control" placeholder="Name" value="<?php  ?>"  required/></div>
+                        <input name="name" id="venue_name_create" type="text" class="form-control" placeholder="Name" value="<?php echo set_post_value('name', $venue->name ) ?>"  required/></div>
                 </div>
-                
+               
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Grade <span class="asterisk">*</span></label>
+                    <label class="control-label col-sm-3">Rank <span class="asterisk">*</span></label>
 
                     <div class="controls col-sm-2">
-                        <select name="grade" class="form-control" required>
-                            <option value="">Select Grade</option>
+                        <select name="rank" class="form-control" required>                             
                             <?php for($i = 1; $i<=100; $i++) { ?>
-                                <option value="<?php echo $i;?>" <?php echo set_post_value('grade',$venue->grade) == $i ? "selected" : ""; ?>><?php echo $i;?></option>
+                                <option value="<?php echo $i;?>" <?php echo set_post_value('rank', $venue->rank ) == $i ? "selected" : ""; ?>><?php echo $i;?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -30,38 +32,58 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Address</label>
                     <div class="controls col-sm-6">
-                    <textarea name="address" class="form-control autogrow" placeholder="Address" rows="4" style="height: 105px;"><?php echo $venue->address; ?></textarea>
+                    <textarea name="address" class="form-control autogrow" id="venue_address1" placeholder="Address" rows="4" style="height: 105px;"><?php echo set_post_value('address', $venue->address ); ?></textarea>
                     </div>
                 </div>
-                
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Address 2</label>
+                    <div class="controls col-sm-6">
+                    <textarea name="address2" class="form-control autogrow" id="venue_address2" placeholder="Address" rows="4" style="height: 105px;"><?php echo set_post_value('address2', $venue->address2 ); ?></textarea>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Neighborhood</label>
 
                     <div class="controls col-sm-4">
-                        <input name="neighborhood" type="text" class="form-control" placeholder="Neighborhood" value="<?php echo $venue->neighborhood; ?>" />
+                    	<?php $postval = set_post_value('neighborhood', $venue->neighborhood );  ?>
+                    	<select name="neighborhood"  class="form-control">
+                    		
+                    		<option <?php echo $postval == "bryant park" ? "selected='true'" : ""; ?> value="bryant park">Bryant Park</option>
+							<option <?php echo $postval == "chelsea" ? "selected='true'" : ""; ?> value="chelsea">Chelsea</option>
+							<option <?php echo $postval == "east village" ? "selected='true'" : ""; ?> value="east village">East Village</option>
+							<option <?php echo $postval == "flatiron" ? "selected='true'" : ""; ?> value="flatiron">Flatiron</option>
+							<option <?php echo $postval == "greenwich village" ? "selected='true'" : ""; ?> value="greenwich village">Greenwich Village</option>
+							<option <?php echo $postval == "hell's kitchen" ? "selected='true'" : ""; ?> value="hell's kitchen">Hell's Kitchen</option>
+							<option <?php echo $postval == "hells kitchen" ? "selected='true'" : ""; ?> value="hells kitchen">Hells Kitchen</option>
+							<option <?php echo $postval == "lincoln center" ? "selected='true'" : ""; ?> value="lincoln center">Lincoln Center</option>
+							<option <?php echo $postval == "little italy" ? "selected='true'" : ""; ?> value="little italy">Little Italy</option>
+							<option <?php echo $postval == "lower east side" ? "selected='true'" : ""; ?> value="lower east side">Lower East Side</option>
+							<option <?php echo $postval == "meat packing" ? "selected='true'" : ""; ?> value="meat packing">Meat Packing</option>
+							<option <?php echo $postval == "meatpacking district" ? "selected='true'" : ""; ?> value="meatpacking district">Meatpacking District</option>
+							<option <?php echo $postval == "midtown" ? "selected='true'" : ""; ?> value="midtown">Midtown</option>
+							<option <?php echo $postval == "midtown east" ? "selected='true'" : ""; ?> value="midtown east">Midtown East</option>
+							<option <?php echo $postval == "midtown west" ? "selected='true'" : ""; ?> value="midtown west">Midtown West</option>
+							<option <?php echo $postval == "nolita" ? "selected='true'" : ""; ?> value="nolita">Nolita</option>
+							<option <?php echo $postval == "theater district" ? "selected='true'" : ""; ?> value="theater district">Theater District</option>
+							<option <?php echo $postval == "times square" ? "selected='true'" : ""; ?> value="times square">Times Square</option>
+							<option <?php echo $postval == "tribeca" ? "selected='true'" : ""; ?> value="tribeca">Tribeca</option>
+							<option <?php echo $postval == "west village" ? "selected='true'" : ""; ?> value="west village">West Village</option>
+                    	</select>
+                    	
+                      
 
                     </div>
                  </div>
                 
-                <div class="form-group">
-                    <label class="control-label col-sm-3">Cross street</label>
-
-                    <div class="controls col-sm-4">
-                        <input name="cross_street" type="text" class="form-control" placeholder="Cross street" value="<?php echo $venue->cross_street; ?>" />
-
-                    </div>
-                 </div>
+                 
                 
                  <div class="form-group">
                     <label class="control-label col-sm-3">City <span class="asterisk">*</span></label>
 
                     <div class="controls col-sm-4">
                         <!--<input name="city" type="text" class="form-control" placeholder="City" value="<?php //echo $this->input->post('city'); ?>" />-->
-                        <select name="city" class="form-control" required>
-                            <option value="">Select City</option>
-                            <?php foreach($cities as $city) { ?>
-                                <option value="<?php echo $city["venue_city_id"];?>" <?php echo $city["venue_city_id"] == $venue->venue_city_id ? "selected" : "";  ?>><?php echo $city["venue_city_name"];?></option>
-                            <?php } ?>
+                        <select name="city" id="venue_city" class="form-control" required>
+                           <option value="new york">New York</option>                            
                         </select>
 
                     </div>
@@ -71,34 +93,29 @@
                     <label class="control-label col-sm-3">State</label>
 
                     <div class="controls col-sm-4">
-                        <input name="state" type="text" class="form-control" placeholder="State" value="<?php echo $venue->state; ?>" />
-
+                    	<select name="state" id="venue_state" class="form-control" required>
+                           <option value="ny">New York</option>                            
+                        </select>
+                       
                     </div>
                  </div>
                 
                 <div class="form-group">
-                    <label class="control-label col-sm-3">Zip</label>
+                    <label class="control-label col-sm-3">Zip<span class="asterisk">*</span></label>
 
                     <div class="controls col-sm-4">
-                        <input name="zip" type="text" class="form-control" placeholder="Zip" value="<?php echo $venue->zip; ?>" />
+                        <input required name="zip" type="text" id="venu_zip" class="form-control" placeholder="Zip" value="<?php echo set_post_value('zip', $venue->zip )?>" />
 
                     </div>
                  </div>
                 
-                <div class="form-group">
-                    <label class="control-label col-sm-3">Country</label>
-
-                    <div class="controls col-sm-4">
-                        <input name="country" type="text" class="form-control" placeholder="Country" value="<?php echo $venue->country; ?>" />
-
-                    </div>
-                 </div>
+                 
                 
                 <div class="form-group">
                     <label class="control-label col-sm-3">Phone</label>
 
                     <div class="controls col-sm-4">
-                        <input name="phone" type="text" class="form-control" placeholder="Phone" value="<?php echo $venue->phone?$venue->phone:'' ?>" />
+                        <input  name="phone" type="text" class="form-control" placeholder="Phone" value="<?php echo set_post_value('phone', $venue->phone ) ?>" />
 
                     </div>
                  </div>
@@ -107,8 +124,12 @@
                     <label class="control-label col-sm-3">Latitude</label>
 
                     <div class="controls col-sm-4">
-                        <input name="lat" type="text" class="form-control" placeholder="Latitude" value="<?php echo $venue->lat; ?>" />
+                        <input name="lat" type="text" id="venue_lat" class="form-control" placeholder="Latitude" value="<?php echo set_post_value('lat', $venue->lat ); ?>" />
 
+                    </div>
+                    <div class="col-sm-2">
+                    	 <a class="btn btn-primary" id="btnLoadLongLat" href="#">Load coordinates</a>
+                    	 <span id="invalidaddress" style="color: red"></span>
                     </div>
                  </div>
                 
@@ -116,7 +137,7 @@
                     <label class="control-label col-sm-3">Longitude</label>
 
                     <div class="controls col-sm-4">
-                        <input name="lng" type="text" class="form-control" placeholder="Longitude" value="<?php echo $venue->lng; ?>" />
+                        <input name="long" id="venue_long" type="text" class="form-control" placeholder="Longitude" value="<?php echo set_post_value('long', $venue->long )  ?>" />
 
                     </div>
                 </div>
@@ -125,7 +146,7 @@
                     <label class="control-label col-sm-3">Url</label>
 
                     <div class="controls col-sm-4">
-                        <input name="url" type="text" class="form-control" placeholder="Url" value="<?php echo $venue->url; ?>" />
+                        <input name="url" type="text" class="form-control" placeholder="Url" value="<?php echo set_post_value('url', $venue->url ) ;?>" />
 
                     </div>
                 </div>
@@ -133,18 +154,19 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Description</label>
                     <div class="controls col-sm-6">
-                    <textarea name="description" class="form-control autogrow" placeholder="Description" rows="4" style="height: 105px;"><?php echo $venue->description; ?></textarea>
+                    <textarea name="description" class="form-control autogrow" placeholder="Description" rows="4" style="height: 105px;"><?php echo set_post_value('description', $venue->description )   ?></textarea>
                     </div>
+                    
                 </div>
                 
-                <div class="form-group">
+                <!--div class="form-group">
                     <label class="control-label col-sm-3">Venue status</label>
                     <div class="col-md-3 col-sm-6">
                       <input type="checkbox" name="venue_status" id="vstatus" data-off-color="success" data-off-text="INACTIVE"  data-on-text="ACTIVE" data-size="small" data-on-color="primary" value ="1" checked="true" class="boot-switch"/>
                      
                     
                     </div>
-                </div>
+                </div-->
                 
                 <!--input type="hidden" name="profile_image" id="profile_image" value="" />
                 <input type="hidden" name="uploaded_image" id="uploaded_image" value="0" />
@@ -156,58 +178,48 @@
                     
                 </div>
                 <div class="qq-upload-extra-drop-area">Drop files here too</div-->
-                
-                <div class="form-group">
-                    <label class="control-label col-sm-3">Profile images
-                    <p class="f11">Max allowed size:2MB <br/> Allowed file types :png,jpg</p>
+                <!--div class="form-group">
+                    <label class="control-label col-sm-3">Venue images
+                    	<p class="f11">Max allowed size:2MB <br/> Allowed file types :png,jpg</p>
                     </label>
 
-                    <div class="controls col-sm-4">
-                          <input type="file" name="image1" class="" id="file1" data-show-upload="false" data-preview-file-type="text"/>
+                   	<div class="controls col-sm-4">
+                          <input type="file" name="image1" class="file1" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                          <input type="file" name="image2" class="" id="file2" data-show-upload="false" data-preview-file-type="text"/>
+                          <input type="file" name="image2" class="file1" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                          <input type="file" name="image3" class="" id="file3" data-show-upload="false" data-preview-file-type="text"/>
+                          <input type="file" name="image3" class="file1" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                          <input type="file" name="image4" class="" id="file4" data-show-upload="false" data-preview-file-type="text"/>
+                          <input type="file" name="image4" class="file1" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">&nbsp;</label>
                     <div class="controls col-sm-4">
-                          <input type="file" name="image5" class="file1" id="file5" data-show-upload="false" data-preview-file-type="text"/>
+                          <input type="file" name="image5" class="file1" data-show-upload="false" data-preview-file-type="text"/>
                     </div>
-                </div>    
-                
-                
+                </div--> 
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
-                    <div class="controls col-sm-4"><button type="submit" class="btn btn-primary">Duplicate Venue</button>
-                    <a class="btn btn-default" href="<?php echo base_url().'admin/venue/venues/'; ?>">Cancel</a>
+                    <div class="controls col-sm-4"><button type="submit" class="btn btn-primary">Create Venue</button>
+                    <a class="btn btn-default" href="<?php echo base_url().'admin/venue'; ?>">Cancel</a>
                     </div>
                 </div>
                 
             </div>
         </div>
-        <input type="hidden" value="" name="email_verified" id="email_verified" />
+        
     </form>
 </div>    
-<script>
-	var venue_img_1 = "<?php echo $venue->img_1 ?>";
-	var venue_img_2 = "<?php echo $venue->img_2 ?>";
-	var venue_img_3 = "<?php echo $venue->img_3 ?>";
-	var venue_img_4 = "<?php echo $venue->img_4 ?>";
-	var venue_img_5 = "<?php echo $venue->img_5;?>";
-</script>

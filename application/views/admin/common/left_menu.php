@@ -63,7 +63,11 @@
             </a>
                   
         </li>
-       
+         <li class="nav-dropdown <?php echo strtolower($current_controller) =='notifications' ? 'active':''?>">
+            <a href="<?php echo base_url() ?>admin/notifications" target="_blank" title="Notifications Dashboard">
+                <i class="fa fa-lg fa-fw fa-bolt"></i> Interests Manager  
+            </a>                  
+        </li>
     </ul>
     
 </nav>

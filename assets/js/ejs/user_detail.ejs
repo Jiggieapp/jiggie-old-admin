@@ -2,7 +2,7 @@
     <form class="form-horizontal form-bordered" role="form">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">User Details!</h4>
+                <h4 class="panel-title">User Details</h4>
 
                 <div class="panel-options">
                     <!--a href="#" data-rel="collapse"><i class="fa fa-fw fa-minus"></i></a>
@@ -16,10 +16,11 @@
             <div class="panel-body" id="selected_user" user_id="<%= user._id  %>" user_fb_id="<%=user.fb_id %>">
                
                     <div class="col-sm-6 col-md-5 mbsm" style="overflow-x: hidden">
-                        <a class="profile_image"  data-user_id="<%= user.fb_id %>" href="#">                            
+                        <a class="profile_image"  data-user_id="<%= user.fb_id %>" href="#">        
+
                             <% image = user.profile_image_url ? encodeURIComponent(user.profile_image_url): siteurl+'assets/images/default.png' %>
                             
-                            <img   alt="image"  src="<%=  siteurl +'timthumb1.php?src='+image+'&w=200&q=100&h=150' %>" />
+                            <img   alt="image"  src="http://graph.facebook.com/<%= user.fb_id  %>/picture?type=large" />
                         </a>   
                     </div>
                     <div class="col-sm-6  col-md-7 profile-details">
@@ -37,7 +38,7 @@
                             <div class="col-xs-9"> 
                                 <%=  user.birthday %>
                                 <!--<p id="edit_birthday">
-                                    <a data-title="Select Date of birth" data-pk="1" data-template="MMM / DD / YYYY" data-viewformat="MM/DD/YYYY" data-format="MM/DD/YYYY" data-value="<%=  user.birthday %>" data-type="combodate" id="dob" href="#" class="editable" style="display: inline;">
+                                    <a data-title="Select Date of birth" data-pk="1" data-template="MMM / DD / YESYYY" data-viewformat="MM/DD/YYYY" data-format="MM/DD/YYYY" data-value="<%=  user.birthday %>" data-type="combodate" id="dob" href="#" class="editable" style="display: inline;">
                                         <%=  user.birthday %>
                                     </a>
                                     
@@ -252,7 +253,7 @@
                         </div>
                     </div>
 
-                    <% if(user.appsflyer) { %>
+                    <% if(invited_by) { %>
                     <div class="form-group">
                         <label class="control-label col-xs-3  ">Invited By</label>
                         <div class="controls col-xs-9">

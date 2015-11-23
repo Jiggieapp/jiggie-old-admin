@@ -2,7 +2,7 @@
     <form class="form-horizontal form-bordered" role="form" id="event-form" method="post">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">Create Event</h4>
+                <h4 class="panel-title">Create Event!</h4>
             </div>
             <div class="panel-body" id="section_create_event">
                 <?php //echo showMessage(); //echo $error;?>
@@ -114,8 +114,8 @@
                        <?php $default = ($this->input->post('endtime')?$this->input->post('endtime'):'')?>
                         <div class="input-group">
                         	<select class="form-control" name="event_time" id="event_time" >
-                        		 <?php for($i = 1; $i<=24; $i++) { ?>
-	                                <option value="<?php echo $i;?>" <?php echo $this->input->post("event_time") == $i ? "selected" : ""; ?>><?php echo $i;?></option>
+                        		 <?php for($i = 2; $i<=48; $i++) { ?>
+	                                <option value="<?php echo $i/2;?>" <?php echo $this->input->post("event_time") == $i/2 ? "selected" : ""; ?>><?php echo $i/2;?></option>
 	                            <?php } ?>
                         	</select>                
                             
@@ -184,7 +184,19 @@
                     <div class="col-md-3 col-sm-6">
                       <!--input type="checkbox" name="event_status" id="estatus" data-off-color="success" data-off-text="INACTIVE"  data-on-text="ACTIVE" data-size="small" data-on-color="primary" value ="1" checked="true" class="boot-switch"/-->
                       <select id="event_tags" name="event_tags[]" class="form-control" multiple="multiple">
-						  <optgroup label="Music Type">
+						    
+
+              <optgroup label="Tag List">
+                <option value="Art & Culture">Art & Culture</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Food & Drink">Food & Drink</option>
+                <option value="Family">Family</option>
+                <option value="Music">Music</option>
+                <option value="Nightlife">Nightlife</option>
+              </optgroup>
+
+              <!--
+              <optgroup label="Music Type">
 						    <option value="ART & CULTURE">ART & CULTURE</option>
 						    <option value="FASHION">FASHION</option>
 						    <option value="FOOD & DRINK">FOOD & DRINK</option>
@@ -192,6 +204,7 @@
                 <option value="MUSIC">MUSIC</option>
                 <option value="NIGHTLIFE">NIGHTLIFE</option>
 						  </optgroup>
+              -->
               <!--
 						  <optgroup label="Venue Type">
 						    <option value="nightclub">Nightclub</option>

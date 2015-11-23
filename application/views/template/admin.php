@@ -12,7 +12,7 @@
         <!-- Meta, title, CSS, favicons, etc. -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title><?php echo $this->config->item('site_title')?> </title>
+        <title>Jiggie Admin </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
@@ -22,7 +22,12 @@
         <!--link rel="stylesheet" href="demo/css/demo.css"-->
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_css_url')?>font-awesome/css/font-awesome.css">
  		<link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>css/plugins/jquery-select2.css" />
- 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css">
+
+
+
+
+
+ 		<link rel="stylesheet" href="/assets/js/jquery-ui.min.css">
 		<link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>plugins/bootstrap-daterangepicker/daterangepicker-bs3.css">
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_css_url')?>plugins/bootstrap-switch.css" rel="stylesheet">  		
   		<link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>plugins/morris/morris.css">
@@ -34,6 +39,16 @@
  		<link href="<?php echo $this->config->item('assets_css_url')?>fileinput.min.css" media="all" rel="stylesheet"  >
 
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_css_url')?>/bootstrap-editable.css">
+        
+<!--
+        <link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.css" />
+-->
+        
+
+        <link rel="stylesheet" href="/assets/js/jquery.timepicker.css" />
+
+
+
 		<script type="text/javascript">
 		    var base_url 		= "<?php echo base_url(); ?>";
             var start_date              = "<?php echo date("m/d/Y",strtotime($this->session->userdata('startDate'))); ?>";
@@ -105,7 +120,17 @@
         <script src="<?php echo $this->config->item('assets_js_url')?>imagesloaded.pkgd.min.js" type="text/javascript"></script>
         <script src="<?php echo $this->config->item('assets_js_url')?>fullcalendar.min.js" type="text/javascript"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/main.js"></script>
+        <script src="<?php echo $this->config->item('assets_url')?>js/jquery.datepair.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/custom.js"></script>
+
+
+<!--
+        <script src="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.js"></script>
+        <script src="<?php echo $this->config->item('assets_url')?>js/jquery.timepicker.js"></script>
+        <script src="<?php echo $this->config->item('assets_url')?>js/jquery.datepair.js"></script>
+-->
+    
+
         <script src="<?php echo $this->config->item('assets_url')?>plugins/jquery-validation/additional-methods.min.js"></script>
         <!--[if lt IE 9]>
         <script src="<?php echo $this->config->item('assets_css_url')?>/plugins/flot/excanvas.min.js"></script>

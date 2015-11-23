@@ -13,7 +13,7 @@ $exid = ($current_controller=='hostings')?'hostings':'' ;
                 <?php if($current_controller != "chat" && $current_controller != "blocklists" && $add_link!='') { ?>
                 <a href="<?php echo $add_link ?>" title="Add New" id="addnewobj" ><i class="fa fa-fw fa-plus"></i></a>
                 <?php } ?>
-                    <a target="_blank" class="export_options"  href="<?php echo $export_link ?>" title="Export" ><i class="fa fa-fw fa-folder "></i></a>
+                    <a target="_blank" class="export_options"  style="cursor:pointer;" title="Export" ><i class="fa fa-fw fa-folder "></i></a>
             </div>
         </div>
         <div class="panel-body" data-url="<?php echo @$data_url?>" data-page="0" > 

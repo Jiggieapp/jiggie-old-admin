@@ -6,7 +6,7 @@ jQuery(function ($) {
 	var $smVisible = $('<div class="visible-sm" style="position:absolute;top:-9999px;width:1px;height:1px;"></div>');
 	
 
-	var baseDomain = "http://partyhostappdev.herokuapp.com/admin/admin/"
+	var baseDomain = "https://jiggie-dev.herokuapp.com/admin/admin/"
 	var adminToken = "?admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd"
 
 	function openActiveTab(url) {
@@ -53,6 +53,15 @@ jQuery(function ($) {
             return true;
         }
     });
+
+
+    $(".event-dupimage-remove").click(function(e)
+    {
+        $("#update_dupcnt_imageform" +$(this).attr('tag') ).remove();
+        $("#hidden_photo_" +$(this).attr('tag') ).remove();
+
+        
+    })
 
     //openActiveTab(document.location.toString());
 
@@ -756,6 +765,156 @@ $(document).ready(function() {
 		});  	
     	 
     })
+
+
+    $('#section_list').on("click",'#edit_startdatetime', function(e) {     
+         e.preventDefault(); 
+         event_details = this;
+
+         console.log("done!!!");
+
+         var html =  new EJS({url: base_url+'assets/js/ejs/event_edit_time.ejs?v='+ $.now()}).render({});
+
+        $modal = $('<div class="modal " id="edit_event_time"></div>');
+        $modal.html(html);
+        $('body').append($modal);
+        $modal.modal({backdrop: 'static', keyboard: true});
+        $modal.show();
+
+        var defaultStartTime = window.cEditEventData.start_datetime_str.split(",")[1];
+        defaultStartTime = defaultStartTime.slice(6,defaultStartTime.length);
+
+        var defaultEndTime = window.cEditEventData.end_datetime_str.split(",")[1];
+        defaultEndTime = defaultEndTime.slice(6,defaultEndTime.length);
+
+        $('#ModalEventEdit .time_start').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:i A'
+        });
+
+        $('#ModalEventEdit .time_end').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:i A'
+        });
+
+        $('#ModalEventEdit .time_start').attr("value",defaultStartTime);
+        $('#ModalEventEdit .time_end').attr("value",defaultEndTime);
+
+
+        defaultStartTime = defaultStartTime.slice(0,defaultStartTime.length - 2);
+        var defaultStartDate = window.cEditEventData.start_datetime_str.split(defaultStartTime)[0]
+
+
+        defaultEndTime = defaultEndTime.slice(0,defaultEndTime.length - 2);
+        var defaultEndDate = window.cEditEventData.end_datetime_str.split(defaultEndTime)[0]
+
+
+
+
+
+        $('#ModalEventEdit .date_start').datepicker({
+            'format': 'M dd, yyyy',
+            'autoclose': true,
+            'startDate':window.cEditEventData.start_date,
+            "minDate":new Date()
+        });
+
+        $('#ModalEventEdit .date_end').datepicker({
+            'format': 'M dd, yyyy',
+            'autoclose': true,
+            'startDate':window.cEditEventData.end_date,
+            "minDate":new Date()
+        });
+
+        $('#ModalEventEdit .date_start').attr("value",defaultStartDate);
+        $('#ModalEventEdit .date_end').attr("value",defaultEndDate);
+
+        $('#ModalEventEdit .date_start').datepicker('update', defaultStartDate);
+        $('#ModalEventEdit .date_end').datepicker('update', defaultEndDate);
+
+        $('#ModalEventEdit .date_end').datepicker().on('changeDate', function(ev)
+        {
+            var start_date = new Date( $('#ModalEventEdit .date_start').val() );
+            var end_date = ev.dates[0];
+            if(end_date < start_date)
+            {
+                $('#ModalEventEdit .date_end').datepicker('update', $('#ModalEventEdit .date_start').val());
+            }
+        });
+
+
+
+        $("#btnEditEvenTimeUpdate").click(function()
+        {
+ 
+            var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').val();
+            console.log(">>>" + start_date + "<<<<")
+            var start_datetime_str = start_date;
+            start_date = new Date(start_date);
+
+            var end_date = $('#ModalEventEdit .date_end').val() + " " + $('#ModalEventEdit .time_end').val();
+            console.log(">>>" + end_date + "<<<<")
+            var end_datetime_str = end_date;
+
+            end_date = new Date(end_date);
+            console.log("*****************")
+            console.log(start_date);
+            console.log(end_date);
+
+
+            if(end_date.getTime() < start_date.getTime())
+            {
+                alert("end date must be after start date");
+                return;
+            }
+
+            if(start_date.getTime() + 3600000 > end_date.getTime())
+            {
+                alert("event time less than hour");
+                return;
+            }
+
+            var path = base_url+'admin/events/editdatetime/'+$("#selected_event").attr("_id");
+
+            $.ajax({
+            type        : "POST",
+            url     : path, 
+            data        : {'start_datetime_str':start_datetime_str,'end_datetime_str':end_datetime_str,'venue_id':window.cEditEventData.venue_id},
+            dataType: "json",         
+            success : function(resp){
+                                     
+                console.log("RESP");
+                console.log(resp)
+
+                //var resp = jQuery.parseJSON(resp);
+                if(resp.success)
+                {
+                    location.reload();
+                }else{
+                    alert(resp.reason)
+                }
+            },
+             complete : function (o){
+                console.log("---------")
+                //console.log(o.responseText)
+                /*
+                var resp = jQuery.parseJSON(o.responseText);
+                if(resp.success)
+                {
+                    location.reload();
+                }else{
+                    alert(resp.reason)
+                }
+                */
+                //
+             }
+        });    
+
+        });
+
+    
+        });
+
     $('#section_list').on("click",'#delete_ticket_details', function(e) {  	 
     	 e.preventDefault(); 
     	 ticket_details = this;
@@ -940,7 +1099,7 @@ $(document).ready(function() {
 	    url+= $("#venue_address1").val() + ",";
 	    url+= $("#venue_address2").val() + ",";
 	    url+= $("#venue_city").val() + ",";
-	    url+= $("#venue_state").val() + ",";
+	    //url+= $("#venue_state").val() + ",";
 	    url+= $("#venu_zip").val();
 	     console.log(url,'url')
 	    $.get(url, {}).done(function( data )
@@ -1233,11 +1392,11 @@ function updateCalData()
 	//console.log("whole_end_date " + whole_end_date)
 
 	//eventsadminwithdate
-
+    timezone = "Asia/Jakarta"
 	
 	if((new Date()).getTimezoneOffset() == 240)
 	{
-		timezone = "America/New_York"
+
 	}
 
 	if((new Date()).getTimezoneOffset() == 420)
@@ -1397,9 +1556,24 @@ function getDataResponse(){
    /*
    url = "http://partyhostappdev.herokuapp.com/admin/admin/chat/list?admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd&per_page=25&offset=1&sort_field=last_updated&sort_val=DESC&start_date=2014-04-01T04:00:00.000Z&end_date=2015-08-25T03:59:00.000Z"
    */
+
+    $('.export_options').click(function()
+                {
+                    //preparehashtags('export',"true",true);
+                   // window.open(window.location);
+                   //preparehashtags("anchor","true")
+                   console.log("yes!!")
+                })
+    
+
+
+   console.log("URL : " + url)
    console.log("data");
    console.log(dtext)
    
+
+
+
 
     $.ajax({
         type		: "POST",
@@ -1459,9 +1633,9 @@ function getDataResponse(){
 				$('#addnewobj').attr('href',resp.add_url)
 			}
 			if(hasher.getHash()){
-				$('.export_options').attr('href',base_url+exp_uri+'/?'+hasher.getHash()+'/start_date='+dtext.startDate_iso+'/end_date='+dtext.endDate_iso); 
+				//$('.export_options').attr('href',base_url+exp_uri+'/?'+hasher.getHash()+'/start_date='+dtext.startDate_iso+'/end_date='+dtext.endDate_iso); 
 			}else{
-				$('.export_options').attr('href',base_url+exp_uri+'/?start_date='+dtext.startDate_iso+'/end_date='+dtext.endDate_iso);
+				//$('.export_options').attr('href',base_url+exp_uri+'/?start_date='+dtext.startDate_iso+'/end_date='+dtext.endDate_iso);
 			}
 			//$('.export_options').attr('href',base_url+exp_uri+'/?'+hasher.getHash());  
 			 
@@ -1500,6 +1674,25 @@ function getDataResponse(){
 			
         }
     });
+
+    dtext["export"] = "true"
+    $.ajax({
+        type        : "POST",
+        url     : url,  
+        dataType: "json",          
+        data        : dtext,
+        success : function(resp){ 
+            console.log(">>>>>>")
+            console.log(resp);
+            //$('.export_options').attr('href',base_url+'admin/user/users#/'+hasher.getHash() +"/export=true");
+
+            $('.export_options').attr('href',resp.url + "&export=true");
+        },
+        complete : function (){
+            console.log("done!!!!")
+        }
+    });
+
 }
 function setHostingfilter(dtext){
 	//console.log()
@@ -2038,13 +2231,14 @@ function getVenueDetailPage(url,type){
 		            type: 'text',
 		            pk: 1,
 		            url: base_url+'admin/venue/'+'save'+'/'+$("#selected_venue").attr("venue_id"),
-		            emptytext: 'Url',
+		            emptytext: 'Url'/*,
 			         validate: function(value) {         	
-					    if(!(value+"").match(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/) && value !=''  ) {
+					    
+                        if(!(value+"").match(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/) && value !=''  ) {
 					        return 'Please enter valid url. eg http://google.com';
 					    }
 					    
-					}
+					}*/
 		   });
 		   $('#neighborhood').editable({
 			   	type: 'text',
@@ -2052,28 +2246,41 @@ function getVenueDetailPage(url,type){
 		        value: resp.responseJSON.data.neighborhood,
 		        url: base_url+'admin/venue/'+'save'+'/'+$("#selected_venue").attr("venue_id"), 
 		        source: [
-		                {value: 'bryant park', text: 'Bryant Park'},
-		                {value: 'chelsea', text: 'Chelsea'},
-					    {value: 'east village', text: 'East Village'},
-						{value: 'flatiron', text: 'Flatiron'},
-						{value: "hell's kitchen", text: "Hell's Kitchen"},
-						{value: 'hells kitchen', text: 'Hells Kitchen'}	,
-						{value: 'lincoln center', text: 'Lincoln Center'},
-						{value: 'little italy', text: 'Little Italy'},
-						{value: 'lower east side', text: 'Lower East Side'},
-						{value: 'meat packing', text: 'Meat Packing'},
-						{value: 'meatpacking district', text: 'Meatpacking District'},
-						{value: 'midtown', text: 'Midtown'} ,
-						{value: 'midtown east', text: 'Midtown East'} ,
-						{value: 'midtown west', text: 'Midtown West'} ,
-						{value: 'nolita', text: 'Nolita '} ,
-						{value: 'theater district', text: 'Theater District'} ,
-						{value: 'times square', text: 'Times Square'} ,
-						{value: 'tribeca', text: 'Tribeca'} ,
-						{value: 'west village', text: 'West Village'} 
+		                {value: 'Menteng', text: 'Menteng'},
+		                {value: 'Kuningan', text: 'Kuningan'},
+                        {value: 'Kebayoran Baru', text: 'Kebayoran Baru'},
+                        {value: 'Senayan', text: 'Senayan'},
+                        {value: 'Permata Hijau', text: 'Permata Hijau'},
+                        {value: 'Pondok Indah', text: 'Pondok Indah'},
+                        {value: 'Lebak Bulus', text: 'Lebak Bulus'},
+                        {value: 'Kemang', text: 'Kemang'},
+                        {value: 'Cipete', text: 'Cipete'},
+                        {value: 'Cilandak', text: 'Cilandak'},
+                        {value: 'Kelapa Gading', text: 'Kelapa Gading'},
+                        {value: 'Senopati', text: 'Senopati'},
+                        {value: 'Sarinah', text: 'Sarinah'},
+                        {value: 'Cikini', text: 'Cikini'}
 		           ]
 		             
 		    }); 
+            /*
+            <option value="Menteng">Menteng</option>
+            <option value="Kuningan">Kuningan</option>
+            <option value="Kebayoran Baru">Kebayoran Baru</option>
+            <option value="Senayan">Senayan</option>
+            <option value="Permata Hijau">Permata Hijau</option>
+            <option value="Pondok Indah">Pondok Indah</option>
+            <option value="Lebak Bulus">Lebak Bulus</option>
+            <option value="Kemang">Kemang</option>
+            <option value="Cipete">Cipete</option>
+            <option value="Cilandak">Cilandak</option>
+            <option value="Kelapa Gading">Kelapa Gading</option>
+            <option value="Senopati">Senopati</option>
+            <option value="Sarinah">Sarinah</option>
+            <option value="Cikini">Cikini</option>
+            */
+
+
 		   $(".edit_venuephone").editable({
 		            type: 'text',
 		            pk: 1,
@@ -2081,12 +2288,14 @@ function getVenueDetailPage(url,type){
 		            emptytext: 'Phone',
 			        validate: function(value) {  
 			         	if(value)     {
+                            /*
 			         		if(!(value+"").match(/^\d+$/) ) {
 					        	return 'Please enter valid Phone number';
 						    }
 						    if(value.length!=10) {
 						        return 'Please enter valid Phone number';
 						    }
+                            */
 			         	}  	
 					   
 				    },
@@ -2170,7 +2379,7 @@ function getVenueDetailPage(url,type){
 			$("#filevenue").fileinput({
 		       "uploadUrl": base_url+'admin/venue/addimage',
 		       'allowedFileExtensions': ['png','jpg','jpeg'],
-		       'maxFileSize': 10240,              
+		       'maxFileSize': 1000240,              
 		       "maxFileCount": 1,
 		       "minFileCount": 1,		       
 		        uploadExtraData: function() {
@@ -2245,14 +2454,14 @@ function getEventDetailPage(url,type){
 	                }
 	        	}
 
-
+                var updatetype = (type == "weekly")?"edit":"editspecial";
                 //capFL
                 //resp.responseJSON.venue._id
                 $('#edit_fufill').editable({
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_type,
-                url: base_url+'admin/events/'+'editspecial'+'/'+$("#selected_event").attr("_id"), 
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"), 
                 source: [
                         {value: 'none', text: 'None'},
                         {value: 'phone_number', text: 'Phone Number'},
@@ -2264,13 +2473,67 @@ function getEventDetailPage(url,type){
                 });
 
 
+
+
+
+
+
+                $('#edit_venue_item').editable({
+                type: 'text',
+                pk: 1,
+                value: resp.fullfillment_type,
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"), 
+                source: [
+                        {value: 'none', text: 'None'},
+                        {value: 'phone_number', text: 'Phone Number'},
+                        {value: 'link', text: 'Link'},
+                        {value: 'reservation', text: 'Reservation'},
+                        {value: 'purchase', text: 'Purchase'}, 
+                   ]
+                     
+                });
+
+
+                
+
                 $('#edit_fufill_value').editable({
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_value,
-                url: base_url+'admin/events/'+'editspecial'+'/'+$("#selected_event").attr("_id")
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
                      
                 });
+
+                window.cEditEventData = resp;
+
+                console.log("resp.start_time " + resp.start_time)
+                console.log("resp.start_datetime " + resp.start_datetime)
+                /*
+                $('#edit_startdatetime').editable({  
+                    type:'combodate',
+                    value: new Date(resp.start_datetime),
+                    minuteStep:10,
+                    url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
+                    pk: 1
+                });
+                */
+ /*
+                $('<div class="confirmation-modal modal in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title">Confirmation required</h4></div><div class="modal-body">Do you want to delete this event ?</div><div class="modal-footer"><button class="confirm btn btn-primary" type="button" data-dismiss="modal">Delete Event</button><button class="cancel btn btn-default" type="button" data-dismiss="modal">Cancel</button></div></div></div></div>').appendTo(document.body);
+
+               
+                
+                */
+
+
+                /*
+                $('#edit_startdatetime').editable({
+                type: 'time',
+                pk: 1,
+                value: resp.start_datetime,
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
+                     
+                });
+                */
 
                 console.log("is_recurring :: " + type)
 
@@ -2567,8 +2830,19 @@ function getOrderDetailPage(url,order_id){
 }
 function enablespecialeventedit(resp){
 	 
-	$('#eventvenue').editable({
-        value: resp.responseJSON.venue._id,    
+	$('#venue_id').editable({
+        value: resp.responseJSON.venue._id,
+        pk: 1,
+        url: base_url+'admin/events/'+'editspecial'+'/'+$("#selected_event").attr("_id"),
+        success: function(response, newValue)
+        {
+            console.log("done!!!! " + newValue)
+            // /admin/venue/#/venue-details=
+            $("#edit_venue_details_link").attr("href","/admin/venue/#/venue-details=" + newValue);
+
+            location.reload();
+
+        },
         source  : function ()
         {
         	var result;
@@ -2650,6 +2924,22 @@ function enablespecialeventedit(resp){
     "Family",
     "Music",
     "Nightlife"
+    
+
+    "House / EDM",
+    "Hip Hop",
+    "Top 40s",
+    "Dance",
+    "Nightclub",
+    "Lounge",
+    "Hotel Lounge",
+    "Rooftop",
+    "Restaurant",
+    "Red Carpet",
+    "Upscale Chic",
+    "Casual"
+    
+
     */
 
 
@@ -2659,12 +2949,13 @@ function enablespecialeventedit(resp){
          emptytext: 'Please enter tag',
          url: base_url+'admin/events/'+'editspecial'+'/'+$("#selected_event").attr("_id"),
        source: [
-          {id: 'ART & CULTURE', text: 'Art & Culture'},
-          {id: 'FASHION', text: 'Fashion'},
-		  {id: 'FOOD & DRINK', text: 'Food & Drink'},
-		  {id: 'FAMILY', text: 'Family'},
-		  {id: 'MUSIC', text: 'Music'},
-          {id: 'NIGHTLIFE', text: 'Nightlife'}
+
+          {id: 'Art & Culture', text: 'Art & Culture'},
+          {id: 'Fashion', text: 'Fashion'},
+		  {id: 'Food & Drink', text: 'Food & Drink'},
+		  {id: 'Family', text: 'Family'},
+          {id: 'Music', text: 'Music'},
+          {id: 'Nightlife', text: 'Nightlife'}
        ],
         select2: {
            multiple: true,
@@ -2676,7 +2967,7 @@ function enablespecialeventedit(resp){
 	$("#file-4").fileinput({
        "uploadUrl": base_url+'admin/events/addimage',
        'allowedFileExtensions': ['png','jpg','jpeg'],                
-       'maxFileSize': 10240,              
+       'maxFileSize': 1000240,              
        "maxFileCount": 1,
        "minFileCount": 1,	
         uploadExtraData: function() {
@@ -2687,7 +2978,10 @@ function enablespecialeventedit(resp){
       	}              	
 	});
 	$('#file-4').on('filebatchuploadcomplete', function(event, files, extra) {
-        			 location.reload();
+        			 //location.reload();
+                     console.log("extra");
+                     console.log(extra)
+                     console.log(event)
     		});
     $('#file-4').on('fileuploaded', function(event, data, previewId, index) {
 			 location.reload();
@@ -2786,12 +3080,12 @@ function enableweeklyeventedit(resp){
          params: function(params) {params.forceedit = $('#forceedit').is(":checked"); return params;  },
          url: base_url+'admin/events/'+'edit'+'/'+$("#selected_event").attr("event_id"), 
        source: [
-          {id: 'ART & CULTURE', text: 'Art & Culture'},
-          {id: 'FASHION', text: 'Fashion'},
-          {id: 'FOOD & DRINK', text: 'Food & Drink'},
-          {id: 'FAMILY', text: 'Family'},
-          {id: 'MUSIC', text: 'Music'},
-          {id: 'NIGHTLIFE', text: 'Nightlife'}
+          {id: 'Art & Culture', text: 'Art & Culture'},
+          {id: 'Fashion', text: 'Fashion'},
+          {id: 'Food & Drink', text: 'Food & Drink'},
+          {id: 'Family', text: 'Family'},
+          {id: 'Music', text: 'Music'},
+          {id: 'Nightlife', text: 'Nightlife'}
        ],
         select2: {
            multiple: true,
@@ -2803,7 +3097,7 @@ function enableweeklyeventedit(resp){
     $("#file-4").fileinput({
        "uploadUrl": base_url+'admin/events/addimage',
        'allowedFileExtensions': ['png','jpg','jpeg'],                
-       'maxFileSize': 10240,              
+       'maxFileSize': 1000240,              
        "maxFileCount": 1,
        "minFileCount": 1,	
         uploadExtraData: function() {
@@ -2924,7 +3218,7 @@ function formatselected_verified(state) {
     return  $(originalOption).data('name') ;
 }
 function convertToServerTimeZone1(date){
-    var offset = 4.0
+    var offset = -7.0
     var clientDate = new TimeShift.OriginalDate(date);
     var utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     var serverDate = new TimeShift.OriginalDate(utc - (3600000*offset));
@@ -2932,7 +3226,7 @@ function convertToServerTimeZone1(date){
     return dateFormats(serverDate, "mm/dd/yy")
 }
 function convertToServerDate(date,format){
-    var offset = 4.0
+    var offset = -7.0
     var clientDate = new TimeShift.OriginalDate(date);
     var utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     var serverDate = new TimeShift.OriginalDate(utc - (3600000*offset));
@@ -2941,7 +3235,7 @@ function convertToServerDate(date,format){
 }
 function convertToServerTimeZone(date)
 {
-    var offset = 4.0
+    var offset = -7.0
     date = String(date);
     var clientDate = new TimeShift.OriginalDate(date);
     if(!Object.prototype.toString.call(clientDate) === "[object Date]")
