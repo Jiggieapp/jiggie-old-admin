@@ -39,8 +39,10 @@
  		<link href="<?php echo $this->config->item('assets_css_url')?>fileinput.min.css" media="all" rel="stylesheet"  >
 
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_css_url')?>/bootstrap-editable.css">
+        
+<!--
         <link rel="stylesheet" href="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.css" />
-
+-->
         
 
         <link rel="stylesheet" href="/assets/js/jquery.timepicker.css" />
@@ -120,10 +122,13 @@
         <script src="<?php echo $this->config->item('assets_url')?>js/main.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/jquery.datepair.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/custom.js"></script>
+
+
+<!--
         <script src="<?php echo $this->config->item('assets_url')?>js/bootstrap-datepicker.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/jquery.timepicker.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/jquery.datepair.js"></script>
-
+-->
     
 
         <script src="<?php echo $this->config->item('assets_url')?>plugins/jquery-validation/additional-methods.min.js"></script>
