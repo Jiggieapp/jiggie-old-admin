@@ -33,20 +33,20 @@ if (defined('ENVIRONMENT'))
 	switch (ENVIRONMENT)
 	{
 		case 'development':
-			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
+			define('APIURL', 'http://jiggie.herokuapp.com/');
 			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 			error_reporting(E_ALL);
 		break;
 	
 		case 'testing':
 			error_reporting(E_ALL);
-			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
+			define('APIURL', 'http://jiggie.herokuapp.com/');
 			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 		case 'production':
 			//define('APIURL', 'http://partyhostapp.herokuapp.com/');
 			//define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 			error_reporting(0);
-			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
+			define('APIURL', 'http://jiggie.herokuapp.com/');
 			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 		break;
 
