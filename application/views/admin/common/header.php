@@ -8,7 +8,7 @@
 	            <!--img src="<?php echo $this->config->item('assets_url')?>images/logo.png"  /-->
 	        </span>
 	        <span class="sc-hidden">
-	            <span class="semi-bold">PartyHost</span>
+	            <span class="semi-bold">Jiggie</span>
 	            ADMIN
 	        </span>
 	    </a>
