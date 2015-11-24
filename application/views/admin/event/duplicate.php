@@ -204,15 +204,6 @@
                     </div>
                 </div>
 
-                <div class="form-group" id="hosting_name_div">
-                    <label class="control-label col-sm-3">Photos</label>
-
-                    <div class="controls col-sm-4" id ="hosting_name_div_err">
-                      <input class="typeahead form-control" name="fullfillment_value" id="fullfillment_value" type="text" placeholder="Fullfillment Value" value="<?php echo set_post_value('photos', $events->photos[0]) ; ?>">
-                    </div>
-                </div>
-
-
 
 
 
