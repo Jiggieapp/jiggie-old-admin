@@ -439,6 +439,37 @@ class Events extends CI_Controller {
             redirect("admin/events");
         }
 	}
+
+	public function editdatetime($event_id)
+	{
+		// 
+
+		$post_data["start_datetime_str"] = $this->input->post("start_datetime_str");
+		$post_data["end_datetime_str"] = $this->input->post("end_datetime_str");
+		$post_data["venue_id"] = $this->input->post("venue_id");
+
+		
+		$url =APIURL."admin/admin/event/datetime/update/".$event_id."?".TOKEN;
+
+		$ch = curl_init($url);					 
+		$payload = json_encode( $post_data );	
+					  					
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+		# Send request.
+		$result_set = curl_exec($ch);
+		curl_close($ch);
+		$result =  json_decode($result_set);
+		//var_dump($result);
+
+		$arrayName = array('success' => false, 'reason'=>'incorrect');
+		//echo json_encode($arrayName);
+
+		echo $result_set;
+
+		exit;  
+	}
 	
 	public function edit($event_id){
 		 $force = $this->input->post("forceedit");

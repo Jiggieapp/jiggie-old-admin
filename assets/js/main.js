@@ -765,6 +765,156 @@ $(document).ready(function() {
 		});  	
     	 
     })
+
+
+    $('#section_list').on("click",'#edit_startdatetime', function(e) {     
+         e.preventDefault(); 
+         event_details = this;
+
+         console.log("done!!!");
+
+         var html =  new EJS({url: base_url+'assets/js/ejs/event_edit_time.ejs?v='+ $.now()}).render({});
+
+        $modal = $('<div class="modal " id="edit_event_time"></div>');
+        $modal.html(html);
+        $('body').append($modal);
+        $modal.modal({backdrop: 'static', keyboard: true});
+        $modal.show();
+
+        var defaultStartTime = window.cEditEventData.start_datetime_str.split(",")[1];
+        defaultStartTime = defaultStartTime.slice(6,defaultStartTime.length);
+
+        var defaultEndTime = window.cEditEventData.end_datetime_str.split(",")[1];
+        defaultEndTime = defaultEndTime.slice(6,defaultEndTime.length);
+
+        $('#ModalEventEdit .time_start').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:i A'
+        });
+
+        $('#ModalEventEdit .time_end').timepicker({
+            'showDuration': true,
+            'timeFormat': 'g:i A'
+        });
+
+        $('#ModalEventEdit .time_start').attr("value",defaultStartTime);
+        $('#ModalEventEdit .time_end').attr("value",defaultEndTime);
+
+
+        defaultStartTime = defaultStartTime.slice(0,defaultStartTime.length - 2);
+        var defaultStartDate = window.cEditEventData.start_datetime_str.split(defaultStartTime)[0]
+
+
+        defaultEndTime = defaultEndTime.slice(0,defaultEndTime.length - 2);
+        var defaultEndDate = window.cEditEventData.end_datetime_str.split(defaultEndTime)[0]
+
+
+
+
+
+        $('#ModalEventEdit .date_start').datepicker({
+            'format': 'M dd, yyyy',
+            'autoclose': true,
+            'startDate':window.cEditEventData.start_date,
+            "minDate":new Date()
+        });
+
+        $('#ModalEventEdit .date_end').datepicker({
+            'format': 'M dd, yyyy',
+            'autoclose': true,
+            'startDate':window.cEditEventData.end_date,
+            "minDate":new Date()
+        });
+
+        $('#ModalEventEdit .date_start').attr("value",defaultStartDate);
+        $('#ModalEventEdit .date_end').attr("value",defaultEndDate);
+
+        $('#ModalEventEdit .date_start').datepicker('update', defaultStartDate);
+        $('#ModalEventEdit .date_end').datepicker('update', defaultEndDate);
+
+        $('#ModalEventEdit .date_end').datepicker().on('changeDate', function(ev)
+        {
+            var start_date = new Date( $('#ModalEventEdit .date_start').val() );
+            var end_date = ev.dates[0];
+            if(end_date < start_date)
+            {
+                $('#ModalEventEdit .date_end').datepicker('update', $('#ModalEventEdit .date_start').val());
+            }
+        });
+
+
+
+        $("#btnEditEvenTimeUpdate").click(function()
+        {
+ 
+            var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').val();
+            console.log(">>>" + start_date + "<<<<")
+            var start_datetime_str = start_date;
+            start_date = new Date(start_date);
+
+            var end_date = $('#ModalEventEdit .date_end').val() + " " + $('#ModalEventEdit .time_end').val();
+            console.log(">>>" + end_date + "<<<<")
+            var end_datetime_str = end_date;
+
+            end_date = new Date(end_date);
+            console.log("*****************")
+            console.log(start_date);
+            console.log(end_date);
+
+
+            if(end_date.getTime() < start_date.getTime())
+            {
+                alert("end date must be after start date");
+                return;
+            }
+
+            if(start_date.getTime() + 3600000 > end_date.getTime())
+            {
+                alert("event time less than hour");
+                return;
+            }
+
+            var path = base_url+'admin/events/editdatetime/'+$("#selected_event").attr("_id");
+
+            $.ajax({
+            type        : "POST",
+            url     : path, 
+            data        : {'start_datetime_str':start_datetime_str,'end_datetime_str':end_datetime_str,'venue_id':window.cEditEventData.venue_id},
+            dataType: "json",         
+            success : function(resp){
+                                     
+                console.log("RESP");
+                console.log(resp)
+
+                //var resp = jQuery.parseJSON(resp);
+                if(resp.success)
+                {
+                    location.reload();
+                }else{
+                    alert(resp.reason)
+                }
+            },
+             complete : function (o){
+                console.log("---------")
+                //console.log(o.responseText)
+                /*
+                var resp = jQuery.parseJSON(o.responseText);
+                if(resp.success)
+                {
+                    location.reload();
+                }else{
+                    alert(resp.reason)
+                }
+                */
+                //
+             }
+        });    
+
+        });
+
+    
+        });
+
     $('#section_list').on("click",'#delete_ticket_details', function(e) {  	 
     	 e.preventDefault(); 
     	 ticket_details = this;
@@ -2081,13 +2231,14 @@ function getVenueDetailPage(url,type){
 		            type: 'text',
 		            pk: 1,
 		            url: base_url+'admin/venue/'+'save'+'/'+$("#selected_venue").attr("venue_id"),
-		            emptytext: 'Url',
+		            emptytext: 'Url'/*,
 			         validate: function(value) {         	
-					    if(!(value+"").match(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/) && value !=''  ) {
+					    
+                        if(!(value+"").match(/^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/) && value !=''  ) {
 					        return 'Please enter valid url. eg http://google.com';
 					    }
 					    
-					}
+					}*/
 		   });
 		   $('#neighborhood').editable({
 			   	type: 'text',
@@ -2352,6 +2503,37 @@ function getEventDetailPage(url,type){
                 url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
                      
                 });
+
+                window.cEditEventData = resp;
+
+                console.log("resp.start_time " + resp.start_time)
+                console.log("resp.start_datetime " + resp.start_datetime)
+                /*
+                $('#edit_startdatetime').editable({  
+                    type:'combodate',
+                    value: new Date(resp.start_datetime),
+                    minuteStep:10,
+                    url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
+                    pk: 1
+                });
+                */
+ /*
+                $('<div class="confirmation-modal modal in" tabindex="-1" role="dialog" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title">Confirmation required</h4></div><div class="modal-body">Do you want to delete this event ?</div><div class="modal-footer"><button class="confirm btn btn-primary" type="button" data-dismiss="modal">Delete Event</button><button class="cancel btn btn-default" type="button" data-dismiss="modal">Cancel</button></div></div></div></div>').appendTo(document.body);
+
+               
+                
+                */
+
+
+                /*
+                $('#edit_startdatetime').editable({
+                type: 'time',
+                pk: 1,
+                value: resp.start_datetime,
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
+                     
+                });
+                */
 
                 console.log("is_recurring :: " + type)
 
