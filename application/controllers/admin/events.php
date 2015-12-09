@@ -407,13 +407,13 @@ class Events extends CI_Controller {
 		 
 		$result =  json_decode($result_set);
 		 
-        if($result->success=='true') {
-            sf('success_message', 'Event deleted successfully');
-            redirect("admin/events/");
-        } else {
-            sf('error_message', $result->reason);
-            redirect("admin/events");
-        }
+    if($result->success=='true') {
+        sf('success_message', 'Event deleted successfully');
+        redirect("admin/events/");
+    } else {
+        sf('error_message', $result->reason);
+        redirect("admin/events");
+    }
 	}
 	
 	public function weeklydelete($event_id,$force){		 
@@ -438,12 +438,12 @@ class Events extends CI_Controller {
 		curl_close($ch);
 		$result =  json_decode($result_set);
 		if($result->success=='true') {
-            sf('success_message', 'Event deleted successfully');
-            redirect("admin/events/");
-        } else {
-             sf('error_message', $result->reason);
-            redirect("admin/events");
-        }
+        sf('success_message', 'Event deleted successfully');
+        redirect("admin/events/");
+    } else {
+         sf('error_message', $result->reason);
+        redirect("admin/events");
+    }
 	}
 
 	public function editdatetime($event_id)
