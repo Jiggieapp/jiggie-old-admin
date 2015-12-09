@@ -10,10 +10,10 @@ class Chat extends CI_Controller {
         $this->msuccess['msg']	= '';
         $this->load->model(array('admin/admin_model', 'common_model', 'admin/chat_model','master_model','admin/permission_model'));
         $this->gen_contents['title']	=	'';
-		$this->config->set_item('site_title', 'Party Host  Admin - Chats');
+				$this->config->set_item('site_title', 'Party Host  Admin - Chats');
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         presetpastdaterange();
-		$this->gen_contents['current_controller'] = $this->router->fetch_class();
+				$this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
         $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
         $this->access_permissions = $this->permission_model->get_all_permission();
@@ -28,21 +28,18 @@ class Chat extends CI_Controller {
             $this->chat_list();
         }
     }
-    
-	
-	
-	
-	
-	
-	
+
      public function chat_list($init=''){
-     	     
+				if(!$this->master_model->checkAccess('view', CHATS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+				 return FALSE;
+				}
+
         $breadCrumbs = array( 'admin/chat/chat_list/0'=>'Chat');
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         $this->gen_contents['p_title']= 'Chats';
         $this->gen_contents['ci_view']= 'admin/chat/list_all';
         $this->gen_contents['add_link']= "";
-		$this->gen_contents['user_filter']= $this->uri->segment(5);
+				$this->gen_contents['user_filter']= $this->uri->segment(5);
         $this->gen_contents['export_link']= base_url().'admin/chat/export';
 		
         $this->gen_contents['current_controller'] = "chat";
