@@ -9,10 +9,10 @@ class Venue extends CI_Controller {
         parent::__construct();
         $this->merror['error']	= '';
         $this->msuccess['msg']	= '';
-		 $this->gen_contents['current_controller'] = $this->router->fetch_class();
+		    $this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->load->model(array('admin/venue_model','common_model','admin/permission_model','master_model'));
         $this->gen_contents['title']	=	'';
-		$this->config->set_item('site_title', 'Jiggie  Admin - Venues');
+		    $this->config->set_item('site_title', 'Jiggie  Admin - Venues');
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         presetpastdaterange();
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
@@ -23,7 +23,7 @@ class Venue extends CI_Controller {
     
     public function index()
     {
-    	if(!$this->master_model->checkAccess('view', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+    	  if(!$this->master_model->checkAccess('view', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
             return FALSE;
         }
         else {	
@@ -31,19 +31,22 @@ class Venue extends CI_Controller {
         }
     }
 	
-	public function venues($init=''){			 
-            
-            $this->gen_contents['p_title']= 'Venue listing';
-            $this->gen_contents['ci_view']= 'admin/venue/list';
-            $this->gen_contents['add_link']= base_url().'admin/venue/create_venue';
-            $this->gen_contents['export_link']= base_url().'admin/venue/export';
-            
-            $breadCrumbs = array( 'admin/venue/venues/'=>'Venues');
-            $this->gen_contents['breadcrumbs'] = $breadCrumbs;
-            $this->template->write_view('content', 'admin/listing',$this->gen_contents);
-            $this->template->render();
+    public function venues($init=''){
+        if(!$this->master_model->checkAccess('view', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+          return FALSE;
+        }
 
-	}
+        $this->gen_contents['p_title']= 'Venue listing';
+        $this->gen_contents['ci_view']= 'admin/venue/list';
+        $this->gen_contents['add_link']= base_url().'admin/venue/create_venue';
+        $this->gen_contents['export_link']= base_url().'admin/venue/export';
+
+        $breadCrumbs = array( 'admin/venue/venues/'=>'Venues');
+        $this->gen_contents['breadcrumbs'] = $breadCrumbs;
+        $this->template->write_view('content', 'admin/listing',$this->gen_contents);
+        $this->template->render();
+
+	  }
 	
 	public function ajax_list($init=''){
 		 
@@ -298,23 +301,27 @@ class Venue extends CI_Controller {
         return false; // If no formats match
     }
     public function delete_venue($venue) {
-       $url =APIURL."admin/admin/venue/update/".$venue."?".TOKEN;  
+        if(!$this->master_model->checkAccess('delete', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            return false;
+        }
+
+        $url =APIURL."admin/admin/venue/update/".$venue."?".TOKEN;
         $post_data["object"]          = 'active';
 		
-		$post_data["value"]           = '0' ; 
- 
-		$post_data["venue_id"]        = $venue;		
-		$ch = curl_init($url);					 
-		$payload = json_encode( $post_data );	
-					  					
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		# Send request.
-		$result_set = curl_exec($ch);
-		curl_close($ch);
-		
-		$result =  json_decode($result_set);
+        $post_data["value"]           = '0' ;
+
+        $post_data["venue_id"]        = $venue;
+        $ch = curl_init($url);
+        $payload = json_encode( $post_data );
+
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        # Send request.
+        $result_set = curl_exec($ch);
+        curl_close($ch);
+
+        $result =  json_decode($result_set);
 		 
         if($result->success=='true') {
             sf('success_message', 'Venue deleted successfully');
