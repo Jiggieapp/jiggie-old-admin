@@ -1456,7 +1456,7 @@ function getDataResponse(){
 	        ejs = 'chat_list.ejs';
 	        exp_uri= 'admin/chat/export';
 	        break;
-	    case 'user':	    	
+	    case 'user':
 	        if(typeof(dtext.view_type)=='undefined'||dtext.view_type=='list'){
 	        	 url = base_url+'admin/user/ajax_list';
 	       		 ejs = 'user_list.ejs';
@@ -1564,16 +1564,10 @@ function getDataResponse(){
                    //preparehashtags("anchor","true")
                    console.log("yes!!")
                 })
-    
 
-
-   console.log("URL : " + url)
-   console.log("data");
-   console.log(dtext)
-   
-
-
-
+    console.log("URL : " + url)
+    console.log("data");
+    console.log(dtext)
 
     $.ajax({
         type		: "POST",
@@ -1675,11 +1669,11 @@ function getDataResponse(){
         }
     });
 
-    dtext["export"] = "true"
+    dtext["export"] = "true";
     $.ajax({
         type        : "POST",
-        url     : url,  
-        dataType: "json",          
+        url         : url,
+        dataType    : "json",
         data        : dtext,
         success : function(resp){ 
             console.log(">>>>>>")
