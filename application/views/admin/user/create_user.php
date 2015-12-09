@@ -137,7 +137,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
                     <div class="controls col-sm-4"><button type="submit" class="btn btn-primary">Submit</button>
-                    <a class="btn btn-default" href="<?php echo base_url().'/admin/user'; ?>">Cancel</a>
+                    <a class="btn btn-default" href="<?php echo base_url().'admin/user'; ?>">Cancel</a>
                     </div>
                 </div>
             </div>
