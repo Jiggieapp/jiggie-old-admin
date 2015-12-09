@@ -9,10 +9,10 @@ class Blocklists extends CI_Controller {
         parent::__construct();
         $this->merror['error']	= '';
         $this->msuccess['msg']	= '';
-		 $this->gen_contents['current_controller'] = $this->router->fetch_class();
+        $this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->load->model(array('admin/admin_model','common_model','admin/block_model', 'admin/chat_model','master_model','admin/permission_model'));
         $this->gen_contents['title']	=	'';
-		presetpastdaterange();
+		    presetpastdaterange();
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
@@ -20,18 +20,21 @@ class Blocklists extends CI_Controller {
         $this->access_permissions = $this->permission_model->get_all_permission();
     }
     
-   
-	public function index()
-        {
-            if(!$this->master_model->checkAccess('view', BLOCKS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-                return FALSE;
-            } else {
-                $this->blocks();
-            }
+    public function index()
+    {
+        if(!$this->master_model->checkAccess('view', BLOCKS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            return FALSE;
+        } else {
+            $this->blocks();
         }
-	 public function blocks($init=''){
-	 	
-    	//$this->ajax_list($init);
+    }
+
+    public function blocks($init=''){
+        if(!$this->master_model->checkAccess('view', BLOCKS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            return FALSE;
+        }
+
+        //$this->ajax_list($init);
         $this->gen_contents['p_title']= 'User Blocks';
         $this->gen_contents['ci_view']= 'admin/block/listing';
         $this->gen_contents['add_link']= '';
