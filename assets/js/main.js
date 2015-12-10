@@ -2240,21 +2240,22 @@ function getVenueDetailPage(url,type){
 		        value: resp.responseJSON.data.neighborhood,
 		        url: base_url+'admin/venue/'+'save'+'/'+$("#selected_venue").attr("venue_id"), 
 		        source: [
-		                {value: 'Menteng', text: 'Menteng'},
-		                {value: 'Kuningan', text: 'Kuningan'},
-                        {value: 'Kebayoran Baru', text: 'Kebayoran Baru'},
-                        {value: 'Senayan', text: 'Senayan'},
-                        {value: 'Permata Hijau', text: 'Permata Hijau'},
-                        {value: 'Pondok Indah', text: 'Pondok Indah'},
-                        {value: 'Lebak Bulus', text: 'Lebak Bulus'},
-                        {value: 'Kemang', text: 'Kemang'},
-                        {value: 'Cipete', text: 'Cipete'},
-                        {value: 'Cilandak', text: 'Cilandak'},
-                        {value: 'Kelapa Gading', text: 'Kelapa Gading'},
-                        {value: 'Senopati', text: 'Senopati'},
-                        {value: 'Sarinah', text: 'Sarinah'},
-                        {value: 'Cikini', text: 'Cikini'}
-		           ]
+                {value: 'Menteng', text: 'Menteng'},
+                {value: 'Kuningan', text: 'Kuningan'},
+                {value: 'Kebayoran Baru', text: 'Kebayoran Baru'},
+                {value: 'Senayan', text: 'Senayan'},
+                {value: 'Permata Hijau', text: 'Permata Hijau'},
+                {value: 'Pondok Indah', text: 'Pondok Indah'},
+                {value: 'Lebak Bulus', text: 'Lebak Bulus'},
+                {value: 'Kemang', text: 'Kemang'},
+                {value: 'Cipete', text: 'Cipete'},
+                {value: 'Cilandak', text: 'Cilandak'},
+                {value: 'Kelapa Gading', text: 'Kelapa Gading'},
+                {value: 'Senopati', text: 'Senopati'},
+                {value: 'Sarinah', text: 'Sarinah'},
+                {value: 'Cikini', text: 'Cikini'},
+                {value: 'Tangerang', text: 'Tangerang'}
+            ]
 		             
 		    }); 
             /*
