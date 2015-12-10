@@ -22,7 +22,6 @@ class Adminuser extends CI_Controller {
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
         $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
         $this->access_permissions = $this->permission_model->get_all_permission();
-        
     }
     
      public function index() {
@@ -30,11 +29,10 @@ class Adminuser extends CI_Controller {
      }
      
      public function users($init='') {
-     	if(!$this->master_model->checkAccess('create', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+     	  if(!$this->master_model->checkAccess('create', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
             return FALSE;
         }
-		
-      
+
         $this->gen_contents['p_title'] = 'Admin Users List';
         $this->gen_contents['ci_view'] = 'admin/admin_user/listing';
         $this->gen_contents['add_link'] = base_url() . 'admin/adminuser/create';
@@ -46,13 +44,10 @@ class Adminuser extends CI_Controller {
     }
 
     public function ajax_list($init='') {
-
-
-
         $config['base_url'] = base_url() . 'admin/adminuser/ajax_list';
     
 
-		if ('' != $this->input->post('per_page')) {
+    		if ('' != $this->input->post('per_page')) {
             $config['per_page'] = $this->input->post('per_page');            
             $perPage = '';
         }        
@@ -60,10 +55,10 @@ class Adminuser extends CI_Controller {
             $config['per_page'] = 10;
         }        
         	
-		if('' != $this->input->post ('offset')){
+		    if('' != $this->input->post ('offset')){
                $offset	= safeInteger($this->input->post ('offset'));			    
         }
-		else {
+		    else {
         	$offset = 1;
         } 
         $this->gen_contents['offset'] = $offset;
@@ -98,14 +93,14 @@ class Adminuser extends CI_Controller {
 
         $config['total_rows'] = $this->master_model->getAllUsers($arr_where, $arr_sort, 'count', $config['per_page'], ($offset-1)*$config['per_page'], $arr_search);
         $config['total_page'] = ceil($config['total_rows'] / $config['per_page']);
-		$config['offset'] = $offset;
-	    $this->gen_contents['total_count'] = $config['total_rows'];         	
+		    $config['offset'] = $offset;
+	      $this->gen_contents['total_count'] = $config['total_rows'];
         $this->gen_contents['data_search'] = $arr_search["where"];		
         $this->gen_contents['paginate'] = $config;
         $this->gen_contents['data_url'] = $config['base_url'];
         $this->gen_contents['users'] = $this->master_model->getAllUsers($arr_where, $arr_sort, 'list', $config['per_page'], ($offset-1)*$config['per_page'], $arr_search);
 
-         echo json_encode($this->gen_contents);exit;
+        echo json_encode($this->gen_contents);exit;
     }
     
     public function create() {
@@ -116,10 +111,7 @@ class Adminuser extends CI_Controller {
                 return FALSE;
             }
 
-            
             if (!empty($_POST)) {
-                
-                                
                 $this->form_validation->set_rules('email', 'Email', 'required');
                 $this->form_validation->set_rules('user_type_id', 'User Type', 'required');
                 $this->form_validation->set_rules('first_name', 'First Name', 'required');

@@ -62,6 +62,7 @@
                             <option value="Senopati">Senopati</option>
                             <option value="Sarinah">Sarinah</option>
                             <option value="Cikini">Cikini</option>
+                            <option value="Tangerang">Tangerang</option>
                         <!--
                     		<?php $postval = $this->input->post("neighborhood");?>
                     		<option <?php echo $postval == "bryant park" ? "selected='true'" : ""; ?> value="bryant park">Bryant Park</option>
