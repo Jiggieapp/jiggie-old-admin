@@ -28,6 +28,8 @@
  * By default development will show errors but testing and live will hide them.
  */
 //date_default_timezone_set('America/New_York');
+// This is added by arman
+
 if (defined('ENVIRONMENT'))
 {
 	switch (ENVIRONMENT)

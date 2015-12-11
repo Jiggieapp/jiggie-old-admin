@@ -1,3 +1,4 @@
+
 <?php
 
 if (!defined('BASEPATH'))
@@ -638,7 +639,7 @@ class User_model extends CI_Model {
          foreach ($query->result_array() as $count){
          	$result[$count['week']] =$count['count'];
          }	 
-		 return $result;
+		 return $result;
 	}
 	public function getGuestByMonth($start,$end){
 		 $query	= $this->db->query("SELECT  DATE(`m`.`created_at`) AS `date`,COUNT( DISTINCT(t.guest_id)) AS `count`, 

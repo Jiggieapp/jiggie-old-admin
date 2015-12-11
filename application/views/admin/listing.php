@@ -6,7 +6,7 @@ $exid = ($current_controller=='hostings')?'hostings':'' ;
 <div class="" id="section_list" data-section="<?php echo $current_controller?>" data-clickedfrom="" data-clickedfromurl="">
     <div class="panel panel-default">
         <div class="panel-heading" id="test-heading" style="display: none">
-            <h4 class="panel-title"><?php echo $p_title ?>        	</h4>
+            <h4 class="panel-title"><?php echo $p_title ?></h4>
 
             <div class="panel-options">
                  <?php $perPage = null ?>

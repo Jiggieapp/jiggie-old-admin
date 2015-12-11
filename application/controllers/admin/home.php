@@ -32,29 +32,29 @@ class Home extends CI_Controller {
     public function index() {
     	presetpastdaterange();
         $this->mcontents = array();
-		($this->authentication->check_logged_in("admin")) ? redirect('admin/home/dashboard') : ''; 
+				($this->authentication->check_logged_in("admin")) ? redirect('admin/home/dashboard') : '';
         if (!empty($_POST)) {
 
-            $this->load->library('form_validation');
-            $this->_init_adminlogin_validation_rules(); //server side validation of input values
-            if ($this->form_validation->run() == FALSE) {// form validation
-                sf('error_message', 'Invalid Username or Password');
+	        $this->load->library('form_validation');
+	        $this->_init_adminlogin_validation_rules(); //server side validation of input values
+	        if ($this->form_validation->run() == FALSE) {// form validation
+            sf('error_message', 'Invalid Username or Password');
+            redirect("admin");
+          } else {
+            $this->_init_adminlogin_details();
+            $login_details['email'] = $this->email;
+            $login_details['password'] = $this->password;
+						$login_status =  $this->authentication->process_admin_login($login_details);
+            if ($login_status == 'success') {
+                redirect("admin/home/dashboard");
+            } else if ($login_status == 'deleted') {
+                sf('error_message', 'Your account has been deleted. Please contact Party Host Admin');
                 redirect("admin");
             } else {
-                $this->_init_adminlogin_details();
-                $login_details['email'] = $this->email;
-                $login_details['password'] = $this->password;
-				$login_status =  $this->authentication->process_admin_login($login_details);
-                if ($login_status == 'success') {
-                    redirect("admin/home/dashboard");
-                } else if ($login_status == 'deleted') {
-                    sf('error_message', 'Your account has been deleted. Please contact Party Host Admin');
-                    redirect("admin");
-                } else {
-                    sf('error_message', 'The email or password you entered is incorrect.');
-                    redirect("admin");
-                }
+                sf('error_message', 'The email or password you entered is incorrect.');
+                redirect("admin");
             }
+          }
         }
 
         // define form attributes

@@ -10,10 +10,10 @@ class Events extends CI_Controller {
         $this->msuccess['msg']	= '';
         $this->load->model(array('master_model','admin/permission_model'));
         $this->gen_contents['title']	=	'';
-		$this->config->set_item('site_title', 'Jiggie  Admin - Events');
+				$this->config->set_item('site_title', 'Jiggie  Admin - Events');
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
         presetfuturedaterange();
-		$this->gen_contents['current_controller'] = $this->router->fetch_class();
+				$this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->access_userid = $this->session->userdata("ADMIN_USERID");
         $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
         $this->access_permissions = $this->permission_model->get_all_permission();		
@@ -22,7 +22,7 @@ class Events extends CI_Controller {
       
     public function index()
     {
-        if(!$this->master_model->checkAccess('view', CHATS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+        if(!$this->master_model->checkAccess('view', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
             return FALSE;
         } else {
         	
@@ -36,80 +36,82 @@ class Events extends CI_Controller {
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         $this->gen_contents['p_title']= 'Events';
         $this->gen_contents['current_controller'] = "events";
-		$this->gen_contents['export_link']= base_url().'admin/events/export';
-		$this->gen_contents['add_link']= base_url().'admin/events/create_event';
+				$this->gen_contents['export_link']= base_url().'admin/events/export';
+				$this->gen_contents['add_link']= base_url().'admin/events/create_event';
         //$this->template->write_view('content', 'admin/events',$this->gen_contents);
-		$this->template->write_view('content', 'admin/listing',$this->gen_contents);
+				$this->template->write_view('content', 'admin/listing',$this->gen_contents);
         $this->template->render();		 
     }
 	
-	public function ajax_list(){
+		public function ajax_list(){
 		
 		
         $config['base_url'] = base_url().'admin/venue/ajax_list';
-		if ('' != $this->input->post('per_page')) {
-            $config['per_page'] = $this->input->post('per_page');            
+				if ('' != $this->input->post('per_page')) {
+            $config['per_page'] = $this->input->post('per_page');
             $perPage = '';
         }        
         else {
             $config['per_page'] = 10;
         }        
         	
-		if('' != $this->input->post ('offset')){
+
+				if('' != $this->input->post ('offset')){
                $offset	= safeInteger($this->input->post ('offset'));			    
-        }
-		else {
+          }
+				else {
         	$offset = 1;
         } 
-		$this->mcontents['offset'] = $offset;
+				$this->mcontents['offset'] = $offset;
 		 
 		 
-		$arr_where								= array();		
-		$arr_sort								= array();
-		if ('' != $this->input->post('sort_field')) {
-            $arr_sort['name'] = $this->input->post('sort_field');
-        } else {
-            $arr_sort['name'] = 'start_datetime';
-        }
-        if ('' != $this->input->post('sort_val')) {
-            $arr_sort['value'] = $this->input->post('sort_val');
-        } else {
-            $arr_sort['value'] = 'asc';
-        }
-        
-		if ('' != $this->input->post('sort_status')) {
-            $sort_status = $this->input->post('sort_status');
-        } else {
-            $sort_status = '';
-        }
-		     
-        $arr_search = array();
-        if ($this->input->post('search_name') != "") {
-        	$arr_search["where"] = mysql_real_escape_string($this->input->post('search_name')) ; 
-			 $search_string ="&search_fields=type,title,description,event_date,&search_value=".urlencode($arr_search["where"]);           		
-        }else {
-           	 $search_string  = "";
-            
-        }
-                
-		 //T04:00:00.000Z
-         $start_date = $this->input->post('startDate_iso');		 
-         $end_date =   $this->input->post('endDate_iso');
-        // file_put_contents('C:\Users\User\Desktop\1.txt', $start_date.'======'.$end_date);
-		 $url =APIURL."admin/admin/events/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
-		 $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&sort_status=".$sort_status."&start_date=$start_date&end_date=$end_date".$search_string;
-	 
-		 
-		
-		//echo $json = file_get_contents($url);exit;
-		
-         
-		//  $url =APIURL."admin/events/list/".$start_date."/".$end_date; 
-		
-		echo $json = file_get_contents($url);exit;
-        
-        
-    }
+				$arr_where								= array();
+				$arr_sort								= array();
+				if ('' != $this->input->post('sort_field')) {
+		            $arr_sort['name'] = $this->input->post('sort_field');
+		        } else {
+		            $arr_sort['name'] = 'start_datetime';
+		        }
+		        if ('' != $this->input->post('sort_val')) {
+		            $arr_sort['value'] = $this->input->post('sort_val');
+		        } else {
+		            $arr_sort['value'] = 'asc';
+		        }
+
+				if ('' != $this->input->post('sort_status')) {
+		            $sort_status = $this->input->post('sort_status');
+		        } else {
+		            $sort_status = '';
+		        }
+
+		        $arr_search = array();
+		        if ($this->input->post('search_name') != "") {
+		          $arr_search["where"] = mysql_real_escape_string($this->input->post('search_name')) ;
+					 $search_string ="&search_fields=type,title,description,event_date,&search_value=".urlencode($arr_search["where"]);
+		        }else {
+		             $search_string  = "";
+
+		        }
+
+				 //T04:00:00.000Z
+		         $start_date = $this->input->post('startDate_iso');
+		         $end_date =   $this->input->post('endDate_iso');
+		        // file_put_contents('C:\Users\User\Desktop\1.txt', $start_date.'======'.$end_date);
+				 $url =APIURL."admin/admin/events/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
+				 $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&sort_status=".$sort_status."&start_date=$start_date&end_date=$end_date".$search_string;
+
+
+
+				//echo $json = file_get_contents($url);exit;
+
+
+				//  $url =APIURL."admin/events/list/".$start_date."/".$end_date;
+
+				echo $json = file_get_contents($url);exit;
+
+
+		}
+
 	public function cal_view($start_date='',$end_date=''){
 		
 
@@ -145,12 +147,17 @@ class Events extends CI_Controller {
 	}
    
    public function create_event($date=''){
-   	    $startdate='';
-		 
-		if(validateDate($date, 'Y-m-d')){
-   	    	$startdate = date('M d, Y',strtotime($date));
-   	    }
-   	    
+
+	   if(!$this->master_model->checkAccess('create', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+		   return FALSE;
+	   }
+
+	   $startdate='';
+
+	   if(validateDate($date, 'Y-m-d')){
+		   $startdate = date('M d, Y',strtotime($date));
+	   }
+
    		try 
         {
             if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
@@ -158,82 +165,80 @@ class Events extends CI_Controller {
             }
             
             $this->mcontents = array();
-            
-			
-            if(!empty($_POST)) {                 
-                	
-                    $post_data["title"]              = $this->input->post("title");
-					$post_data["event_type"]         = $this->input->post("event_type");
-                    $post_data["description"]        = $this->input->post("description");
-					$post_data["source"]             = $this->input->post("featured_event"); 
-                    $post_data["description"]        = $this->input->post("description");					 
-					$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
-				    $post_data["end_datetime_str"]   = $this->input->post("end_time");	
-					$post_data["status"]         	 = $this->input->post("event_status");
 
 
-					$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
-					$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
+            if(!empty($_POST)) {
+	            $post_data["title"] = $this->input->post("title");
+							$post_data["event_type"] = $this->input->post("event_type");
+	            $post_data["description"] = $this->input->post("description");
+							$post_data["source"] = $this->input->post("featured_event");
+	            $post_data["description"] = $this->input->post("description");
+							$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
+				      $post_data["end_datetime_str"]   = $this->input->post("end_time");
+							$post_data["status"] = $this->input->post("event_status");
 
-					if(is_array($this->input->post("event_tags")))
-						$etags		=implode(",", $this->input->post("event_tags"));
-					else  
-						$etags	=  '';
-					 	 
-					$post_data["tags"]         		= $etags;					
-					$post_data["venue_id"]          = $this->input->post("venue_sel");
-					$post_data["rank"]              = $this->input->post("rank"); 
-					if($this->input->post("forever"))  
-				    	$post_data["end_series_datetime"]              = 0;
-					else
-						$post_data["end_series_datetime"]              = $this->input->post("end_date").' '.$this->input->post("starttime");
-					
-				    
-					$ch = curl_init(APIURL.'admin/admin/events/add'."?".TOKEN );					 
-					$payload = json_encode( $post_data );
-					 					
-					curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-					curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
-					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-					# Send request.
-					$result_set = curl_exec($ch);
-					curl_close($ch);
-					$result =  json_decode($result_set);
-					if($result->success==true){						 
-						sf('success_message', 'Event created successfully');
-						if($result->event->event_type=='special'){
-							$type= 'event-special';
-							$ev = $result->event->_id;
-						}else {
-							$type= 'event-weekly';
-							$ev = $result->event->_id;
-							
-						}
-						redirect('admin/events/#/'.$type.'='.$ev);
-					}else{
-						if($result->reason=="event already exists"){
-							$this->gen_contents['error'] =$result->reason;
-							if($result->event->event_type=='special'){
-								$type= 'event-special';
-								$ev = $result->event->_id;
-							}else {
-								$type= 'event-weekly';
-								$ev = $result->event->event_id;
+
+							$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
+							$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
+
+							if(is_array($this->input->post("event_tags")))
+								$etags		=implode(",", $this->input->post("event_tags"));
+							else
+								$etags	=  '';
+
+							$post_data["tags"]         		= $etags;
+							$post_data["venue_id"]          = $this->input->post("venue_sel");
+							$post_data["rank"]              = $this->input->post("rank");
+							if($this->input->post("forever"))
+						      $post_data["end_series_datetime"]              = 0;
+							else
+								$post_data["end_series_datetime"]              = $this->input->post("end_date").' '.$this->input->post("starttime");
+
+
+							$ch = curl_init(APIURL.'admin/admin/events/add'."?".TOKEN );
+							$payload = json_encode( $post_data );
+
+							curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+							curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+							curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+							# Send request.
+							$result_set = curl_exec($ch);
+							curl_close($ch);
+							$result =  json_decode($result_set);
+							if($result->success==true){
+								sf('success_message', 'Event created successfully');
+								if($result->event->event_type=='special'){
+									$type= 'event-special';
+									$ev = $result->event->_id;
+								}else {
+									$type= 'event-weekly';
+									$ev = $result->event->_id;
+
+								}
+								redirect('admin/events/#/'.$type.'='.$ev);
+							}else{
+								if($result->reason=="event already exists"){
+									$this->gen_contents['error'] =$result->reason;
+									if($result->event->event_type=='special'){
+										$type= 'event-special';
+										$ev = $result->event->_id;
+									}else {
+										$type= 'event-weekly';
+										$ev = $result->event->event_id;
+									}
+									$url = base_url().'admin/events/#/'.$type.'='.$ev;
+									$this->gen_contents['error'] = '<a target="_blank" style="color:#fff;text-decoration: underline;"  href="'.$url.'"  >'.$result->event->title.'</a>  already exist';
+								}else{
+									$this->gen_contents['error'] =$result->reason;
+								}
 							}
-							$url = base_url().'admin/events/#/'.$type.'='.$ev;
-							$this->gen_contents['error'] = '<a target="_blank" style="color:#fff;text-decoration: underline;"  href="'.$url.'"  >'.$result->event->title.'</a>  already exist';
-						}else{
-							$this->gen_contents['error'] =$result->reason;
-						}
-						
-						 
-					}
                    
                     
-                }
+            }
+
             $venues=  file_get_contents(APIURL.'admin/admin/venuelist'."?".TOKEN);			
-			$this->gen_contents['venues'] = json_decode($venues); 
-			$this->gen_contents['startdate'] = $startdate; 
+						$this->gen_contents['venues'] = json_decode($venues);
+						$this->gen_contents['startdate'] = $startdate;
             $breadCrumbs = array( 'admin/events/'=>'Events');
             $this->gen_contents['breadcrumbs'] = $breadCrumbs;
             $this->template->write_view('content', 'admin/event/create_event', $this->gen_contents);
@@ -384,14 +389,18 @@ class Events extends CI_Controller {
         }
    }
 	public function delete($event_id){
-		 $url =APIURL."admin/admin/event/update/".$event_id."?".TOKEN;
-		 $post_data["object"]          = 'active'; 
-		 $post_data["value"]           = '0' ; 		 
-		 $post_data["event_id"]          = $event_id;
-		  
-		 $ch = curl_init($url);					 
-		 $payload = json_encode( $post_data );	
-					  					
+		if(!$this->master_model->checkAccess('delete', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+			return FALSE;
+		}
+
+		$url =APIURL."admin/admin/event/update/".$event_id."?".TOKEN;
+		$post_data["object"]          = 'active';
+		$post_data["value"]           = '0' ;
+		$post_data["event_id"]          = $event_id;
+
+		$ch = curl_init($url);
+		$payload = json_encode( $post_data );
+
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -401,13 +410,13 @@ class Events extends CI_Controller {
 		 
 		$result =  json_decode($result_set);
 		 
-        if($result->success=='true') {
-            sf('success_message', 'Event deleted successfully');
-            redirect("admin/events/");
-        } else {
-            sf('error_message', $result->reason);
-            redirect("admin/events");
-        }
+    if($result->success=='true') {
+        sf('success_message', 'Event deleted successfully');
+        redirect("admin/events/");
+    } else {
+        sf('error_message', $result->reason);
+        redirect("admin/events");
+    }
 	}
 	
 	public function weeklydelete($event_id,$force){		 
@@ -432,12 +441,12 @@ class Events extends CI_Controller {
 		curl_close($ch);
 		$result =  json_decode($result_set);
 		if($result->success=='true') {
-            sf('success_message', 'Event deleted successfully');
-            redirect("admin/events/");
-        } else {
-             sf('error_message', $result->reason);
-            redirect("admin/events");
-        }
+        sf('success_message', 'Event deleted successfully');
+        redirect("admin/events/");
+    } else {
+         sf('error_message', $result->reason);
+        redirect("admin/events");
+    }
 	}
 
 	public function editdatetime($event_id)

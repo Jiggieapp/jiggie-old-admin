@@ -10,7 +10,7 @@ class User extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-		$this->gen_contents['current_controller'] = $this->router->fetch_class();
+        $this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->merror['error'] = '';
         $this->msuccess['msg'] = '';
         $this->load->model(array('admin/admin_model', 'common_model', 'admin/user_model','admin/permission_model','master_model'));
@@ -44,11 +44,15 @@ class User extends CI_Controller {
     }
 
     public function users($init='') {
-    	    
+
+        if(!$this->master_model->checkAccess('view', USERS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            return FALSE;
+        }
+
         $this->gen_contents['p_title'] = 'Users List';
         $this->gen_contents['ci_view'] = 'admin/user/listing';
         $this->gen_contents['add_link'] = base_url() . 'admin/user/create_user';
-        $this->gen_contents['export_link'] = base_url() . 'admin/user/export';       
+        $this->gen_contents['export_link'] = base_url() . 'admin/user/export';
         $breadCrumbs = array( 'admin/user/users/0'=>'Users');
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         $this->template->write_view('content', 'admin/listing', $this->gen_contents);
@@ -57,10 +61,8 @@ class User extends CI_Controller {
     }
 
     public function ajax_list($init='') {
-		
-        
-        $config['base_url'] = base_url() . 'admin/user/ajax_list';  
-         
+        $config['base_url'] = base_url() . 'admin/user/ajax_list';
+
         if ('' != $this->input->post('per_page')) {
             $config['per_page'] = $this->input->post('per_page');            
             $perPage = '';
@@ -69,14 +71,16 @@ class User extends CI_Controller {
             $config['per_page'] = 10;
         }        
         	
-		if('' != $this->input->post ('offset')){
+        if('' != $this->input->post ('offset')){
                $offset	= safeInteger($this->input->post ('offset'));			    
         }
-		else {
+		    else {
         	$offset = 1;
-        } 
+        }
+
         $arr_where = array();
         $arr_sort = array();
+
         if ('' != $this->input->post('sort_field')) {
             $arr_sort['name'] = $this->input->post('sort_field');
         } else {
@@ -90,37 +94,37 @@ class User extends CI_Controller {
         //Search Factor
         $arr_search = array();
         if ($this->input->post('search_name') != "") {
-        	$arr_search["where"] = mysql_real_escape_string($this->input->post('search_name')) ;     
-			$search_string  = "&search_fields=first_name,last_name,email,location,gender,age,&search_value=".urlencode($arr_search["where"]);
+        	  $arr_search["where"] = mysql_real_escape_string($this->input->post('search_name')) ;
+            $search_string  = "&search_fields=first_name,last_name,email,location,gender,age,&search_value=".urlencode($arr_search["where"]);
                    		
-        }else {           	 
-			$search_string  = "";            
+        }else {
+            $search_string  = "";
         }
 
-		$config['offset'] = $offset;
-	          	
+		    $config['offset'] = $offset;
+
 
         if ($this->input->post('search_ref') != "")
         {
             $search_string  = "&search_fields=appsflyer.af_sub1,&search_value=".$this->input->post('search_ref');
         }
 
-		 
-         $start_date = $this->input->post('startDate_iso');		 
-         $end_date =   $this->input->post('endDate_iso');
+
+        $start_date = $this->input->post('startDate_iso');
+        $end_date =   $this->input->post('endDate_iso');
       
-		 $url =APIURL."admin/admin/users/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
-		 $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&start_date=$start_date&end_date=$end_date".$search_string;
-	 
-		 if($this->input->post('export') == "true")
-         {
-            echo json_encode(array("url" => $url));exit;
-         }else{
-            echo $json = @file_get_contents($url);exit;
-         }
-		
-	
-        
+		    $url =APIURL."admin/admin/users/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
+		    $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&start_date=$start_date&end_date=$end_date".$search_string;
+
+        if($this->input->post('export') == "true")
+        {
+            $export_url = (!$this->master_model->checkAccess('export', USERS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions))?
+               'javascript: return(0);' : $url;
+            echo json_encode(array("url" => $export_url));exit;
+        }else{
+           echo $json = @file_get_contents($url);exit;
+        }
+
         //$this->gen_contents['users'] = $this->user_model->getAllUsers($arr_where, $arr_sort, 'list', $config['per_page'], ($offset-1)*$config['per_page'], $arr_search);
 
         //echo json_encode($this->gen_contents);exit;
