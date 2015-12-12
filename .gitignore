@@ -1,3 +1,4 @@
+index.php
 /application/config/database.php
 /application/cache/*
 /cache/*
