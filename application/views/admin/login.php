@@ -4,7 +4,7 @@
         <!-- Meta, title, CSS, favicons, etc. -->
                 <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Party Host- Administrator Login </title>
+        <title>Jiggie - Administrator Login </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
