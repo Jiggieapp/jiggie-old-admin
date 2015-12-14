@@ -28,34 +28,18 @@ class Chat extends CI_Controller {
             $this->chat_list();
         }
     }
-<<<<<<< HEAD
-    
-	
-	
-	
-	
-	
-	
-     public function chat_list($init=''){
-     	     
-=======
 
      public function chat_list($init=''){
 				if(!$this->master_model->checkAccess('view', CHATS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
 				 return FALSE;
 				}
 
->>>>>>> development
         $breadCrumbs = array( 'admin/chat/chat_list/0'=>'Chat');
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         $this->gen_contents['p_title']= 'Chats';
         $this->gen_contents['ci_view']= 'admin/chat/list_all';
         $this->gen_contents['add_link']= "";
-<<<<<<< HEAD
-		$this->gen_contents['user_filter']= $this->uri->segment(5);
-=======
 				$this->gen_contents['user_filter']= $this->uri->segment(5);
->>>>>>> development
         $this->gen_contents['export_link']= base_url().'admin/chat/export';
 		
         $this->gen_contents['current_controller'] = "chat";
