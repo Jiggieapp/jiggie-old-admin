@@ -2456,7 +2456,7 @@ function getEventDetailPage(url,type){
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_type,
-                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"), 
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
                 source: [
                         {value: 'none', text: 'None'},
                         {value: 'phone_number', text: 'Phone Number'},
@@ -2464,20 +2464,13 @@ function getEventDetailPage(url,type){
                         {value: 'reservation', text: 'Reservation'},
                         {value: 'purchase', text: 'Purchase'}, 
                    ]
-                     
                 });
-
-
-
-
-
-
 
                 $('#edit_venue_item').editable({
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_type,
-                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"), 
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
                 source: [
                         {value: 'none', text: 'None'},
                         {value: 'phone_number', text: 'Phone Number'},
@@ -2487,16 +2480,12 @@ function getEventDetailPage(url,type){
                    ]
                      
                 });
-
-
-                
 
                 $('#edit_fufill_value').editable({
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_value,
                 url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
-                     
                 });
 
                 window.cEditEventData = resp;

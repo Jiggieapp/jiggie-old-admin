@@ -32,7 +32,7 @@ class Events extends CI_Controller {
 	
 	
     public function event_list($init=''){     	     
-        $breadCrumbs = array( 'admin/events/'=>'Events');
+	      $breadCrumbs = array( 'admin/events/'=>'Events');
         $this->gen_contents['breadcrumbs'] = $breadCrumbs;
         $this->gen_contents['p_title']= 'Events';
         $this->gen_contents['current_controller'] = "events";
@@ -421,7 +421,8 @@ class Events extends CI_Controller {
 		 	$post_data["force"]          = 1;
 		else
 		 	$post_data["force"]          = 0;
-	    $url =APIURL."admin/admin/event/recurring/update/".$event_id."?".TOKEN;
+
+		$url =APIURL."admin/admin/event/recurring/update/".$event_id."?".TOKEN;
 		$post_data["object"]          = 'active'; 
 		$post_data["value"]           = '0' ; 
 		 
@@ -448,8 +449,6 @@ class Events extends CI_Controller {
 
 	public function editdatetime($event_id)
 	{
-		// 
-
 		$post_data["start_datetime_str"] = $this->input->post("start_datetime_str");
 		$post_data["end_datetime_str"] = $this->input->post("end_datetime_str");
 		$post_data["venue_id"] = $this->input->post("venue_id");
@@ -584,11 +583,7 @@ class Events extends CI_Controller {
 				 	$data_to_post['force']        = 0;
 			$url =APIURL."admin/admin/event/recurring/delete/image/".$event_id."?".TOKEN;
 		}
-			 
-			 
-	
-		
-		
+
 		$data_to_post['url'] = $this->input->post('url');
 		$data_to_post['event_id'] = $event_id;		 
 		$curl = curl_init();
@@ -611,7 +606,12 @@ class Events extends CI_Controller {
 		exit;
 	}
 	function editspecial($event_id){
-		
+		if(!$this->master_model->checkAccess('update', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+			http_response_code(401);
+			echo "Unauthorized";
+			exit;
+		}
+
 		$url =APIURL."admin/admin/event/update/".$event_id."?".TOKEN;
 		$post_data["object"]          = $this->input->post('name'); 
 		 if($post_data["object"] =='tags'){
