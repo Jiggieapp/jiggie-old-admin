@@ -272,7 +272,7 @@ class Events extends CI_Controller {
               $post_data["description"]        = $this->input->post("description");
 							$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
 				      $post_data["end_datetime_str"]   = $this->input->post("end_time");
-							$post_data["status"]         	 = $this->input->post("event_status");
+							$post_data["status"]         	   = $this->input->post("event_status");
 
 							$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
 							$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
@@ -349,8 +349,6 @@ class Events extends CI_Controller {
 									$this->gen_contents['error'] =$result->reason;
 								}
 							}
-                   
-                     
             }
 
 	          if(empty($event_id))
@@ -601,6 +599,7 @@ class Events extends CI_Controller {
 	}
 	function editspecial($event_id){
 		if(!$this->master_model->checkAccess('update', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+			var_dump('here');
 			http_response_code(401);
 			echo "Unauthorized";
 			exit;
@@ -608,18 +607,18 @@ class Events extends CI_Controller {
 
 		$url =APIURL."admin/admin/event/update/".$event_id."?".TOKEN;
 		$post_data["object"]          = $this->input->post('name'); 
-		 if($post_data["object"] =='tags'){
+		if($post_data["object"] =='tags'){
 		 	if(is_array($this->input->post("value")))
 						$etags		=implode(",", $this->input->post("value"));
 					else  
 						$etags	=  '';
 		 	$post_data["value"]         = $etags ;
-		 }else{
+		}else{
 		 	$post_data["value"]          = $this->input->post('value') ;
-		 }
+		}
 		 
 		 
-		 $post_data["event_id"]          = $event_id;
+		$post_data["event_id"]          = $event_id;
 		  
 		$ch = curl_init($url);					 
 		$payload = json_encode( $post_data );	
