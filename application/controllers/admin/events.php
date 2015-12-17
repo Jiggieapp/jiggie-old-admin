@@ -115,17 +115,15 @@ class Events extends CI_Controller {
 		
 
 		if ('' != $this->input->get('sort_status')) {
-            $sort_status = $this->input->get('sort_status');
-        } else {
-            $sort_status = '';
-        }
+      $sort_status = $this->input->get('sort_status');
+    } else {
+      $sort_status = '';
+    }
 
 		$url =APIURL."admin/admin/events/list/calendar/".$start_date."/".$end_date."?".TOKEN."&sort_status=".$sort_status;
-		 
 
-
-		echo $json = file_get_contents($url);        
-        exit;
+		echo $json = file_get_contents($url);
+		exit;
 	}
 	public function event_details($type,$id){
 		if($type=='weekly')
