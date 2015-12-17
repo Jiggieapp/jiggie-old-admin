@@ -107,8 +107,6 @@ class Events extends CI_Controller {
 				//  $url =APIURL."admin/events/list/".$start_date."/".$end_date;
 
 				echo $json = file_get_contents($url);exit;
-
-
 		}
 
 	public function cal_view($start_date='',$end_date=''){
@@ -119,6 +117,7 @@ class Events extends CI_Controller {
 		echo $json = file_get_contents($url);
 		exit;
 	}
+
 	public function event_details($type,$id){
 		if($type=='weekly')
 			$url =APIURL."admin/admin/event/recurring/details/".$id."?".TOKEN;
@@ -127,14 +126,14 @@ class Events extends CI_Controller {
 		}	
 		// echo $url;
 		echo $json = file_get_contents($url);        
-        exit;
+			exit;
 	}
 	
 	public function allvenues(){
 		$url =APIURL."admin/admin/venuelist"."?".TOKEN;	
 		 
 		echo $json = file_get_contents($url);        
-        exit;
+			exit;
 	}
    
    public function create_event($date=''){
@@ -151,7 +150,7 @@ class Events extends CI_Controller {
    		try 
         {
             if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-                    return FALSE;
+	            return FALSE;
             }
             
             $this->mcontents = array();
@@ -165,7 +164,6 @@ class Events extends CI_Controller {
 							$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
 				      $post_data["end_datetime_str"]   = $this->input->post("end_time");
 							$post_data["status"] = $this->input->post("event_status");
-
 
 							$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
 							$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
