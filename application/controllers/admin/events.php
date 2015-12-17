@@ -112,13 +112,7 @@ class Events extends CI_Controller {
 		}
 
 	public function cal_view($start_date='',$end_date=''){
-		
-
-		if ('' != $this->input->get('sort_status')) {
-      $sort_status = $this->input->get('sort_status');
-    } else {
-      $sort_status = '';
-    }
+		$sort_status = '' != $this->input->get('sort_status') ? $this->input->get('sort_status') : '';
 
 		$url =APIURL."admin/admin/events/list/calendar/".$start_date."/".$end_date."?".TOKEN."&sort_status=".$sort_status;
 
