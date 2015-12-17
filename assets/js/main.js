@@ -771,8 +771,6 @@ $(document).ready(function() {
          e.preventDefault(); 
          event_details = this;
 
-         console.log("done!!!");
-
          var html =  new EJS({url: base_url+'assets/js/ejs/event_edit_time.ejs?v='+ $.now()}).render({});
 
         $modal = $('<div class="modal " id="edit_event_time"></div>');
@@ -807,10 +805,6 @@ $(document).ready(function() {
 
         defaultEndTime = defaultEndTime.slice(0,defaultEndTime.length - 2);
         var defaultEndDate = window.cEditEventData.end_datetime_str.split(defaultEndTime)[0]
-
-
-
-
 
         $('#ModalEventEdit .date_start').datepicker({
             'format': 'M dd, yyyy',
@@ -2456,7 +2450,7 @@ function getEventDetailPage(url,type){
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_type,
-                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"), 
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
                 source: [
                         {value: 'none', text: 'None'},
                         {value: 'phone_number', text: 'Phone Number'},
@@ -2464,20 +2458,13 @@ function getEventDetailPage(url,type){
                         {value: 'reservation', text: 'Reservation'},
                         {value: 'purchase', text: 'Purchase'}, 
                    ]
-                     
                 });
-
-
-
-
-
-
 
                 $('#edit_venue_item').editable({
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_type,
-                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"), 
+                url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id"),
                 source: [
                         {value: 'none', text: 'None'},
                         {value: 'phone_number', text: 'Phone Number'},
@@ -2487,16 +2474,12 @@ function getEventDetailPage(url,type){
                    ]
                      
                 });
-
-
-                
 
                 $('#edit_fufill_value').editable({
                 type: 'text',
                 pk: 1,
                 value: resp.fullfillment_value,
                 url: base_url+'admin/events/'+updatetype+'/'+$("#selected_event").attr("_id")
-                     
                 });
 
                 window.cEditEventData = resp;

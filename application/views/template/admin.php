@@ -46,8 +46,14 @@
         
 
         <link rel="stylesheet" href="/assets/js/jquery.timepicker.css" />
-
-
+      <style type="text/css">
+        #ui-datepicker-div{
+          z-index: 99999999 !important;
+        }
+        .bootstrap-timepicker-widget{
+          z-index: 9999999;
+        }
+      </style>
 
 		<script type="text/javascript">
 		    var base_url 		= "<?php echo base_url(); ?>";
