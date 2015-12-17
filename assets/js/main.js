@@ -771,8 +771,6 @@ $(document).ready(function() {
          e.preventDefault(); 
          event_details = this;
 
-         console.log("done!!!");
-
          var html =  new EJS({url: base_url+'assets/js/ejs/event_edit_time.ejs?v='+ $.now()}).render({});
 
         $modal = $('<div class="modal " id="edit_event_time"></div>');
@@ -807,10 +805,6 @@ $(document).ready(function() {
 
         defaultEndTime = defaultEndTime.slice(0,defaultEndTime.length - 2);
         var defaultEndDate = window.cEditEventData.end_datetime_str.split(defaultEndTime)[0]
-
-
-
-
 
         $('#ModalEventEdit .date_start').datepicker({
             'format': 'M dd, yyyy',
