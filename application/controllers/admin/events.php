@@ -256,126 +256,127 @@ class Events extends CI_Controller {
 			redirect('admin/events');
 
 		try
-        {
-            if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-                    return FALSE;
-            }
-            
-            $this->mcontents = array();
+    {
+	    if (!$this->master_model->checkAccess('create', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions))
+      {
+        return FALSE;
+      }
 
-            if(!empty($_POST)) {                 
-                	 
-	            $post_data["title"]              = $this->input->post("title");
-							$post_data["event_type"]         = $this->input->post("event_type");
-              $post_data["description"]        = $this->input->post("description");
-							$post_data["source"]             = $this->input->post("featured_event");
-              $post_data["description"]        = $this->input->post("description");
-							$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
-				      $post_data["end_datetime_str"]   = $this->input->post("end_time");
-							$post_data["status"]         	   = $this->input->post("event_status");
+      $this->mcontents = array();
 
-							$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
-							$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
+      if(!empty($_POST)) {
+
+        $post_data["title"]              = $this->input->post("title");
+				$post_data["event_type"]         = $this->input->post("event_type");
+        $post_data["description"]        = $this->input->post("description");
+				$post_data["source"]             = $this->input->post("featured_event");
+        $post_data["description"]        = $this->input->post("description");
+				$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
+	      $post_data["end_datetime_str"]   = $this->input->post("end_time");
+				$post_data["status"]         	   = $this->input->post("event_status");
+
+				$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
+				$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
 
 
-							$pic_total = $this->input->post("pic_total");
-					
-							$post_data["pic_total"] = $pic_total;
+				$pic_total = $this->input->post("pic_total");
 
-							$tmpA = array();
-					
-							for ($i=0; $i < $pic_total ; $i++)
-							{
-								if($this->input->post("photo_".$i) != "")
-								{
-									array_push($tmpA, $this->input->post("photo_".$i));
-								}
-							}
-					
-							for ($j=0; $j <$pic_total ; $j++)
-							{
-								$post_data["photo_" . $j] = $tmpA[$j];
-							}
-				
-							//$post_data["pic_total"] = "2";
-							//$post_data["photo_0"] = "https://s3-us-west-2.amazonaws.com/cdnpartyhost/1446789007515.jpg";
-							//$post_data["photo_1"] = "https://s3-us-west-2.amazonaws.com/cdnpartyhost/1446789007515.jpg";
+				$post_data["pic_total"] = $pic_total;
 
-							if(is_array($this->input->post("event_tags")))
-								$etags		=implode(",", $this->input->post("event_tags"));
-							else
-								$etags	=  '';
+				$tmpA = array();
 
-							$post_data["tags"]         		= $etags;
-							$post_data["venue_id"]          = $this->input->post("venue_sel");
-							$post_data["rank"]              = $this->input->post("rank");
-							if($this->input->post("forever"))
-								$post_data["end_series_datetime"]              = 0;
-							else
-								$post_data["end_series_datetime"]              = $this->input->post("end_date").' '.$this->input->post("starttime");
+				for ($i=0; $i < $pic_total ; $i++)
+				{
+					if($this->input->post("photo_".$i) != "")
+					{
+						array_push($tmpA, $this->input->post("photo_".$i));
+					}
+				}
 
-							$ch = curl_init(APIURL.'admin/admin/events/add'."?".TOKEN );
-							$payload = json_encode( $post_data );
+				for ($j=0; $j <$pic_total ; $j++)
+				{
+					$post_data["photo_" . $j] = $tmpA[$j];
+				}
 
-							curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-							curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-							curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-							# Send request.
-							$result_set = curl_exec($ch);
-							curl_close($ch);
-							$result =  json_decode($result_set);
-							//var_dump($result);
+				//$post_data["pic_total"] = "2";
+				//$post_data["photo_0"] = "https://s3-us-west-2.amazonaws.com/cdnpartyhost/1446789007515.jpg";
+				//$post_data["photo_1"] = "https://s3-us-west-2.amazonaws.com/cdnpartyhost/1446789007515.jpg";
 
-							if($result->success==true){
-								sf('success_message', 'Event created successfully');
-								if($result->event->event_type=='special')
-									$type= 'event-special';
-								else {
-									$type= 'event-weekly';
-								}
-								redirect('admin/events/#/'.$type.'='.$result->event->_id);
-							}else{
-								if($result->reason=="event already exists"){
-									$this->gen_contents['error'] =$result->reason;
+				if(is_array($this->input->post("event_tags")))
+					$etags		=implode(",", $this->input->post("event_tags"));
+				else
+					$etags	=  '';
 
-									if($e_type=='special')
-										$type= 'event-special';
-									else {
-										$type= 'event-weekly';
-									}
-									$url = base_url().'admin/events/#/'.$type.'='.$event_id;
-									$this->gen_contents['error'] = '<a target="_blank" style="color:#fff;text-decoration: underline;"  href="'.$url.'"  >'.$result->event->title.'</a>  already exist';
-								}else{
-									$this->gen_contents['error'] =$result->reason;
-								}
-							}
-            }
+				$post_data["tags"]         		= $etags;
+				$post_data["venue_id"]          = $this->input->post("venue_sel");
+				$post_data["rank"]              = $this->input->post("rank");
+				if($this->input->post("forever"))
+					$post_data["end_series_datetime"]              = 0;
+				else
+					$post_data["end_series_datetime"]              = $this->input->post("end_date").' '.$this->input->post("starttime");
 
-	          if(empty($event_id))
-            { 
-                sf('error_message', "Events details not found");  
-                redirect('admin/events');
-            }
+				$ch = curl_init(APIURL.'admin/admin/events/add'."?".TOKEN );
+				$payload = json_encode( $post_data );
 
-            $venues=  file_get_contents(APIURL.'admin/admin/venuelist'."?".TOKEN);	
-						if($e_type=='weekly')
-							$url_e =APIURL."admin/admin/event/recurring/details/".$event_id."?".TOKEN;
+				curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+				curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+				# Send request.
+				$result_set = curl_exec($ch);
+				curl_close($ch);
+				$result =  json_decode($result_set);
+				//var_dump($result);
+
+				if($result->success==true){
+					sf('success_message', 'Event created successfully');
+					if($result->event->event_type=='special')
+						$type= 'event-special';
+					else {
+						$type= 'event-weekly';
+					}
+					redirect('admin/events/#/'.$type.'='.$result->event->_id);
+				}else{
+					if($result->reason=="event already exists"){
+						$this->gen_contents['error'] =$result->reason;
+
+						if($e_type=='special')
+							$type= 'event-special';
 						else {
-							$url_e =APIURL."admin/admin/event/details/".$event_id."?".TOKEN;
+							$type= 'event-weekly';
 						}
-						$events=  file_get_contents($url_e);
-						$this->gen_contents['venues'] = json_decode($venues);
+						$url = base_url().'admin/events/#/'.$type.'='.$event_id;
+						$this->gen_contents['error'] = '<a target="_blank" style="color:#fff;text-decoration: underline;"  href="'.$url.'"  >'.$result->event->title.'</a>  already exist';
+					}else{
+						$this->gen_contents['error'] =$result->reason;
+					}
+				}
+      }
 
-						$this->gen_contents['events'] = json_decode($events);
-            $breadCrumbs = array( 'admin/events/'=>'Events');
-            $this->gen_contents['breadcrumbs'] = $breadCrumbs;
-            $this->template->write_view('content', 'admin/event/duplicate', $this->gen_contents);
-            $this->template->render();
-        }
-        catch (Exception $e) 
-        {
-            
-        }
+      if(empty($event_id))
+      {
+          sf('error_message', "Events details not found");
+          redirect('admin/events');
+      }
+
+      $venues=  file_get_contents(APIURL.'admin/admin/venuelist'."?".TOKEN);
+			if($e_type=='weekly')
+				$url_e =APIURL."admin/admin/event/recurring/details/".$event_id."?".TOKEN;
+			else {
+				$url_e =APIURL."admin/admin/event/details/".$event_id."?".TOKEN;
+			}
+			$events=  file_get_contents($url_e);
+			$this->gen_contents['venues'] = json_decode($venues);
+
+			$this->gen_contents['events'] = json_decode($events);
+      $breadCrumbs = array( 'admin/events/'=>'Events');
+      $this->gen_contents['breadcrumbs'] = $breadCrumbs;
+      $this->template->write_view('content', 'admin/event/duplicate', $this->gen_contents);
+      $this->template->render();
+    }
+    catch (Exception $e)
+    {
+
+    }
    }
 	public function delete($event_id){
 		if(!$this->master_model->checkAccess('delete', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
@@ -506,7 +507,13 @@ class Events extends CI_Controller {
 	}
 	
 	public function addimage(){
-		 	 
+		if(!$this->master_model->checkAccess('update', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+			http_response_code(401);
+			$response['error'] = "You're not authorized";
+			echo json_encode($response);
+			exit;
+		}
+
 			if (empty($_FILES['photo'])) {
 			    echo json_encode(array('error'=>'No files found for upload.')); 		    
 			    return;  
@@ -562,6 +569,13 @@ class Events extends CI_Controller {
 	}
 	
 	function removeimage($event_id=''){
+		if(!$this->master_model->checkAccess('update', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+			http_response_code(401);
+			$response['error'] = "You're not authorized";
+			echo json_encode($response);
+			exit;
+		}
+
 		$force = $this->input->post("forceedit");
 		$type = $this->input->post('type');
 		$data_to_post = array();
@@ -597,6 +611,7 @@ class Events extends CI_Controller {
 		echo 1;
 		exit;
 	}
+
 	function editspecial($event_id){
 		if(!$this->master_model->checkAccess('update', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
 			http_response_code(401);
@@ -631,6 +646,7 @@ class Events extends CI_Controller {
 		var_dump($result);
 		exit;   
 	}
+
 	function getCurlValue($filename, $contentType, $postname)
 	{
 	    // PHP 5.5 introduced a CurlFile object that deprecates the old @filename syntax
