@@ -436,7 +436,6 @@ class Events extends CI_Controller {
 		$post_data["end_datetime_str"] = $this->input->post("end_datetime_str");
 		$post_data["venue_id"] = $this->input->post("venue_id");
 
-		
 		$url =APIURL."admin/admin/event/datetime/update/".$event_id."?".TOKEN;
 
 		$ch = curl_init($url);					 
@@ -574,9 +573,9 @@ class Events extends CI_Controller {
 		}else{
 			
 			if($force=='true') 
-				 	$data_to_post['force']        = 1;
-				else
-				 	$data_to_post['force']        = 0;
+				$data_to_post['force']        = 1;
+			else
+				$data_to_post['force']        = 0;
 			$url =APIURL."admin/admin/event/recurring/delete/image/".$event_id."?".TOKEN;
 		}
 
@@ -610,22 +609,19 @@ class Events extends CI_Controller {
 		}
 
 		$url =APIURL."admin/admin/event/update/".$event_id."?".TOKEN;
+
 		$post_data["object"]          = $this->input->post('name'); 
 		if($post_data["object"] =='tags'){
-		 	if(is_array($this->input->post("value")))
-				$etags		=implode(",", $this->input->post("value"));
-			else
-				$etags	=  '';
-		 	$post_data["value"]         = $etags ;
+			$post_data["value"]         = is_array($this->input->post("value")) ? implode(",", $this->input->post("value")) : '';
 		}else{
-		 	$post_data["value"]          = $this->input->post('value') ;
+		 	$post_data["value"]         = $this->input->post('value') ;
 		}
 
-		$post_data["event_id"]          = $event_id;
+		$post_data["event_id"]        = $event_id;
 		  
 		$ch = curl_init($url);					 
-		$payload = json_encode( $post_data );	
-					  					
+		$payload = json_encode( $post_data );
+
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
