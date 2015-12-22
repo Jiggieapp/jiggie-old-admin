@@ -823,8 +823,8 @@ $(document).ready(function() {
         $('#ModalEventEdit .date_start').attr("value",defaultStartDate);
         $('#ModalEventEdit .date_end').attr("value",defaultEndDate);
 
-        $('#ModalEventEdit .date_start').datepicker('update', defaultStartDate);
-        $('#ModalEventEdit .date_end').datepicker('update', defaultEndDate);
+        //$('#ModalEventEdit .date_start').datepicker('update', defaultStartDate);
+        //$('#ModalEventEdit .date_end').datepicker('update', defaultEndDate);
 
         $('#ModalEventEdit .date_end').datepicker().on('changeDate', function(ev)
         {
@@ -836,11 +836,8 @@ $(document).ready(function() {
             }
         });
 
-
-
-        $("#btnEditEvenTimeUpdate").click(function()
+        $("#btnEditEvenTimeUpdate").on("click", function()
         {
- 
             var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').val();
             console.log(">>>" + start_date + "<<<<")
             var start_datetime_str = start_date;
