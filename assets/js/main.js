@@ -787,21 +787,21 @@ $(document).ready(function() {
 
         $('#ModalEventEdit .time_start').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:i A'
+            'timeFormat': 'g:i A',
+            'defaultTime': defaultStartTime
         });
 
         $('#ModalEventEdit .time_end').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:i A'
+            'timeFormat': 'g:i A',
+            'defaultTime': defaultEndTime
         });
 
         $('#ModalEventEdit .time_start').attr("value",defaultStartTime);
         $('#ModalEventEdit .time_end').attr("value",defaultEndTime);
 
-
         defaultStartTime = defaultStartTime.slice(0,defaultStartTime.length - 2);
         var defaultStartDate = window.cEditEventData.start_datetime_str.split(defaultStartTime)[0]
-
 
         defaultEndTime = defaultEndTime.slice(0,defaultEndTime.length - 2);
         var defaultEndDate = window.cEditEventData.end_datetime_str.split(defaultEndTime)[0]
