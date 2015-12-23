@@ -767,7 +767,7 @@ $(document).ready(function() {
     })
 
 
-    $('#section_list').on("click",'#edit_startdatetime', function(e) {     
+    $('#section_list').on("click",'#edit_startdatetime', function(e) {
          e.preventDefault(); 
          event_details = this;
 
@@ -787,21 +787,21 @@ $(document).ready(function() {
 
         $('#ModalEventEdit .time_start').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:i A'
+            'timeFormat': 'g:i A',
+            'defaultTime': defaultStartTime
         });
 
         $('#ModalEventEdit .time_end').timepicker({
             'showDuration': true,
-            'timeFormat': 'g:i A'
+            'timeFormat': 'g:i A',
+            'defaultTime': defaultEndTime
         });
 
         $('#ModalEventEdit .time_start').attr("value",defaultStartTime);
         $('#ModalEventEdit .time_end').attr("value",defaultEndTime);
 
-
         defaultStartTime = defaultStartTime.slice(0,defaultStartTime.length - 2);
         var defaultStartDate = window.cEditEventData.start_datetime_str.split(defaultStartTime)[0]
-
 
         defaultEndTime = defaultEndTime.slice(0,defaultEndTime.length - 2);
         var defaultEndDate = window.cEditEventData.end_datetime_str.split(defaultEndTime)[0]
@@ -823,9 +823,6 @@ $(document).ready(function() {
         $('#ModalEventEdit .date_start').attr("value",defaultStartDate);
         $('#ModalEventEdit .date_end').attr("value",defaultEndDate);
 
-        $('#ModalEventEdit .date_start').datepicker('update', defaultStartDate);
-        $('#ModalEventEdit .date_end').datepicker('update', defaultEndDate);
-
         $('#ModalEventEdit .date_end').datepicker().on('changeDate', function(ev)
         {
             var start_date = new Date( $('#ModalEventEdit .date_start').val() );
@@ -836,25 +833,19 @@ $(document).ready(function() {
             }
         });
 
-
-
-        $("#btnEditEvenTimeUpdate").click(function()
+        $("#btnEditEvenTimeUpdate").on("click", function()
         {
- 
             var start_date = $('#ModalEventEdit .date_start').val() + " " + $('#ModalEventEdit .time_start').val();
-            console.log(">>>" + start_date + "<<<<")
             var start_datetime_str = start_date;
             start_date = new Date(start_date);
 
             var end_date = $('#ModalEventEdit .date_end').val() + " " + $('#ModalEventEdit .time_end').val();
-            console.log(">>>" + end_date + "<<<<")
             var end_datetime_str = end_date;
 
             end_date = new Date(end_date);
-            console.log("*****************")
+            console.log("*****************");
             console.log(start_date);
             console.log(end_date);
-
 
             if(end_date.getTime() < start_date.getTime())
             {
@@ -872,7 +863,7 @@ $(document).ready(function() {
 
             $.ajax({
             type        : "POST",
-            url     : path, 
+            url         : path,
             data        : {'start_datetime_str':start_datetime_str,'end_datetime_str':end_datetime_str,'venue_id':window.cEditEventData.venue_id},
             dataType: "json",         
             success : function(resp){
@@ -888,7 +879,7 @@ $(document).ready(function() {
                     alert(resp.reason)
                 }
             },
-             complete : function (o){
+            complete : function (o){
                 console.log("---------")
                 //console.log(o.responseText)
                 /*
@@ -902,12 +893,11 @@ $(document).ready(function() {
                 */
                 //
              }
-        });    
+        });
 
         });
 
-    
-        });
+    });
 
     $('#section_list').on("click",'#delete_ticket_details', function(e) {  	 
     	 e.preventDefault(); 
