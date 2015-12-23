@@ -779,6 +779,10 @@ $(document).ready(function() {
         $modal.modal({backdrop: 'static', keyboard: true});
         $modal.show();
 
+        $("#edit_event_time").on('hidden.bs.modal', function(){
+            $(this).remove();
+        });
+
         var defaultStartTime = window.cEditEventData.start_datetime_str.split(",")[1];
         defaultStartTime = defaultStartTime.slice(6,defaultStartTime.length);
 
