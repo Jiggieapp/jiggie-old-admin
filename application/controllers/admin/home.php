@@ -98,11 +98,12 @@ class Home extends CI_Controller {
     }
 
     public function dashboard() {
- 		redirect('admin/user');
-        (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';  
-		$start_date = $this->session->userdata('startDate') . " 00:00:00";
+// 		redirect('admin/user');
+
+        (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
+				$start_date = $this->session->userdata('startDate') . " 00:00:00";
         $end_date = $this->session->userdata('endDate') . " 23:59:59";
-		$this->config->set_item('site_title', 'Party Host - Administrator DashBoard');      
+				$this->config->set_item('site_title', 'Party Host - Administrator DashBoard');
         $this->gen_contents['user_count'] = $this->user_model->getUserCounts($start_date,$end_date);
         $this->gen_contents['hosting_count'] = $this->hosting_model->getHostingCounts($start_date,$end_date);
         $this->gen_contents['chats_count'] = $this->chat_model->getChatCounts($start_date,$end_date);
@@ -110,6 +111,43 @@ class Home extends CI_Controller {
         $this->template->write_view('content', 'admin/dashboard', $this->gen_contents);
         $this->template->render();
     }
+
+	public function ajax_mixpanel_users(){
+		$apiK = '71fb579d648860ee5e6df09e3243b1e4';
+		$apiS = 'a25cf43fe8892a4f06686eb29cc89c99';
+
+		$now = strtotime(date("Y-m-d H:i:s"));
+		$expire = $now + (60*10);
+
+		$from = $this->input->get('from', TRUE);
+		$fromDate = date('Y-m-d', $from > 0 ? strtotime('-' . $from . ' days', strtotime(date('Y-m-d'))) : strtotime(date('Y-m-d')));
+		$toDate = date('Y-m-d');
+
+		$mpToday = array(
+				'api_key' => $apiK,
+				'event' => 'Sign+Up',
+				'from_date' => $fromDate,
+				'to_date' => $toDate,
+				'where' => '(string(user["email"]) != "hankao@gmail.com")',
+				'expire' => $expire,
+				'type' => 'general',
+				'unit' => 'day',
+		);
+
+		ksort($mpToday);
+
+		$mixpanel_params = '';
+		foreach ($mpToday as $k => $v) {
+			if (!empty($mixpanel_params)) $mixpanel_params .= '&';
+			$mixpanel_params .= $k . '=' . $v;
+		}
+
+		$sig = md5(str_replace('&', '', $mixpanel_params) . $apiS);
+
+		$endpoint = 'http://mixpanel.com/api/2.0/segmentation?' . $mixpanel_params . '&sig=' . $sig;
+
+		echo($endpoint);
+	}
 	
 	public function overview() {		
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';  

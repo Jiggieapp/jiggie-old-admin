@@ -129,7 +129,6 @@ jQuery(function ($) {
     
 });
 $(document).ready(function() {
-	
 	if($('#section_list').length){
 		
 		//getDataResponse(base_url+'admin/chat/ajax_list','chat');
@@ -185,9 +184,10 @@ $(document).ready(function() {
 	    hasher.init(); //initialize hasher (start listening for history changes)
 	}
 	if(controller_JS=='events' || controller_JS=='hostings' ){
-		var all_endDate = moment().add(6, 'months') ;
-		
-		//auto_range ={"start":moment(),"end":moment().add(6, 'months')};
+		var all_endDate = moment().add(6, 'months');
+
+    console.log(moment());
+      //auto_range ={"start":moment(),"end":moment().add(6, 'months')};
 		max_date ='+6m';
 		auto_range = {};
 		auto_range.start= moment("2015-04-01"+'T01:00:00-04:00');
@@ -220,6 +220,8 @@ $(document).ready(function() {
 			 ]
 	}
  
+    var _today = new Date();
+    var userTimeZoneDiff = 360;
     $("#e1").daterangepicker1(
 		{
 			presetRanges:preset_options,
@@ -230,12 +232,11 @@ $(document).ready(function() {
 			initStart:moment(start_date_JS+'T01:00:00-04:00') ,
 			initEnd:moment(end_date_JS+'T01:00:00-04:00'),
 			initSel:int_sel,
-			autorange: auto_range, 
+			autorange: auto_range,
 	});
       
-    $('#e1').on('change.daterangepicker', function(e) {
-      
-			
+    $('#e1').on('change.daterangepicker1', function(e) {
+
 	  var seldate = $("#e1").daterangepicker1("getRange");	 
 	  var url_link = base_url+'admin/home/dateRange/'+ (new Date()).getTime();  
 	   console.log(">>>>> " + seldate.end)
@@ -3190,7 +3191,8 @@ function formatselected_verified(state) {
     return  $(originalOption).data('name') ;
 }
 function convertToServerTimeZone1(date){
-    var offset = -7.0
+    //var offset = -7.0
+    var offset = 0;
     var clientDate = new TimeShift.OriginalDate(date);
     var utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     var serverDate = new TimeShift.OriginalDate(utc - (3600000*offset));
@@ -3198,7 +3200,8 @@ function convertToServerTimeZone1(date){
     return dateFormats(serverDate, "mm/dd/yy")
 }
 function convertToServerDate(date,format){
-    var offset = -7.0
+    //var offset = -7.0
+    var offset = 0;
     var clientDate = new TimeShift.OriginalDate(date);
     var utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
     var serverDate = new TimeShift.OriginalDate(utc - (3600000*offset));
@@ -3207,7 +3210,8 @@ function convertToServerDate(date,format){
 }
 function convertToServerTimeZone(date)
 {
-    var offset = -7.0
+    //var offset = -7.0
+    var offset = 0;
     date = String(date);
     var clientDate = new TimeShift.OriginalDate(date);
     if(!Object.prototype.toString.call(clientDate) === "[object Date]")
@@ -3240,7 +3244,7 @@ function getAge(dateString)
     
    
     var age = today.getFullYear() - birthDate.getFullYear();
-    console.log(dateString) 
+    //console.log(dateString)
     var m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
     {
@@ -3296,4 +3300,45 @@ function calculateTotal(){
 	var total= price + parseFloat(adminfee) + parseFloat(price*(tax/100))+ parseFloat(price*(tip/100));
 	$('#total').val(total.toFixed(2));
 }
- 
+
+if (controller_JS == 'home'){
+    if ($('#user_stat_number').length > 0){
+        var endpoint = 'admin/user/ajax_list';
+        getTotalFromAdmin(endpoint, 0, 0, '#user_stat_today');
+        getTotalFromAdmin(endpoint, 1, 0, '#user_stat_yesterday');
+        getTotalFromAdmin(endpoint, 30, 0, '#user_stat_30day');
+        getTotalFromAdmin(endpoint, 9999, 0, '#total_user_stat')
+    }
+
+    if ($("#user_chat_number").length > 0){
+        var endpoint = 'admin/chat/ajax_list';
+        getTotalFromAdmin(endpoint, 0, 0, '#chat_stat_today');
+        getTotalFromAdmin(endpoint, 1, 0, '#chat_stat_yesterday');
+        getTotalFromAdmin(endpoint, 7, 0, '#chat_stat_7day');
+        getTotalFromAdmin(endpoint, 14, 7, '#chat_stat_14day');
+        getTotalFromAdmin(endpoint, 30, 0, '#chat_stat_30day');
+        getTotalFromAdmin(endpoint, 60, 30, '#chat_stat_60day');
+        getTotalFromAdmin(endpoint, 9999, 0, '#total_chat_stat');
+    }
+}
+
+function getTotalFromAdmin(endpoint, from_pointer, to_pointer, target){
+    var format_date = "YYYY-MM-DD";
+    startDate = from_pointer < 9999 ?
+      moment().subtract(from_pointer, 'day').format(format_date) : "2015-10-01T00:00:00.000Z";
+    endDate = moment().subtract(to_pointer, 'day').format(format_date) + 'T00:00:00.000Z';
+
+    var param = {
+        startDate_iso: startDate,
+        endDate_iso: endDate
+    };
+
+    $.ajax({
+        method: 'POST',
+        url: base_url + endpoint,
+        data: param
+    }).done(function(html){
+        eval("var response = " + html + ";");
+        $(target).html(response.total_count).counterUp({delay: 10, time: 1000});
+    });
+}
