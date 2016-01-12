@@ -132,7 +132,7 @@ class Home extends CI_Controller {
 
 		$from = $this->input->get('from', TRUE);
 		$fromDate = date('Y-m-d', $from > 0 ? strtotime('-' . $from . ' days', strtotime(date('Y-m-d'))) : strtotime(date('Y-m-d')));
-		$toDate = date('Y-m-d');
+		$toDate = date('Y-m-d', $from == 1 ? strtotime('-' . $from . ' days', strtotime(date('Y-m-d'))) : strtotime(date('Y-m-d')));
 
 		$where = '';
 
