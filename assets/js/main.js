@@ -3308,6 +3308,13 @@ if (controller_JS == 'home'){
         getTotalFromAdmin(endpoint, 1, 0, '#user_stat_yesterday');
         getTotalFromAdmin(endpoint, 30, 0, '#user_stat_30day');
         getTotalFromAdmin(endpoint, 9999, 0, '#total_user_stat')
+
+        endpoint = 'admin/home/ajax_mixpanel_users?event=Sign Up';
+        var allTimeDays = moment().diff(moment("2015-10-01"), 'days');
+        getTotalFromAdmin(endpoint + '&from=0', 0, 0, '#user_mp_today');
+        getTotalFromAdmin(endpoint + '&from=1', 0, 0, '#user_mp_yesterday');
+        getTotalFromAdmin(endpoint + '&from=30', 0, 0, '#user_mp_30day');
+        getTotalFromAdmin(endpoint + '&from=' + allTimeDays, 0, 0, '#total_mp_stat');
     }
 
     if ($("#user_chat_number").length > 0){

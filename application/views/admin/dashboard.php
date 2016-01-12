@@ -78,13 +78,13 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" >
             <h4>Mix Panel</h4>
             <div class="col-md-4">
               <div class="panel panel-default">
                 <div class="panel-body">
                   <h5 class="page-header no-margin semi-bold">Today</h5>
-                  <h2 class="semi-bold text-primary-dark no-margin-bottom text-center"><?php echo $user_count['user_prev_week']; ?></h2>
+                  <h2 id="user_mp_today" class="semi-bold text-primary-dark no-margin-bottom text-center">0</h2>
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@
               <div class="panel panel-default">
                 <div class="panel-body">
                   <h5 class="page-header no-margin semi-bold">Yesterday</h5>
-                  <h2 class="semi-bold text-primary-dark no-margin-bottom"><?php echo $user_count['user_month']; ?></h2>
+                  <h2 id="user_mp_yesterday" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@
               <div class="panel panel-default">
                 <div class="panel-body">
                   <h5 class="page-header no-margin semi-bold">Last 30 days</h5>
-                  <h2 class="semi-bold text-primary-dark no-margin-bottom"><?php echo $user_count['user_prev_month']; ?></h2>
+                  <h2 id="user_mp_30day" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                 </div>
               </div>
             </div>
@@ -120,7 +120,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body">
                         <h5 class="page-header no-margin semi-bold">Total Mixpanel</h5>
-                        <h2 class="semi-bold text-primary-dark no-margin-bottom counter"><?php echo $user_count['user_new']; ?></h2>
+                        <h2 id="total_mp_stat" class="semi-bold text-primary-dark no-margin-bottom counter">0</h2>
                     </div>
                 </div>
         	</div>

@@ -112,41 +112,79 @@ class Home extends CI_Controller {
         $this->template->render();
     }
 
-	public function ajax_mixpanel_users(){
+	public function ajax_mixpanel_users()
+	{
+		if (empty($this->input->get('event', TRUE))){
+			$err = array(
+				'code' => 500,
+				'message' => 'event data needed'
+			);
+
+			echo json_encode($err);
+			exit();
+		}
+
 		$apiK = '71fb579d648860ee5e6df09e3243b1e4';
 		$apiS = 'a25cf43fe8892a4f06686eb29cc89c99';
 
 		$now = strtotime(date("Y-m-d H:i:s"));
-		$expire = $now + (60*10);
+		$expire = $now + 86400;
 
 		$from = $this->input->get('from', TRUE);
 		$fromDate = date('Y-m-d', $from > 0 ? strtotime('-' . $from . ' days', strtotime(date('Y-m-d'))) : strtotime(date('Y-m-d')));
 		$toDate = date('Y-m-d');
 
+		$where = '';
+
 		$mpToday = array(
 				'api_key' => $apiK,
-				'event' => 'Sign+Up',
+				'event' => 'Sign Up',
 				'from_date' => $fromDate,
 				'to_date' => $toDate,
-				'where' => '(string(user["email"]) != "hankao@gmail.com")',
+				'where' => $where,
 				'expire' => $expire,
-				'type' => 'general',
-				'unit' => 'day',
 		);
 
 		ksort($mpToday);
 
 		$mixpanel_params = '';
+		$hash_params = "";
 		foreach ($mpToday as $k => $v) {
 			if (!empty($mixpanel_params)) $mixpanel_params .= '&';
-			$mixpanel_params .= $k . '=' . $v;
+			$mixpanel_params .= $k . '=' . urlencode($v);
+			$hash_params .= $k . '=' . $v;
 		}
 
-		$sig = md5(str_replace('&', '', $mixpanel_params) . $apiS);
+		$sig = md5($hash_params . $apiS);
 
 		$endpoint = 'http://mixpanel.com/api/2.0/segmentation?' . $mixpanel_params . '&sig=' . $sig;
 
-		echo($endpoint);
+		$response = file_get_contents($endpoint);
+		$data = json_decode($response, true);
+
+		$msg = '';
+		$total = 0;
+		if (isset($data['data']['values'])){
+			$values = $data['data']['values'];
+			foreach ($values[$this->input->get('event', TRUE)] as $count)
+				$total += $count;
+
+			$msg = array(
+				'code' => 200,
+				'event' => $this->input->get('event', TRUE),
+				'from_date' => $fromDate,
+				'to_date' => $toDate,
+				'total_count' => $total
+			);
+
+			echo json_encode($msg);
+		}
+
+		exit();
+	}
+
+	protected function getData(){
+
 	}
 	
 	public function overview() {		
