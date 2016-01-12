@@ -48,7 +48,7 @@ if (defined('ENVIRONMENT'))
 		case 'production':
 			//define('APIURL', 'http://partyhostapp.herokuapp.com/');
 			//define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
-			error_reporting(E_ALL);
+			error_reporting(0);
 			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
 			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 			break;
