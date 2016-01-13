@@ -98,11 +98,12 @@ class Home extends CI_Controller {
     }
 
     public function dashboard() {
- 		redirect('admin/user');
-        (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';  
-		$start_date = $this->session->userdata('startDate') . " 00:00:00";
+// 		redirect('admin/user');
+
+        (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
+				$start_date = $this->session->userdata('startDate') . " 00:00:00";
         $end_date = $this->session->userdata('endDate') . " 23:59:59";
-		$this->config->set_item('site_title', 'Party Host - Administrator DashBoard');      
+				$this->config->set_item('site_title', 'Party Host - Administrator DashBoard');
         $this->gen_contents['user_count'] = $this->user_model->getUserCounts($start_date,$end_date);
         $this->gen_contents['hosting_count'] = $this->hosting_model->getHostingCounts($start_date,$end_date);
         $this->gen_contents['chats_count'] = $this->chat_model->getChatCounts($start_date,$end_date);
@@ -110,8 +111,108 @@ class Home extends CI_Controller {
         $this->template->write_view('content', 'admin/dashboard', $this->gen_contents);
         $this->template->render();
     }
-	
-	public function overview() {		
+
+	public function ajax_mixpanel_users()
+	{
+		if ($this->input->get('event', TRUE) == ""){
+			$err = array(
+				'code' => 500,
+				'message' => 'event data needed'
+			);
+
+			echo json_encode($err);
+			exit();
+		}
+
+		$apiK = '71fb579d648860ee5e6df09e3243b1e4';
+		$apiS = 'a25cf43fe8892a4f06686eb29cc89c99';
+
+		$event = ucwords($this->input->get('event', TRUE));
+
+		$now = strtotime(date("Y-m-d H:i:s"));
+		$expire = $now + 86400;
+
+		$from = $this->input->get('from', TRUE);
+		$fromDate = date('Y-m-d', $from > 0 ? strtotime('-' . $from . ' days', strtotime(date('Y-m-d'))) : strtotime(date('Y-m-d')));
+		$toDate = date('Y-m-d', $from == 1 ? strtotime('-' . $from . ' days', strtotime(date('Y-m-d'))) : strtotime(date('Y-m-d')));
+
+		$where = '';
+		if (strtolower($event) == 'conversation updated'){
+			if ($this->input->get('state', TRUE) == ""){
+				$err = array(
+						'code' => 500,
+						'message' => 'state data needed'
+				);
+
+				echo json_encode($err);
+				exit();
+			}
+
+			$where = '(string(properties["state"]) != "NON_ACTIVATED_CHAT_INITIATED" and string(properties["state"]) != "NON_ACTIVATED_CHAT_UPDATED")';
+
+			$state = $this->input->get('state', TRUE);
+			switch (strtolower($state)){
+				case 'updated':
+					$where .= ' and ("ACTIVATED_CHAT_UPDATED" in string(properties["state"])) and (defined (properties["state"]))';
+					break;
+				case 'started':
+					$where .= ' and ("ACTIVATED_CHAT_INITIATED" in string(properties["state"])) and (defined (properties["state"]))';
+					break;
+			}
+		}
+
+		$mpToday = array(
+				'api_key' => $apiK,
+				'event' => $event,
+				'from_date' => $fromDate,
+				'to_date' => $toDate,
+				'where' => $where,
+				'expire' => $expire,
+		);
+
+		ksort($mpToday);
+
+		$mixpanel_params = '';
+		$hash_params = "";
+		foreach ($mpToday as $k => $v) {
+			if (!empty($mixpanel_params)) $mixpanel_params .= '&';
+			$mixpanel_params .= $k . '=' . urlencode($v);
+			$hash_params .= $k . '=' . $v;
+		}
+
+		$sig = md5($hash_params . $apiS);
+
+		$endpoint = 'http://mixpanel.com/api/2.0/segmentation?' . $mixpanel_params . '&sig=' . $sig;
+
+		$response = file_get_contents($endpoint);
+		$data = json_decode($response, true);
+
+		$msg = '';
+		$total = 0;
+		if (isset($data['data']['values'])){
+			$values = $data['data']['values'];
+			foreach ($values[$event] as $count)
+				$total += $count;
+
+			$msg = array(
+				'code' => 200,
+				'event' => $this->input->get('event', TRUE),
+				'from_date' => $fromDate,
+				'to_date' => $toDate,
+				'total_count' => $total
+			);
+
+			echo json_encode($msg);
+		}
+
+		exit();
+	}
+
+	protected function getData(){
+
+	}
+
+	public function overview() {
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';  
 		$this->config->set_item('site_title', 'Party Host - Chat Overview');       
         $this->template->write_view('content', 'admin/overview', $this->gen_contents);

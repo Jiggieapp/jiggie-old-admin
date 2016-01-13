@@ -125,6 +125,9 @@
 		<script src="<?php echo $this->config->item('assets_url')?>plugins/morris/morris.min.js"></script>		
         <script src="<?php echo $this->config->item('assets_js_url')?>imagesloaded.pkgd.min.js" type="text/javascript"></script>
         <script src="<?php echo $this->config->item('assets_js_url')?>fullcalendar.min.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+        <script src="<?php echo $this->config->item('assets_js_url')?>jquery.counterup.min.js" type="text/javascript"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/main.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/jquery.datepair.js"></script>
         <script src="<?php echo $this->config->item('assets_url')?>js/custom.js"></script>
