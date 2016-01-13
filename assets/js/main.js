@@ -3319,13 +3319,19 @@ if (controller_JS == 'home'){
 
     if ($("#user_chat_number").length > 0){
         var endpoint = 'admin/chat/ajax_list';
-        getTotalFromAdmin(endpoint, 0, 0, '#chat_stat_today');
-        getTotalFromAdmin(endpoint, 1, 0, '#chat_stat_yesterday');
-        getTotalFromAdmin(endpoint, 7, 0, '#chat_stat_7day');
         getTotalFromAdmin(endpoint, 14, 7, '#chat_stat_14day');
-        getTotalFromAdmin(endpoint, 30, 0, '#chat_stat_30day');
         getTotalFromAdmin(endpoint, 60, 30, '#chat_stat_60day');
-        getTotalFromAdmin(endpoint, 9999, 0, '#total_chat_stat');
+
+        var endpoint = 'admin/home/ajax_mixpanel_users?event=Conversation Updated';
+        getTotalFromAdmin(endpoint + '&state=all&from=0', 0, 0, '#chat_stat_today');
+        getTotalFromAdmin(endpoint + '&state=all&from=1', 1, 1, '#chat_stat_yesterday');
+        getTotalFromAdmin(endpoint + '&state=all&from=7', 7, 0, '#chat_stat_7day');
+        getTotalFromAdmin(endpoint + '&state=all&from=30', 30, 0, '#chat_stat_30day');
+        var allTimeDays = moment().diff(moment("2015-10-01"), 'days');
+        getTotalFromAdmin(endpoint + '&state=all&from=' + allTimeDays, 9999, 0, '#total_chat_stat');
+        getTotalFromAdmin(endpoint + '&state=started&from=' + allTimeDays, 9999, 0, '#total_new_chat');
+        getTotalFromAdmin(endpoint + '&state=updated&from=' + allTimeDays, 9999, 0, '#total_updated_chat');
+
     }
 }
 

@@ -264,7 +264,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">New Chat</h5>
-                        <h2 class="semi-bold text-primary-dark no-margin-bottom"></h2>
+                        <h2 id="total_new_chat" class="semi-bold text-primary-dark no-margin-bottom"></h2>
                     </div>
                 </div>
         	</div>
@@ -272,7 +272,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Updated Chats</h5>
-                        <h2 class="semi-bold text-primary-dark no-margin-bottom"></h2>
+                        <h2 id="total_updated_chat" class="semi-bold text-primary-dark no-margin-bottom"></h2>
                     </div>
                 </div>
         	</div>

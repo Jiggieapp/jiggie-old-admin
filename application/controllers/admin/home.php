@@ -127,6 +127,8 @@ class Home extends CI_Controller {
 		$apiK = '71fb579d648860ee5e6df09e3243b1e4';
 		$apiS = 'a25cf43fe8892a4f06686eb29cc89c99';
 
+		$event = ucwords($this->input->get('event', TRUE));
+
 		$now = strtotime(date("Y-m-d H:i:s"));
 		$expire = $now + 86400;
 
@@ -135,10 +137,33 @@ class Home extends CI_Controller {
 		$toDate = date('Y-m-d', $from == 1 ? strtotime('-' . $from . ' days', strtotime(date('Y-m-d'))) : strtotime(date('Y-m-d')));
 
 		$where = '';
+		if (strtolower($event) == 'conversation updated'){
+			if ($this->input->get('state', TRUE) == ""){
+				$err = array(
+						'code' => 500,
+						'message' => 'state data needed'
+				);
+
+				echo json_encode($err);
+				exit();
+			}
+
+			$where = '(string(properties["state"]) != "NON_ACTIVATED_CHAT_INITIATED" and string(properties["state"]) != "NON_ACTIVATED_CHAT_UPDATED")';
+
+			$state = $this->input->get('state', TRUE);
+			switch (strtolower($state)){
+				case 'updated':
+					$where .= ' and ("ACTIVATED_CHAT_UPDATED" in string(properties["state"])) and (defined (properties["state"]))';
+					break;
+				case 'started':
+					$where .= ' and ("ACTIVATED_CHAT_INITIATED" in string(properties["state"])) and (defined (properties["state"]))';
+					break;
+			}
+		}
 
 		$mpToday = array(
 				'api_key' => $apiK,
-				'event' => 'Sign Up',
+				'event' => $event,
 				'from_date' => $fromDate,
 				'to_date' => $toDate,
 				'where' => $where,
@@ -166,7 +191,7 @@ class Home extends CI_Controller {
 		$total = 0;
 		if (isset($data['data']['values'])){
 			$values = $data['data']['values'];
-			foreach ($values[$this->input->get('event', TRUE)] as $count)
+			foreach ($values[$event] as $count)
 				$total += $count;
 
 			$msg = array(
@@ -186,8 +211,8 @@ class Home extends CI_Controller {
 	protected function getData(){
 
 	}
-	
-	public function overview() {		
+
+	public function overview() {
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';  
 		$this->config->set_item('site_title', 'Party Host - Chat Overview');       
         $this->template->write_view('content', 'admin/overview', $this->gen_contents);
