@@ -3302,6 +3302,7 @@ function calculateTotal(){
 }
 
 if (controller_JS == 'home'){
+    var allTimeDays = moment().diff(moment("2015-10-01"), 'days');
     if ($('#user_stat_number').length > 0){
         var endpoint = 'admin/user/ajax_list';
         getTotalFromAdmin(endpoint, 0, 0, '#user_stat_today');
@@ -3310,11 +3311,16 @@ if (controller_JS == 'home'){
         getTotalFromAdmin(endpoint, 9999, 0, '#total_user_stat')
 
         endpoint = 'admin/home/ajax_mixpanel_users?event=Sign Up';
-        var allTimeDays = moment().diff(moment("2015-10-01"), 'days');
         getTotalFromAdmin(endpoint + '&from=0', 0, 0, '#user_mp_today');
         getTotalFromAdmin(endpoint + '&from=1', 0, 0, '#user_mp_yesterday');
         getTotalFromAdmin(endpoint + '&from=30', 0, 0, '#user_mp_30day');
         getTotalFromAdmin(endpoint + '&from=' + allTimeDays, 0, 0, '#total_mp_stat');
+    }
+
+    if ($("#user_feed_number").length > 0){
+        var endpoint = 'admin/home/ajax_mixpanel_users?event=';
+        getTotalFromAdmin(endpoint + 'Accept Feed Item&from=' + allTimeDays, 0, 0, '#feed_accepted');
+        getTotalFromAdmin(endpoint + 'Passed Feed Item&from=' + allTimeDays, 60, 30, '#feed_passed');
     }
 
     if ($("#user_chat_number").length > 0){
@@ -3327,7 +3333,6 @@ if (controller_JS == 'home'){
         getTotalFromAdmin(endpoint + '&state=all&from=1', 1, 1, '#chat_stat_yesterday');
         getTotalFromAdmin(endpoint + '&state=all&from=7', 7, 0, '#chat_stat_7day');
         getTotalFromAdmin(endpoint + '&state=all&from=30', 30, 0, '#chat_stat_30day');
-        var allTimeDays = moment().diff(moment("2015-10-01"), 'days');
         getTotalFromAdmin(endpoint + '&state=all&from=' + allTimeDays, 9999, 0, '#total_chat_stat');
         getTotalFromAdmin(endpoint + '&state=started&from=' + allTimeDays, 9999, 0, '#total_new_chat');
         getTotalFromAdmin(endpoint + '&state=updated&from=' + allTimeDays, 9999, 0, '#total_updated_chat');

@@ -127,29 +127,29 @@
         </div>        
     </div>
 </div>
-<!--div class="row ph_db">
-    <div class="col-md-12">
+<div class="row ph_db">
+    <div class="col-md-12" id="user_feed_number">
         <header>
-            <h3 class="thin">New Hostings</h3>
+            <h3 class="thin">Social</h3>
         </header>
         <div class="row">
         	<div class="col-md-2">
         		<div class="panel panel-default ">
                     <div class="panel-body panel-body-success">
-                        <h5 class="page-header no-margin semi-bold">Today</h5>
-                        <h2 class="semi-bold text-primary-dark no-margin-bottom"><?php echo $hosting_count['hosting_today']; ?></h2>
+                        <h5 class="page-header no-margin semi-bold">Accepted Feed</h5>
+                        <h2 id="feed_accepted" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
         	<div class="col-md-2">
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-success">
-                        <h5 class="page-header no-margin semi-bold">Yesterday</h5>
-                        <h2 class="semi-bold text-primary-dark no-margin-bottom"><?php echo $hosting_count['hosting_yesterday']; ?></h2>
+                        <h5 class="page-header no-margin semi-bold">Passed Feed</h5>
+                        <h2 id="feed_passed" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
-        	<div class="col-md-2">
+        	<!--div class="col-md-2">
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-success">
                         <h5 class="page-header no-margin semi-bold">Last 7 days</h5>
@@ -191,10 +191,10 @@
                         <h2 class="semi-bold text-primary-dark no-margin-bottom"><?php echo $hosting_count['hosting_total']; ?></h2>
                     </div>
                 </div>
-        	</div>
-        </div>       
+        	</div-->
+        </div>
     </div>
-</div-->
+</div>
 <div class="row ph_db">
     <div class="col-md-12" id="user_chat_number">
         <header>
@@ -205,7 +205,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Today</h5>
-                        <h2 id="chat_stat_today" class="semi-bold text-primary-dark no-margin-bottom counter"></h2>
+                        <h2 id="chat_stat_today" class="semi-bold text-primary-dark no-margin-bottom counter">0</h2>
                     </div>
                 </div>
         	</div>
@@ -213,7 +213,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Yesterday</h5>
-                        <h2 id="chat_stat_yesterday" class="semi-bold text-primary-dark no-margin-bottom"><?php echo $chats_count['chats_yesterday']; ?></h2>
+                        <h2 id="chat_stat_yesterday" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
@@ -221,7 +221,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Last 7 days</h5>
-                        <h2 id="chat_stat_7day" class="semi-bold text-primary-dark no-margin-bottom"><?php echo $chats_count['chats_week']; ?></h2>
+                        <h2 id="chat_stat_7day" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
@@ -229,7 +229,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Previous 7 days</h5>
-                        <h2 id="chat_stat_14day" class="semi-bold text-primary-dark no-margin-bottom text-center"><?php echo $chats_count['chats_prev_week']; ?></h2>
+                        <h2 id="chat_stat_14day" class="semi-bold text-primary-dark no-margin-bottom text-center">0</h2>
                     </div>
                 </div>
         	</div>
@@ -237,7 +237,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Last 30 days</h5>
-                        <h2 id="chat_stat_30day" class="semi-bold text-primary-dark no-margin-bottom"></h2>
+                        <h2 id="chat_stat_30day" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
@@ -245,7 +245,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Previous 30 days</h5>
-                        <h2 id="chat_stat_60day" class="semi-bold text-primary-dark no-margin-bottom"></h2>
+                        <h2 id="chat_stat_60day" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
@@ -256,7 +256,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Total</h5>
-                        <h2 id="total_chat_stat" class="semi-bold text-primary-dark no-margin-bottom"></h2>
+                        <h2 id="total_chat_stat" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
@@ -264,7 +264,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">New Chat</h5>
-                        <h2 id="total_new_chat" class="semi-bold text-primary-dark no-margin-bottom"></h2>
+                        <h2 id="total_new_chat" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
@@ -272,7 +272,7 @@
         		<div class="panel panel-default">
                     <div class="panel-body panel-body-warning">
                         <h5 class="page-header no-margin semi-bold">Updated Chats</h5>
-                        <h2 id="total_updated_chat" class="semi-bold text-primary-dark no-margin-bottom"></h2>
+                        <h2 id="total_updated_chat" class="semi-bold text-primary-dark no-margin-bottom">0</h2>
                     </div>
                 </div>
         	</div>
