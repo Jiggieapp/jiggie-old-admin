@@ -31,8 +31,6 @@ define('ENVIRONMENT', 'production');
 
 // This is added by arman
 
-exit('string');
-
 if (defined('ENVIRONMENT'))
 {
 	switch (ENVIRONMENT)
