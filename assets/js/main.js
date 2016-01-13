@@ -3352,6 +3352,6 @@ function getTotalFromAdmin(endpoint, from_pointer, to_pointer, target){
         data: param
     }).done(function(html){
         eval("var response = " + html + ";");
-        $(target).html(response.total_count).counterUp({delay: 10, time: 1000});
+        $(target).html(numeral(response.total_count).format('0,0')).counterUp({delay: 10, time: 1000});
     });
 }
