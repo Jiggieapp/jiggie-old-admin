@@ -114,7 +114,7 @@ class Home extends CI_Controller {
 
 	public function ajax_mixpanel_users()
 	{
-		if (empty($this->input->get('event', TRUE))){
+		if ($this->input->get('event', TRUE) == ""){
 			$err = array(
 				'code' => 500,
 				'message' => 'event data needed'
