@@ -42,6 +42,7 @@
                           <option value="none">None</option>
                           <option value="phone_number">Phone Number</option>
                           <option value="link">Link</option>
+                          <option value="ticket">Ticket</option>
                           <option value="reservation">Reservation</option>
                           <option value="purchase">Purchase</option>
                         </select>
