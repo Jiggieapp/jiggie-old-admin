@@ -2450,6 +2450,7 @@ function getEventDetailPage(url,type){
                         {value: 'none', text: 'None'},
                         {value: 'phone_number', text: 'Phone Number'},
                         {value: 'link', text: 'Link'},
+                        {value: 'ticket', text: 'Ticket'},
                         {value: 'reservation', text: 'Reservation'},
                         {value: 'purchase', text: 'Purchase'}, 
                    ]
@@ -3344,7 +3345,7 @@ function getTotalFromAdmin(endpoint, from_pointer, to_pointer, target){
     var format_date = "YYYY-MM-DD";
     startDate = from_pointer < 9999 ?
       moment().subtract(from_pointer, 'day').format(format_date) : "2015-10-01T00:00:00.000Z";
-    endDate = moment().subtract(to_pointer, 'day').format(format_date) + 'T23:59:59.000Z';
+    endDate = moment().subtract(to_pointer, 'day').format(format_date) + 'T23:59:59f.000Z';
 
     var param = {
         startDate_iso: startDate,
