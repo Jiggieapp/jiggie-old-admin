@@ -495,22 +495,23 @@ class Adminuser extends CI_Controller {
     }
     
 
-    public function delete($userid=""){ 
+    public function delete($userid=""){
         if(!$this->master_model->checkAccess('delete', ADMINUSER_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
             return FALSE;
         }
-	    $seleced_fields = array("id", "CONCAT_WS(' ', first_name, last_name) as name", "email", "first_name", "last_name", "user_type_id", "profile_image_url", "email", "user_status", "created_at");
-       
+
+	      $seleced_fields = array("id", "CONCAT_WS(' ', first_name, last_name) as name", "email", "first_name", "last_name", "user_type_id", "profile_image_url", "email", "user_status", "created_at");
+
         $admin_user = $this->common_model->getDataExists($seleced_fields, "admin_users", array("id" => $userid,'user_status !='=>10));
-           
+
         $this->master_model->delete_user($userid);
-		$to_email  = $admin_user->email;					        
-        
+		    $to_email  = $admin_user->email;
+
         $from = $this->config->item('smtp_from_name');
         $subject = "Administrator account deleted";
         $body_content = "Dear ".$admin_user->name.",<br />";
-        $body_content .= "Partyhost  has deleted your administrator account .<br /><br />";
-		
+        $body_content .= "Jiggie has deleted your administrator account .<br /><br />";
+
         $body_content .= "Partyhost";
         $this->common_model->send_mail($to_email, $from, $subject, $body_content);
         sf('success_message', 'Admin User has been deleted successfully');
