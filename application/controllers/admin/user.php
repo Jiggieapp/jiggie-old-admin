@@ -725,5 +725,59 @@ class User extends CI_Controller {
 
         echo json_encode($this->gen_contents);exit;
     }
+
+    public function broadcast(){
+        if (false != $this->input->post('message') && false != $this->input->post('recipients')){
+            $fb_ids = explode(',', $this->input->post('recipients'));
+            $message = $this->input->post('message');
+
+            $base_domain = 'http://api.jiggieapp.com';
+
+            if ($this->input->post('all') == 1){
+                $endpoint = $base_domain . '/notif_all';
+                $post_data['message'] = $this->input->post('message');
+
+                $ch = curl_init($endpoint);                   
+                $payload = json_encode($post_data);   
+                                                
+                
+                curl_setopt( $ch, CURLOPT_POST, true );
+                curl_setopt( $ch, CURLOPT_HEADER, false );
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));                   
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                # Send request.
+                $result_set = curl_exec($ch);
+                curl_close($ch);
+            } 
+            else{
+                $endpoint = $base_domain . '/notif';
+                $post_data['message'] = $this->input->post('message');
+
+                foreach ($fb_ids as $key){
+                    $post_data['fb_id'] = $key;
+
+                    $ch = curl_init($endpoint);                   
+                    $payload = json_encode( $post_data );   
+
+                    curl_setopt( $ch, CURLOPT_POST, true );
+                    curl_setopt( $ch, CURLOPT_HEADER, false );
+                    curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+                    curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));                   
+                    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                    # Send request.
+                    $result_set = curl_exec($ch);
+                    var_dump($result_set);
+                    curl_close($ch);
+                }
+            }
+        }
+
+        $breadCrumbs = array( 'admin/user/users/0'=>'Users');       
+        $this->gen_contents['breadcrumbs'] = $breadCrumbs;
+
+        $this->template->write_view('content', 'admin/user/broadcast', $this->gen_contents);      
+        $this->template->render();
+    }
 	
 }
