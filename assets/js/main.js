@@ -1025,6 +1025,7 @@ $(document).ready(function() {
 
                 return {
                     results: data.users,
+                    per_page: 50,
                     pagination: {
                         more: (params.page * 30) < data.total_count
                     }
