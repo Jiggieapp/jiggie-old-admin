@@ -43,7 +43,7 @@ $exid = ($current_controller=='hostings')?'hostings':'' ;
                                     </div>    
                                     <div class="col-sm-4 col-md-3 mbsm" id="broadcast_container">
                                         <div class="btn-group" id="broadcast_message">
-                                            <a class="btn btn-default btn-sm" id="broadcast" href="#"><span class="fa fa-cloud-upload"></span> Broadcast</a>
+                                            <a class="btn btn-default btn-sm" id="broadcast" href="<?php echo site_url('/admin/user/broadcast') ?>"><span class="fa fa-cloud-upload"></span> Broadcast</a>
                                         </div>
                                     </div>
                                 <?php endif; ?>
