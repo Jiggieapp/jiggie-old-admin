@@ -1006,9 +1006,67 @@ $(document).ready(function() {
     }).on("select2-selecting", function(e) {           
             console.log(e.val);
     })
+
+    $('#recipients').select2({
+        ajax: {
+            url: base_url + 'admin/user/ajax_list',
+            dataType: 'json',
+            delay: 250,
+            type: 'POST',
+            data: function(params){
+                var format_date = "YYYY-MM-DD";
+                startDate = "2015-04-01T00:00:00.000Z";
+                endDate = moment().format(format_date) + 'T23:59:59.000Z';
+                return {
+                    search_name: params,
+                    startDate_iso: startDate,
+                    endDate_iso: endDate
+                }
+            },
+            results: function(data, params){
+                params.page = data.page || 1;
+
+                return {
+                    results: data.users,
+                    per_page: 50,
+                    pagination: {
+                        more: (params.page * 30) < data.total_count
+                    }
+                };
+            }
+        },
+        id: function(bond){
+            return bond.fb_id;
+        },
+        formatResult: function(data){ 
+            return data.first_name + " " + data.last_name + " (" + data.email + ")"; 
+        },
+        formatSelection: function(data){
+            return data.first_name + " " + data.last_name;   
+        },
+        placeholder: "Recipients",
+        escapeMarkup: function (markup) { return markup; },
+        tags: true,
+        multiple: true,
+        minimumInputLength: 3
+    });
+
+    $("#all").on('click', function(){
+        var displayValue = this.checked == true ? 'none' : 'block';
+        $("#recipients_block").css({display: displayValue});
+    });
+
+    var maxLimit = 144;
+    $("#message_limit").html(maxLimit);
+
+    $("#broadcast_message")
+    .prop('maxlength', maxLimit)
+    .on('keyup', function(){
+        $("#message_limit").html(maxLimit - this.value.length);
+    });
  
 	 
-	 $( "#section_list" ).on( "click", ".event-file-remove", function(e) {
+	 $( "#section_list").on( "click", ".event-file-remove", function(e) {
 		e.preventDefault();	
 		var type = $(this).data('type');
 		if(type=='weekly')

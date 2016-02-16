@@ -35,12 +35,17 @@ $exid = ($current_controller=='hostings')?'hostings':'' ;
 										$lc = 'bt_act';$ic='';
 									}	
                                 	?>
-                                	<div class="col-sm-6 col-md-6 mbsm"> 
+                                	<div class="col-sm-3 col-md-4 mbsm"> 
 	                                	<div class="btn-group" id="displayselection">
 								            <a class="btn btn-default btn-sm" id="list" data-dispaly="list" href="#"><span class="fa fa-list"> </span> List View</a> 
 								            <a class="btn btn-default btn-sm" id="grid" data-dispaly="grid"href="#"><span class="fa fa-th"></span> Image View</a>
 								        </div>
                                     </div>    
+                                    <div class="col-sm-4 col-md-3 mbsm" id="broadcast_container">
+                                        <div class="btn-group" id="broadcast_message">
+                                            <a class="btn btn-default btn-sm" id="broadcast" href="<?php echo site_url('/admin/user/broadcast') ?>"><span class="fa fa-cloud-upload"></span> Broadcast</a>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
                                 <?php if($current_controller == "events"):                         	 	
                                 	?>

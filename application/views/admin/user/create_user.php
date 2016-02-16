@@ -13,7 +13,7 @@
                     <div class="controls col-sm-4">
                         <input aria-required="true" name="email" id="email" type="text" class="form-control" placeholder="Email" value="<?php echo set_value('email'); ?>"  required/></div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="control-label col-sm-3">Password<span class="asterisk">*</span></label>
 
