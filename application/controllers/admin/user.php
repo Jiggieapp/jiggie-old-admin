@@ -755,6 +755,7 @@ class User extends CI_Controller {
                 $post_data['message'] = $this->input->post('message');
 
                 foreach ($fb_ids as $key){
+                    $post_data['fromId'] = 123456;
                     $post_data['fb_id'] = $key;
 
                     $ch = curl_init($endpoint);                   
