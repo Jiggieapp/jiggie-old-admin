@@ -767,7 +767,6 @@ class User extends CI_Controller {
                     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
                     # Send request.
                     $result_set = curl_exec($ch);
-                    var_dump($result_set);
                     curl_close($ch);
                 }
             }

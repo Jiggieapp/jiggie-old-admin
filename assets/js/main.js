@@ -1014,10 +1014,13 @@ $(document).ready(function() {
             delay: 250,
             type: 'POST',
             data: function(params){
+                var format_date = "YYYY-MM-DD";
+                startDate = "2015-04-01T00:00:00.000Z";
+                endDate = moment().format(format_date) + 'T23:59:59.000Z';
                 return {
                     search_name: params,
-                    startDate_iso: moment("2015-04-01T00:00:00.000Z").format(),
-                    endDate_iso: moment().format()
+                    startDate_iso: startDate,
+                    endDate_iso: endDate
                 }
             },
             results: function(data, params){
