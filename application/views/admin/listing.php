@@ -41,11 +41,11 @@ $exid = ($current_controller=='hostings')?'hostings':'' ;
 								            <a class="btn btn-default btn-sm" id="grid" data-dispaly="grid"href="#"><span class="fa fa-th"></span> Image View</a>
 								        </div>
                                     </div>    
-                                    <!--div class="col-sm-4 col-md-3 mbsm" id="broadcast_container">
+                                    <div class="col-sm-4 col-md-3 mbsm" id="broadcast_container">
                                         <div class="btn-group" id="broadcast_message">
                                             <a class="btn btn-default btn-sm" id="broadcast" href="<?php echo site_url('/admin/user/broadcast') ?>"><span class="fa fa-cloud-upload"></span> Broadcast</a>
                                         </div>
-                                    </div-->
+                                    </div>
                                 <?php endif; ?>
                                 <?php if($current_controller == "events"):                         	 	
                                 	?>
