@@ -728,6 +728,10 @@ class User extends CI_Controller {
     }
 
     public function broadcast(){
+        if(!$this->master_model->checkAccess('export', USERS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            return FALSE;
+        }
+        
         if (false != $this->input->post('message') && false != $this->input->post('recipients')){
             $fb_ids = explode(',', $this->input->post('recipients'));
             $message = $this->input->post('message');
