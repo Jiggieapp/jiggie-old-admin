@@ -1051,6 +1051,50 @@ $(document).ready(function() {
         minimumInputLength: 3
     });
 
+    $("#events").select2({
+        ajax: {
+            url: base_url + 'admin/events/ajax_list',
+            dataType: 'json',
+            delay: 250,
+            type: 'POST',
+            data: function(params){
+                var format_date = "YYYY-MM-DD";
+                var startDate = "2015-04-01T00:00:00.000Z";
+                var endDate = moment().format(format_date) + 'T23:59:59.000Z';
+                var status = 'published';
+                var list = 'list';
+                return {
+                    search_name: params,
+                    view_type: list,
+                    sort_status: status,
+                    startDate_iso: startDate,
+                    endDate_iso: endDate
+                }
+            },
+            results: function(data, params){
+                params.page = data.page || 1;
+
+                return {
+                    results: data.events,
+                    per_page: 50,
+                    pagination: {
+                        more: (params.page * 30) < data.total_count
+                    }
+                };
+            }
+        },
+        id: function(bond){
+            return bond._id;
+        },
+        formatResult: function(data){ 
+            return data.title; 
+        },
+        formatSelection: function(data){
+            return data.title;   
+        },
+        minimumInputLength: 3
+    });
+
     $("#all").on('click', function(){
         var displayValue = this.checked == true ? 'none' : 'block';
         $("#recipients_block").css({display: displayValue});

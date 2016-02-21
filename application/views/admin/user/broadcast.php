@@ -12,7 +12,7 @@
                     <label class="control-label col-sm-3">Recipient*</label>
 
                     <div class="controls col-sm-4" id="recipients_block">
-                        <input name="recipients" id="recipients" type="text" class="form-control recipients" placeholder="Recipient" value="" />
+                        <input name="recipients" id="recipients" type="text" class="form-control recipients" placeholder="Choose Recipients" value="" />
                     </div>
                     <div class="controls col-sm-4">
                         <input name="all" id="all" type="checkbox" value="1" /> &nbsp;<label for="all">All Users</label>
@@ -26,6 +26,13 @@
                     </div>
                     <div class="controls col-sm-2">
                         (<span id="message_limit"></span>)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Event</label>
+                    <div class="controls col-sm-4">
+                        <input name="events" id="events" type="text" class="form-control recipients" placeholder="Choose Events" value="" />
                     </div>
                 </div>
                 
