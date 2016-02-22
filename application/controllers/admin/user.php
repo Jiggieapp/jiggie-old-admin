@@ -751,7 +751,7 @@ class User extends CI_Controller {
             if ($this->input->post('all') == 1){
                 $endpoint = $base_domain . '/notif_all';
 
-                $result_set = $this->pushnotif($endpoint, $payload);
+                $result_set = $this->pushnotif($endpoint, $post_data);
             } 
             else{
                 $endpoint = $base_domain . '/notif';
@@ -759,7 +759,7 @@ class User extends CI_Controller {
                 foreach ($fb_ids as $key){
                     $post_data['fb_id'] = $key;
 
-                    $result_set = $this->pushnotif($endpoint, $payload);
+                    $result_set = $this->pushnotif($endpoint, $post_data);
                 }
             }
         }
@@ -771,7 +771,7 @@ class User extends CI_Controller {
         $this->template->render();
     }
 
-    protected function pushnotif($endpoint, $payload){
+    protected function pushnotif($endpoint, $post_data){
         $ch = curl_init($endpoint);                   
         $payload = json_encode( $post_data );   
 
