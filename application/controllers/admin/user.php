@@ -738,7 +738,7 @@ class User extends CI_Controller {
             $fb_ids = explode(',', $this->input->post('recipients'));
             $message = $this->input->post('message');
 
-            $base_domain = 'http://api.jiggieapp.com';
+            $base_domain = NEWAPI;
             $post_data['message'] = $this->input->post('message');
 
             if (false != $this->input->post('events')){
