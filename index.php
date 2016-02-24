@@ -38,6 +38,7 @@ if (defined('ENVIRONMENT'))
 		case 'development':
 			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
 			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
+			define('NEWAPI', 'http://api-dev.jiggieapp.com');
 			error_reporting(E_ALL);
 			break;
 
@@ -45,12 +46,14 @@ if (defined('ENVIRONMENT'))
 			error_reporting(E_ALL);
 			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
 			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
+			define('NEWAPI', 'http://api-dev.jiggieapp.com');
 		case 'production':
 			//define('APIURL', 'http://partyhostapp.herokuapp.com/');
 			//define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
 			error_reporting(E_ALL);
 			define('APIURL', 'http://jiggie-dev.herokuapp.com/');
 			define('TOKEN', 'admin_token=dsabalsdbaiyzVYVKJD78t87tgBQGK9sfhkslhfdksCFCJjgvgKV98y98h90z3pd');
+			define('NEWAPI', 'http://api-dev.jiggieapp.com');
 			break;
 
 		default:
