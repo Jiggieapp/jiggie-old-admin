@@ -173,9 +173,11 @@ class User extends CI_Controller {
     }
 	
 	public function getUserProfile($id=''){
-		$url =APIURL."profile/about/".$id."?".TOKEN;	
-		 
-		echo $json = file_get_contents($url);        
+        // $url =APIURL."profile/about/".$id."?".TOKEN;
+        $url = NEWAPI . '/app/v3/memberinfo/' . $id;
+        $response = json_decode(file_get_contents($url));
+        		 
+		echo json_encode($response->data->memberinfo);        
         exit;
 	}
     public function save1($user_id="") {
