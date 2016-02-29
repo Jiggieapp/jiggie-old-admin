@@ -179,7 +179,7 @@ class User extends CI_Controller {
         $response = json_decode(file_get_contents($url));
         		 
 		echo json_encode($response->data->memberinfo);        
-        exit;
+        exit();
 	}
     public function save1($user_id="") {
 
