@@ -9,6 +9,20 @@
                 <p class='f11'>All <span class="asterisk">*</span> marked fields are mandatory</p>
                                 
                 <div class="form-group">
+                    <label class="control-label col-sm-3">Target Screen*</label>
+
+                    <div class="controls col-sm-4" id="recipients_block">
+                        <select name="target" id="target" class="form-control">
+                            <option value="general">Event List</option>
+                            <option value="event">Event Detail</option>
+                            <option value="social">Social Feed</option>
+                            <option value="chat">Chat List</option>
+                            <option value="message">Chat Detail</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="control-label col-sm-3">Recipient*</label>
 
                     <div class="controls col-sm-4" id="recipients_block">
