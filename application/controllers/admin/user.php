@@ -748,7 +748,7 @@ class User extends CI_Controller {
                 $post_data['event_id'] = $this->input->post('events');
             }
             else{
-                $post_data['type'] = 'general';
+                $post_data['type'] = $this->input->post('target');
             }
 
             if ($this->input->post('all') == 1){
