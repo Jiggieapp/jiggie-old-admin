@@ -51,8 +51,8 @@
                  <a href="<%= siteurl+'admin/hostings/hosting/#/search_filter=user_fb_id/search_name='+users[i].fb_id%>" target="_blank"  ><%= users[i].hosting_count %></a>                	 
                 <% }else{%>0<% }%>  
                </td>                			
-                <td class=" "><% if(typeof(users[i].user_ref_fb_id) != "undefined" &&  users[i].user_ref_fb_id  != '') { %>
-                    <a href="<%= siteurl+'admin/user/users/#/details='+users[i].user_ref_fb_id %>" target="_blank"  ><%= users[i].user_ref_name %></a>                	 
+                <td class=" "><% if(typeof(users[i].appsflyer.af_sub1) != "undefined" &&  typeof(users[i].appsflyer.campaign)  != "undefined") { %>
+                    <a href="<%= siteurl+'admin/user/users/#/details='+users[i].appsflyer.af_sub1 %>" target="_blank"  ><%= users[i].appsflyer.campaign %></a>                	 
                  <% }else{ %>
                  <%= users[i].user_ref_name %>
                 <% } %>                
