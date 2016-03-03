@@ -1301,6 +1301,15 @@ $(document).ready(function() {
 		}
 		calculateTotal()
 	});
+
+    if ($("#ticket_currency").length > 0){
+        $("#ticket_currency").bind("change", function(){
+            var value = $('option:selected', $(this)).text();
+            $('.curr').each(function(){
+                this.innerHTML = value;
+            });
+        });
+    }
 });
 
 function prepareSortinghashtags(field,value){ 
