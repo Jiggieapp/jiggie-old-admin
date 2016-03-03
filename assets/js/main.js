@@ -1059,8 +1059,8 @@ $(document).ready(function() {
             type: 'POST',
             data: function(params){
                 var format_date = "YYYY-MM-DD";
-                var startDate = "2015-04-01T00:00:00.000Z";
-                var endDate = moment().format(format_date) + 'T23:59:59.000Z';
+                var startDate = moment().format(format_date) + "T00:00:00.000Z";
+                var endDate = moment().add('14', 'days').format(format_date) + 'T23:59:59.000Z';
                 var status = 'published';
                 var list = 'list';
                 return {
@@ -1087,12 +1087,15 @@ $(document).ready(function() {
             return bond._id;
         },
         formatResult: function(data){ 
-            return data.title; 
+            return this.formatReturn(data);
         },
         formatSelection: function(data){
-            return data.title;   
+            return this.formatReturn(data);
         },
-        minimumInputLength: 3
+        minimumInputLength: 3,
+        formatReturn: function(data){
+            return data.title + " (" + data.start_datetime_str + ")";
+        }
     });
 
     $("#all").on('click', function(){
