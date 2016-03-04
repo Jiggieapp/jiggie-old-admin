@@ -47,8 +47,6 @@
                     <label class="control-label col-sm-3"># of Tickets Available</label>
                      <div class="controls col-sm-4">                     	 
                      		<input name="quantity" id="quantity" type="text" class="form-control"   placeholder="0" value="<?php echo $this->input->post('quantity'); ?>" />
-                        	
-						 
                     </div>
                 </div>
                 <div class="form-group">
@@ -59,11 +57,20 @@
 
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Currency</label>
+                     <div class="controls col-sm-4">
+                        <select name="currency" class="form-control" id="ticket_currency">
+                            <option value="IDR">Rp</option>
+                            <option value="USD">$</option>
+                        </select>
+                    </div>
+                </div>
 				<div class="form-group">
                     <label class="control-label col-sm-3">Price</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon">$</span>	
+                     		<span class="input-group-addon curr">Rp</span>	
                         	<input name="price" id="price" type="text" class="form-control"   placeholder="0" value="<?php echo $this->input->post('price'); ?>" />
 						</div>
                     </div>
@@ -81,7 +88,7 @@
                     <label class="control-label col-sm-3">Price per additional guest</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon">$</span>	
+                     		<span class="input-group-addon curr">Rp</span>	
                         	<input name="add_guest" id="add_guest" type="text" class="form-control"   placeholder="0" value="<?php echo $this->input->post('add_guest'); ?>" />
 						</div>
                     </div>
@@ -92,7 +99,7 @@
                        	<span class="col-sm-6 nplr"> <input type="checkbox" <?php echo $this->input->post('chk_adminfee')==1?'checked' :''?>  value="1" id="chk_adminfee" name="chk_adminfee"/> Admin Fee</span>
 						<span class="col-sm-6 nplr">
 							<div class="input-group">
-							  <span class="input-group-addon">$</span>
+							  <span class="input-group-addon curr">Rp</span>
 							    <input name="admin_fee" id="admin_fee" type="text" disabled="disabled" class="form-control"   placeholder="0" value="<?php echo $this->input->post('admin_fee'); ?>" />
 							</div>							
 						</span>
@@ -110,7 +117,7 @@
 							</div>											
 						</span>
                     </div>
-                    <span class="col-sm-2 p6">$ <label id="tax_amt">0</label></span>
+                    <span class="col-sm-2 p6"><label class="curr">Rp</label> <label id="tax_amt">0</label></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
@@ -124,7 +131,7 @@
 							</div>
 						</span>						
                     </div>
-                    <div class="col-sm-2 p6">$ <label id="tip_amt">0</label></div>
+                    <div class="col-sm-2 p6"><label class="curr">Rp</label> <label id="tip_amt">0</label></div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Estimated Total</label>

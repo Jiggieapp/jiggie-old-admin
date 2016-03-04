@@ -1301,6 +1301,15 @@ $(document).ready(function() {
 		}
 		calculateTotal()
 	});
+
+    if ($("#ticket_currency").length > 0){
+        $("#ticket_currency").bind("change", function(){
+            var value = $('option:selected', $(this)).text();
+            $('.curr').each(function(){
+                this.innerHTML = value;
+            });
+        });
+    }
 });
 
 function prepareSortinghashtags(field,value){ 
@@ -2673,8 +2682,7 @@ function getTicketDetailPage(url,type){
 	    dataType: "json",		   
 	    data		: '',
 	    success	: function(resp){
-	    	resp['siteurl'] = base_url; 
-	    	console.log(resp.orders_count)
+            resp['siteurl'] = base_url; 
 	    	ejsfile ='ticket_edit.ejs';
 	    	//ejsfile ='ticket_detail.ejs';
             if(type=='weekly'){

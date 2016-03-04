@@ -59,11 +59,20 @@
 
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Currency</label>
+                     <div class="controls col-sm-4">
+                        <select name="currency" class="form-control" id="ticket_currency">
+                            <option <?php echo $ticket->currency  == 'IDR' ? "selected='selected'" : "" ?> value="IDR">Rp</option>
+                            <option <?php echo $ticket->currency  == 'USD' ? "selected='selected'" : "" ?> value="USD">$</option>
+                        </select>
+                    </div>
+                </div>
 				<div class="form-group">
                     <label class="control-label col-sm-3">Price</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon">$</span>	
+                     		<span class="input-group-addon curr">$</span>	
                         	<input name="price" id="price" type="text" class="form-control"   placeholder="0" value="<?php echo set_post_value('price', $ticket->price)  ?>" />
 						</div>
                     </div>
@@ -81,7 +90,7 @@
                     <label class="control-label col-sm-3">Price per additional guest</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon">$</span>	
+                     		<span class="input-group-addon curr">$</span>	
                         	<input name="add_guest" id="add_guest" type="text" class="form-control"   placeholder="0" value="<?php echo set_post_value('add_guest', $ticket->add_guest) ; ?>" />
 						</div>
                     </div>
@@ -109,7 +118,7 @@
 							</div>							
 						</span>
                     </div>
-                    <span class="col-sm-2 p6">$ <label id="tax_amt">0</label></span>
+                    <span class="col-sm-2 p6"><label class="curr">$</label> <label id="tax_amt">0</label></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
@@ -123,7 +132,7 @@
 							</div>
 						</span>						
                     </div>
-                     <span class="col-sm-2 p6">$ <label id="tip_amt">0</label></span>
+                     <span class="col-sm-2 p6"><label class="curr">$</label> <label id="tip_amt">0</label></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Estimated Total</label>
@@ -156,14 +165,15 @@
 
 	                <?php 
 	                    $confirmationscount=0;
-	                    if(count( $ticket->purchase_confirmations)): ?>
+                        $purchase_confirmations = json_decode($ticket->purchase_confirmations);
+	                    if(count( $purchase_confirmations)): ?>
 	                     <div class="form-group">
 		                    <label class="control-label col-sm-3">Purchase confirmations 
 		                    	<p>(I understand that ...) </p>	
 		                    </label>
 		                    <div class="controls col-sm-4"></div>
 		                </div>
-	                	<?php foreach ($ticket->purchase_confirmations as $key => $value) {
+	                	<?php foreach ($purchase_confirmations as $key => $value) {
 							 
 						
 	                	?>
