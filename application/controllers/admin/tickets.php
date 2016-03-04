@@ -81,7 +81,6 @@ class Tickets extends CI_Controller {
     }
 
 	public function create($event_id,$type){	
- 
    		try 
         {
             if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
@@ -94,12 +93,13 @@ class Tickets extends CI_Controller {
             if(!empty($_POST)) {                 
                 	
 				  
-                    $post_data["name"]              = $this->input->post("name");
+          $post_data["name"]              = $this->input->post("name");
 					$post_data["event_id"]          = $this->input->post("event_id");
 					$post_data["is_recurring"]      = $this->input->post("is_recurring_event");
 					$post_data["ticket_type"]       = $this->input->post("ticket_type");
 					$post_data["quantity"]          = $this->input->post("quantity")?$this->input->post("quantity"):'0';   
-				    $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
+				  $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
+				  $post_data["currency"]					= $this->input->post("currency") ? $this->input->post("currency") : 'Rp';
 					$post_data["price"]             = $this->input->post("price")?$this->input->post("price"):'0';
 					$post_data["deposit"]           = $this->input->post("deposit")?$this->input->post("deposit"):'0'; 
 					$post_data["add_guest"]         = $this->input->post("add_guest")?$this->input->post("add_guest"):'0'; 
@@ -111,7 +111,7 @@ class Tickets extends CI_Controller {
 					$post_data["chk_tip"]           = $this->input->post("chk_tip")?'1':'0'; 				
 					$post_data["total"]             = $this->input->post("total")?$this->input->post("total"):'0'; 
 					$post_data["description"]       = $this->input->post("description"); 
-					$post_data["status"]     		= $this->input->post("ticket_status");			  
+					$post_data["status"]     				= $this->input->post("ticket_status");			  
 				    //$post_data["chk_fullamt"]       = $this->input->post("chk_fullamt"); 
 					//$post_data["full_amt_box"]      = $this->input->post("full_amt_box"); 
 					//$post_data["chk_matching"]      = $this->input->post("chk_matching"); 
@@ -154,7 +154,7 @@ class Tickets extends CI_Controller {
  
 					$ch = curl_init(APIURL.'admin/admin/ticket-type/add/'.$this->input->post("event_id")."?".TOKEN );					 
 					$payload = json_encode( $post_data );
-					 					
+
 					curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 					curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
 					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -220,12 +220,12 @@ class Tickets extends CI_Controller {
             if(!empty($_POST)) {                 
                 	 
 				   
-                    $post_data["name"]              = $this->input->post("name");
+          $post_data["name"]              = $this->input->post("name");
 					$post_data["event_id"]          = $this->input->post("event_id");
 					$post_data["is_recurring"]      = $this->input->post("is_recurring_event");
 					$post_data["ticket_type"]       = $this->input->post("ticket_type");
 					$post_data["quantity"]          = $this->input->post("quantity")?$this->input->post("quantity"):'0';   
-				    $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
+				  $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
 					$post_data["price"]             = $this->input->post("price")?$this->input->post("price"):'0';
 					$post_data["deposit"]           = $this->input->post("deposit")?$this->input->post("deposit"):'0'; 
 					$post_data["add_guest"]         = $this->input->post("add_guest")?$this->input->post("add_guest"):'0'; 

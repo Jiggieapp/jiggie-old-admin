@@ -2682,8 +2682,7 @@ function getTicketDetailPage(url,type){
 	    dataType: "json",		   
 	    data		: '',
 	    success	: function(resp){
-	    	resp['siteurl'] = base_url; 
-	    	console.log(resp.orders_count)
+            resp['siteurl'] = base_url; 
 	    	ejsfile ='ticket_edit.ejs';
 	    	//ejsfile ='ticket_detail.ejs';
             if(type=='weekly'){
