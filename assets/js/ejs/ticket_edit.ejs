@@ -1,3 +1,4 @@
+<% var curr = typeof(currency) != 'undefined' ? (currency == 'IDR' ? 'Rp' : '$') : 'Rp'; %> 
 <div class="">
     <form class="form-horizontal form-bordered" role="form" id="editticket-form" method="post" >
         <div class="panel panel-default">
@@ -62,22 +63,20 @@
 
                     </div>
                 </div>
-                <% if (typeof(currency) != 'undefined'){ %>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Currency</label>
                      <div class="controls col-sm-4">
                         <select name="currency" class="form-control" id="ticket_currency">
-                            <option <%= currency == 'IDR' ? 'selected' : '' %>value="IDR">Rp</option>
-                            <option <%= currency == 'USD' ? 'selected' : '' %>value="USD">$</option>
+                            <option <%= typeof(currency) != 'undefined' && currency == 'IDR' ? 'selected="selected"' : '' %>value="IDR">Rp</option>
+                            <option <%= typeof(currency) != 'undefined' && currency == 'USD' ? 'selected="selected"' : '' %>value="USD">$</option>
                         </select>
                     </div>
                 </div>
-                <% } %>
 				<div class="form-group">
                     <label class="control-label col-sm-3">Price</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon">$</span>	
+                     		<span class="input-group-addon curr"><%= typeof(currency) != 'undefined' ? curr : 'Rp' %></span>	
                         	<input name="price" id="price" type="text" class="form-control"   placeholder="0" value="<%=price  %>" />
 						</div>
                     </div>
@@ -95,7 +94,7 @@
                     <label class="control-label col-sm-3">Price per additional guest</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon">$</span>	
+                     		<span class="input-group-addon curr"><%= typeof(currency) != 'undefined' ? curr : 'Rp' %></span>	
                         	<input name="add_guest" id="add_guest" type="text" class="form-control"   placeholder="0" value="<%=add_guest %>" />
 						</div>
                     </div>
@@ -124,7 +123,7 @@
 							</div>											
 						</span>
                     </div>
-                    <span class="col-sm-2 p6">$ <label id="tax_amt">0</label></span>
+                    <span class="col-sm-2 p6"><label class="curr"><%= typeof(currency) != 'undefined' ? curr : 'Rp' %></label> <label id="tax_amt">0</label></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
@@ -138,7 +137,7 @@
 							</div>
 						</span>						
                     </div>
-                    <div class="col-sm-2 p6">$ <label id="tip_amt">0</label></div>
+                    <div class="col-sm-2 p6"><label class="curr"><%= typeof(currency) != 'undefined' ? curr : 'Rp' %></label> <label id="tip_amt">0</label></div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Estimated Total</label>

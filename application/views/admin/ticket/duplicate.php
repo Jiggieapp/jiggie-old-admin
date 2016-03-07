@@ -1,3 +1,6 @@
+<?php
+$curr = isset($this->currency) ? $this->currency : 'Rp';
+?>
 <div class="">
     <form class="form-horizontal form-bordered" role="form" id="ticket-form" method="post">
         <div class="panel panel-default">
@@ -63,8 +66,8 @@
                     <label class="control-label col-sm-3">Currency</label>
                      <div class="controls col-sm-4">
                         <select name="currency" class="form-control" id="ticket_currency">
-                            <option <?php echo $ticket->currency  == 'IDR' ? "selected='selected'" : "" ?> value="IDR">Rp</option>
-                            <option <?php echo $ticket->currency  == 'USD' ? "selected='selected'" : "" ?> value="USD">$</option>
+                            <option <?php echo isset($ticket->currency) && $ticket->currency  == 'IDR' ? "selected='selected'" : "" ?> value="IDR">Rp</option>
+                            <option <?php echo isset($ticket->currency) && $ticket->currency  == 'USD' ? "selected='selected'" : "" ?> value="USD">$</option>
                         </select>
                     </div>
                 </div>
@@ -72,7 +75,7 @@
                     <label class="control-label col-sm-3">Price</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon curr">$</span>	
+                     		<span class="input-group-addon curr"><?php echo $curr ?></span>	
                         	<input name="price" id="price" type="text" class="form-control"   placeholder="0" value="<?php echo set_post_value('price', $ticket->price)  ?>" />
 						</div>
                     </div>
@@ -90,7 +93,7 @@
                     <label class="control-label col-sm-3">Price per additional guest</label>
                      <div class="controls col-sm-4">
                      	<div class="input-group">
-                     		<span class="input-group-addon curr">$</span>	
+                     		<span class="input-group-addon curr"><?php echo $curr ?></span>	
                         	<input name="add_guest" id="add_guest" type="text" class="form-control"   placeholder="0" value="<?php echo set_post_value('add_guest', $ticket->add_guest) ; ?>" />
 						</div>
                     </div>
@@ -118,7 +121,7 @@
 							</div>							
 						</span>
                     </div>
-                    <span class="col-sm-2 p6"><label class="curr">$</label> <label id="tax_amt">0</label></span>
+                    <span class="col-sm-2 p6"><label class="curr"><?php echo $curr ?></label> <label id="tax_amt">0</label></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3"></label>
@@ -132,7 +135,7 @@
 							</div>
 						</span>						
                     </div>
-                     <span class="col-sm-2 p6"><label class="curr">$</label> <label id="tip_amt">0</label></span>
+                     <span class="col-sm-2 p6"><label class="curr"><?php echo $curr ?></label> <label id="tip_amt">0</label></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3">Estimated Total</label>
@@ -165,7 +168,8 @@
 
 	                <?php 
 	                    $confirmationscount=0;
-                        $purchase_confirmations = json_decode($ticket->purchase_confirmations);
+                        $purchase_confirmations = gettype($ticket->purchase_confirmations) == 'array' ? 
+                                            $ticket->purchase_confirmations : json_decode($ticket->purchase_confirmations);
 	                    if(count( $purchase_confirmations)): ?>
 	                     <div class="form-group">
 		                    <label class="control-label col-sm-3">Purchase confirmations 
