@@ -105,7 +105,7 @@
                        	<span class="col-sm-6 nplr"> <input type="checkbox" <%= chk_adminfee==true ?'checked' :''%>  value="1" id="chk_adminfee" name="chk_adminfee"/> Admin Fee</span>
 						<span class="col-sm-6 nplr">
 							<div class="input-group">
-							  <span class="input-group-addon">$</span>
+							  <span class="input-group-addon curr"><%= typeof(currency) != 'undefined' ? curr : 'Rp' %></span>   
 							    <input name="admin_fee" id="admin_fee" type="text"   class="form-control"   placeholder="0" value="<%= admin_fee  %>" />
 							</div>							
 						</span>
