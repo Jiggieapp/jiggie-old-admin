@@ -226,6 +226,7 @@ class Tickets extends CI_Controller {
 					$post_data["ticket_type"]       = $this->input->post("ticket_type");
 					$post_data["quantity"]          = $this->input->post("quantity")?$this->input->post("quantity"):'0';   
 				  $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
+				  $post_data["currency"]					= $this->input->post("currency") ? $this->input->post("currency") : 0;
 					$post_data["price"]             = $this->input->post("price")?$this->input->post("price"):'0';
 					$post_data["deposit"]           = $this->input->post("deposit")?$this->input->post("deposit"):'0'; 
 					$post_data["add_guest"]         = $this->input->post("add_guest")?$this->input->post("add_guest"):'0'; 
@@ -480,14 +481,15 @@ class Tickets extends CI_Controller {
 		if(!empty($_POST)) {                 
                 	 
 				    
-                    $post_data["name"]              = $this->input->post("name");
+          $post_data["name"]              = $this->input->post("name");
 					//$post_data["event_id"]          = $this->input->post("event_id");
 					$post_data["is_recurring"]      = $this->input->post("is_recurring");
 					$post_data["ticket_type"]       = $this->input->post("ticket_type");
-					$post_data["event_id"]       = $this->input->post("event_id");
-					$post_data["ticket_type_id"]       = $this->input->post("ticket_type_id");
+					$post_data["event_id"]	        = $this->input->post("event_id");
+					$post_data["ticket_type_id"]    = $this->input->post("ticket_type_id");
 					$post_data["quantity"]          = $this->input->post("quantity")?$this->input->post("quantity"):'0';   
-				    $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
+				  $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
+				 	$post_data["currency"]					= $this->input->post("currency") ? $this->input->post("currency") : 'Rp';
 					$post_data["price"]             = $this->input->post("price")?$this->input->post("price"):'0';
 					$post_data["deposit"]           = $this->input->post("deposit")?$this->input->post("deposit"):'0'; 
 					$post_data["add_guest"]         = $this->input->post("add_guest")?$this->input->post("add_guest"):'0'; 
@@ -499,7 +501,7 @@ class Tickets extends CI_Controller {
 					$post_data["chk_tip"]           = $this->input->post("chk_tip")?'1':'0'; 				
 					$post_data["total"]             = $this->input->post("total")?$this->input->post("total"):'0'; 
 					$post_data["description"]       = $this->input->post("description"); 
-					$post_data["status"]     		= $this->input->post("ticket_status");	
+					$post_data["status"]     				= $this->input->post("ticket_status");	
 	 				//var_dump($post_data);exit;
 					$purchase_confirmations= array();
 					$confirmations_count = $this->input->post("confirmationscount");
