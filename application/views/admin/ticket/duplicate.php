@@ -164,6 +164,15 @@ $curr = isset($this->currency) ? $this->currency : 'Rp';
 						</select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Payment Timelimit <span class="asterisk">*</span></label>
+                    <div class="controls col-sm-4">
+                      <input name="payment_timelimit" id="payment_timelimit" type="text" class="form-control" placeholder="180" value="<?php echo $this->input->post('payment_timelimit') ? $this->input->post('payment_timelimit') : '180'; ?>" /> 
+                    </div>
+                    <div class="col-sm-2">
+                        <label>minutes</label>
+                    </div>
+                </div>
                <div id="termsandcond">               	   
 
 	                <?php 
