@@ -44,8 +44,6 @@ class Events extends CI_Controller {
     }
 	
 		public function ajax_list(){
-		
-		
         $config['base_url'] = base_url().'admin/venue/ajax_list';
 				if ('' != $this->input->post('per_page')) {
             $config['per_page'] = $this->input->post('per_page');            
@@ -99,7 +97,8 @@ class Events extends CI_Controller {
 				 $url =APIURL."admin/admin/events/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
 				 $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&sort_status=".$sort_status."&start_date=$start_date&end_date=$end_date".$search_string;
 
-
+				 if ($this->access_usertypeid == 3)
+				 	$url .= "&created_by=" . $this->access_userid;
 
 				//echo $json = file_get_contents($url);exit;
 
@@ -113,6 +112,9 @@ class Events extends CI_Controller {
 		$sort_status = '' != $this->input->get('sort_status') ? $this->input->get('sort_status') : '';
 
 		$url =APIURL."admin/admin/events/list/calendar/".$start_date."/".$end_date."?".TOKEN."&sort_status=".$sort_status;
+
+		if ($this->access_usertypeid == 3)
+			$url .= "&created_by=" . $this->access_userid;
 
 		echo $json = file_get_contents($url);
 		exit;
@@ -181,6 +183,8 @@ class Events extends CI_Controller {
 							else
 								$post_data["end_series_datetime"]              = $this->input->post("end_date").' '.$this->input->post("starttime");
 
+							$post_data["created_by"] = $this->access_userid;
+							$post_data["updated_by"] = $this->access_userid;
 
 							$ch = curl_init(APIURL.'admin/admin/events/add'."?".TOKEN );
 							$payload = json_encode( $post_data );

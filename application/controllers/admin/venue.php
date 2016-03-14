@@ -366,6 +366,8 @@ class Venue extends CI_Controller {
                  
                     $post_data["url"]               = $this->input->post("url");
                     $post_data["description"]       = $this->input->post("description");
+
+                    $post_data['created_by']        = $this->access_userid;
                    
                    // $post_data["active"]      = $this->input->post("venue_status");
                     $post_data["rank"]             = $this->input->post("rank");
