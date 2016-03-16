@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Target Screen*</label>
 
-                    <div class="controls col-sm-4" id="recipients_block">
+                    <div class="controls col-sm-4">
                         <select name="target" id="target" class="form-control">
                             <option value="general">Event List</option>
                             <option value="event">Event Detail</option>
