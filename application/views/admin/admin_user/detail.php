@@ -32,13 +32,13 @@
                     <label class="control-label col-sm-3">User Type <span class="asterisk">*</span></label>
                     <div class="controls col-sm-4">
                     	<input type="hidden" value="2" name="user_type_id" id="user_type_id"/>
-                    	Admin
-                        <!--select name="user_type_id" class="form-control" required>
+                    	<!--Admin-->
+                        <select name="user_type_id" class="form-control" required>
                             <option value="">Select</option>
                             <?php foreach ($user_types as $user_type) { ?>
                                 <option value="<?php echo $user_type["user_type_id"]; ?>" <?php echo $user_type["user_type_id"] == $admin_user->user_type_id ? "selected" : ""; ?>><?php echo $user_type["user_type_name"]; ?></option>
                             <?php } ?>
-                        </select-->
+                        </select>
                     </div>
                 </div>
 
