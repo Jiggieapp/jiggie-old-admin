@@ -90,14 +90,15 @@ class Venue extends CI_Controller {
 			$search_string  = "";                   
         }
                 
-		 $start_date = $this->input->post('startDate_iso');		 
-         $end_date =   $this->input->post('endDate_iso');
-      
-		 $url =APIURL."admin/admin/venues/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
-		 $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&start_date=$start_date&end_date=$end_date".$search_string;
+        $start_date = $this->input->post('startDate_iso');		 
+        $end_date =   $this->input->post('endDate_iso');
+
+        $url =APIURL."admin/admin/venues/list?".TOKEN."&per_page=".$config['per_page']."&offset=".
+        $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&start_date=$start_date&end_date=$end_date".$search_string;
 	 
-		 
-		
+        if ($this->access_usertypeid == 3)
+            $url .= '&created_by=' . $this->access_userid;
+
 		echo $json = file_get_contents($url);exit;
 			
 	}
@@ -366,6 +367,8 @@ class Venue extends CI_Controller {
                  
                     $post_data["url"]               = $this->input->post("url");
                     $post_data["description"]       = $this->input->post("description");
+
+                    $post_data['created_by']        = $this->access_userid;
                    
                    // $post_data["active"]      = $this->input->post("venue_status");
                     $post_data["rank"]             = $this->input->post("rank");
