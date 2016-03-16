@@ -97,8 +97,8 @@ class Venue extends CI_Controller {
         $offset."&sort_field=".$arr_sort['name']."&sort_val=".$arr_sort['value']."&start_date=$start_date&end_date=$end_date".$search_string;
 	 
         if ($this->access_usertypeid == 3)
-            $offset .= '&created_by=' . $this->access_userid;
-		
+            $url .= '&created_by=' . $this->access_userid;
+
 		echo $json = file_get_contents($url);exit;
 			
 	}
