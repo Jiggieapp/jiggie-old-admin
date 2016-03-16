@@ -230,7 +230,11 @@ class Events extends CI_Controller {
                     
             }
 
-            $venues=  file_get_contents(APIURL.'admin/admin/venuelist'."?".TOKEN);			
+            $url = APIURL.'admin/admin/venuelist'."?".TOKEN;
+            if ($this->access_usertypeid == 3)
+            	$url .= '&created_by=' . $this->access_userid;
+            
+            $venues=  file_get_contents($url);			
 						$this->gen_contents['venues'] = json_decode($venues);
 						$this->gen_contents['startdate'] = $startdate;
             $breadCrumbs = array( 'admin/events/'=>'Events');
