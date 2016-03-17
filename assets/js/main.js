@@ -2689,7 +2689,7 @@ function getTicketDetailPage(url,type){
                 ejsfile ='ticket_edit.ejs';
             }
 	        
-	        $('#test-heading').hide();	
+            $('#test-heading').hide();	
     		$('#toolbar').hide();	            
 			$('.modal-backdrop').remove();
 			$("#loading").css("display","none"); 
@@ -3217,7 +3217,7 @@ function enableDeleteButton(){
 	});
 }
 function getOverviewGraph(range) {
- 	$('<div class="modal-backdrop fade in" ><img class="loading-gif" src="'+base_url+'assets/images/load.gif"/></div>').appendTo(document.body);
+ 	// $('<div class="modal-backdrop fade in" ><img class="loading-gif" src="'+base_url+'assets/images/load.gif"/></div>').appendTo(document.body);
  	$('#ph_overviewgrpah').html('');
  	if($("#data-set1").select2('data')){
  		var data_set1 =    $("#data-set1").select2('data').id;

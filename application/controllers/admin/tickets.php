@@ -5,42 +5,39 @@ class Tickets extends CI_Controller {
     var $gen_contents	=	array();    
     public function __construct()
     {
-        parent::__construct();
-        $this->merror['error']	= '';
-        $this->msuccess['msg']	= '';
-        $this->load->model(array('master_model','admin/permission_model'));
-        $this->gen_contents['title']	=	'';
-		$this->config->set_item('site_title', 'Jiggie  Admin - Events Tickets');
-        (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
-        presetfuturedaterange();
-		$this->gen_contents['current_controller'] = $this->router->fetch_class();
-        $this->access_userid = $this->session->userdata("ADMIN_USERID");
-        $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
-        $this->access_permissions = $this->permission_model->get_all_permission();		
-		
+      parent::__construct();
+      $this->merror['error']	= '';
+      $this->msuccess['msg']	= '';
+      $this->load->model(array('master_model','admin/permission_model'));
+      $this->gen_contents['title']	=	'';
+			$this->config->set_item('site_title', 'Jiggie  Admin - Events Tickets');
+      (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
+      presetfuturedaterange();
+			$this->gen_contents['current_controller'] = $this->router->fetch_class();
+      $this->access_userid = $this->session->userdata("ADMIN_USERID");
+      $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
+      $this->access_permissions = $this->permission_model->get_all_permission();		
     }
       
     public function index()
     {
-        if(!$this->master_model->checkAccess('view', CHATS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-            return FALSE;
-        } else {
-        	
-            $this->ticket_list();
-        }
+      // if(!$this->master_model->checkAccess('view', CHATS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+      //   return FALSE;
+      // } else {
+        $this->ticket_list();
+      // }
     }
 	
-	
     public function ticket_list($init=''){     	     
-        $breadCrumbs = array( 'admin/tickets/'=>'Tickets');
-        $this->gen_contents['breadcrumbs'] = $breadCrumbs;
-        $this->gen_contents['p_title']= 'Ticket List';
-        $this->gen_contents['current_controller'] = "tickets";
-		$this->gen_contents['export_link']= base_url().'admin/tickets/export';
-		$this->gen_contents['add_link']= 'admin/tickets/add';
+      $breadCrumbs = array( 'admin/tickets/'=>'Tickets');
+      $this->gen_contents['breadcrumbs'] = $breadCrumbs;
+      $this->gen_contents['p_title']= 'Ticket List';
+      $this->gen_contents['current_controller'] = "tickets";
+			$this->gen_contents['export_link']= base_url().'admin/tickets/export';
+			$this->gen_contents['add_link']= 'admin/tickets/add';
         //$this->template->write_view('content', 'admin/events',$this->gen_contents);
-		$this->template->write_view('content', 'admin/listing',$this->gen_contents);
-        $this->template->render();		 
+			$this->template->write_view('content', 'admin/listing',$this->gen_contents);
+      $this->template->render();		 
     }
 	
 	public function ajax_list(){
@@ -82,97 +79,95 @@ class Tickets extends CI_Controller {
 
 	public function create($event_id,$type){	
    		try 
-        {
-            if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-                    return FALSE;
-            }
+       {
+            // if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            //         return FALSE;
+            // }
             
             $this->mcontents = array();
             
 			
             if(!empty($_POST)) {                 
-                	
-				  
-          $post_data["name"]              = $this->input->post("name");
-					$post_data["event_id"]          = $this->input->post("event_id");
-					$post_data["is_recurring"]      = $this->input->post("is_recurring_event");
-					$post_data["ticket_type"]       = $this->input->post("ticket_type");
-					$post_data["quantity"]          = $this->input->post("quantity")?$this->input->post("quantity"):'0';   
-				  $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
-				  $post_data["currency"]					= $this->input->post("currency") ? $this->input->post("currency") : 'Rp';
-					$post_data["price"]             = $this->input->post("price")?$this->input->post("price"):'0';
-					$post_data["deposit"]           = $this->input->post("deposit")?$this->input->post("deposit"):'0'; 
-					$post_data["add_guest"]         = $this->input->post("add_guest")?$this->input->post("add_guest"):'0'; 
-					$post_data["chk_adminfee"]      = $this->input->post("chk_adminfee")?'1':'0';   
-					$post_data["admin_fee"]         = $this->input->post("admin_fee")?$this->input->post("admin_fee"):'0';   
-					$post_data["chk_tax"]           = $this->input->post("chk_tax")?'1':'0'; 
-					$post_data["tax"]               = $this->input->post("tax")?$this->input->post("tax"):'0';  
-					$post_data["tip"]               = $this->input->post("tip")?$this->input->post("tip"):'0'; 
-					$post_data["chk_tip"]           = $this->input->post("chk_tip")?'1':'0'; 				
-					$post_data["total"]             = $this->input->post("total")?$this->input->post("total"):'0'; 
-					$post_data["description"]       = $this->input->post("description"); 
-					$post_data["status"]     				= $this->input->post("ticket_status");			  
-					$post_data["payment_timelimit"] = $this->input->post("payment_timelimit");
-				    //$post_data["chk_fullamt"]       = $this->input->post("chk_fullamt"); 
-					//$post_data["full_amt_box"]      = $this->input->post("full_amt_box"); 
-					//$post_data["chk_matching"]      = $this->input->post("chk_matching"); 
-					//$post_data["matching_box"]      = $this->input->post("matching_box");
-					//$post_data["chk_returns"]       = $this->input->post("chk_returns"); 
-					//$post_data["returns_box"]       = $this->input->post("returns_box");  
-	 				//$post_data["confirmation"]      = $this->input->post("confirmation");  
-					$purchase_confirmations= array();
-					$i=0;
-					if($this->input->post("chk_fullamt")){
-						$purchase_confirmations[$i]['label'] = 'Full Amount';
-						$purchase_confirmations[$i]['body']  =$this->input->post("full_amt_box");
-						$i++;
-					}
-					if($this->input->post("chk_matching")){
-						$purchase_confirmations[$i]['label'] = 'Matching CC &ID';
-						$purchase_confirmations[$i]['body']  =$this->input->post("matching_box");
-						$i++;
-					}
-					if($this->input->post("chk_returns")){
-						$purchase_confirmations[$i]['label'] = 'No returns';
-						$purchase_confirmations[$i]['body']  =$this->input->post("returns_box");
-						$i++;
-					}
-					$cnfm_ids = explode(',', rtrim($this->input->post("cnfm_ids"),","));
-					
-					 
-					foreach($cnfm_ids as $id){
-						 
-						if($this->input->post("new_label".$id)){
-							$purchase_confirmations[$i]['label'] =$this->input->post("new_label".$id);
-							$purchase_confirmations[$i]['body']  =$this->input->post("confirmation".$id);
-							$i++;
-						}
-						
-					}
-					
-					
-					$post_data['purchase_confirmations'] =  json_encode($purchase_confirmations);
- 
-					$ch = curl_init(APIURL.'admin/admin/ticket-type/add/'.$this->input->post("event_id")."?".TOKEN );					 
-					$payload = json_encode( $post_data );
+		          $post_data["name"]              = $this->input->post("name");
+							$post_data["event_id"]          = $this->input->post("event_id");
+							$post_data["is_recurring"]      = $this->input->post("is_recurring_event");
+							$post_data["ticket_type"]       = $this->input->post("ticket_type");
+							$post_data["quantity"]          = $this->input->post("quantity")?$this->input->post("quantity"):'0';   
+						  $post_data["guest"]             = $this->input->post("guest")?$this->input->post("guest"):'0'; 
+						  $post_data["currency"]					= $this->input->post("currency") ? $this->input->post("currency") : 'Rp';
+							$post_data["price"]             = $this->input->post("price")?$this->input->post("price"):'0';
+							$post_data["deposit"]           = $this->input->post("deposit")?$this->input->post("deposit"):'0'; 
+							$post_data["add_guest"]         = $this->input->post("add_guest")?$this->input->post("add_guest"):'0'; 
+							$post_data["chk_adminfee"]      = $this->input->post("chk_adminfee")?'1':'0';   
+							$post_data["admin_fee"]         = $this->input->post("admin_fee")?$this->input->post("admin_fee"):'0';   
+							$post_data["chk_tax"]           = $this->input->post("chk_tax")?'1':'0'; 
+							$post_data["tax"]               = $this->input->post("tax")?$this->input->post("tax"):'0';  
+							$post_data["tip"]               = $this->input->post("tip")?$this->input->post("tip"):'0'; 
+							$post_data["chk_tip"]           = $this->input->post("chk_tip")?'1':'0'; 				
+							$post_data["total"]             = $this->input->post("total")?$this->input->post("total"):'0'; 
+							$post_data["description"]       = $this->input->post("description"); 
+							$post_data["status"]     				= $this->input->post("ticket_status");			  
+							$post_data["payment_timelimit"] = $this->input->post("payment_timelimit");
+						    //$post_data["chk_fullamt"]       = $this->input->post("chk_fullamt"); 
+							//$post_data["full_amt_box"]      = $this->input->post("full_amt_box"); 
+							//$post_data["chk_matching"]      = $this->input->post("chk_matching"); 
+							//$post_data["matching_box"]      = $this->input->post("matching_box");
+							//$post_data["chk_returns"]       = $this->input->post("chk_returns"); 
+							//$post_data["returns_box"]       = $this->input->post("returns_box");  
+			 				//$post_data["confirmation"]      = $this->input->post("confirmation");  
+							$purchase_confirmations= array();
+							$i=0;
+							if($this->input->post("chk_fullamt")){
+								$purchase_confirmations[$i]['label'] = 'Full Amount';
+								$purchase_confirmations[$i]['body']  =$this->input->post("full_amt_box");
+								$i++;
+							}
+							if($this->input->post("chk_matching")){
+								$purchase_confirmations[$i]['label'] = 'Matching CC &ID';
+								$purchase_confirmations[$i]['body']  =$this->input->post("matching_box");
+								$i++;
+							}
+							if($this->input->post("chk_returns")){
+								$purchase_confirmations[$i]['label'] = 'No returns';
+								$purchase_confirmations[$i]['body']  =$this->input->post("returns_box");
+								$i++;
+							}
+							$cnfm_ids = explode(',', rtrim($this->input->post("cnfm_ids"),","));
+							
+							 
+							foreach($cnfm_ids as $id){
+								 
+								if($this->input->post("new_label".$id)){
+									$purchase_confirmations[$i]['label'] =$this->input->post("new_label".$id);
+									$purchase_confirmations[$i]['body']  =$this->input->post("confirmation".$id);
+									$i++;
+								}
+								
+							}
+							
+							
+							$post_data['purchase_confirmations'] =  json_encode($purchase_confirmations);
+		 
+							$ch = curl_init(APIURL.'admin/admin/ticket-type/add/'.$this->input->post("event_id")."?".TOKEN );					 
+							$payload = json_encode( $post_data );
 
-					curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-					curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
-					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-					# Send request.
-					$result_set = curl_exec($ch);
-					curl_close($ch);
-					$result =  json_decode($result_set);
-					
-					if($result->success==true){						 
-						sf('success_message', 'Ticket created successfully');	
-						if($result->tickettype->is_recurring)					 
-							redirect('admin/tickets/#/ticket-recurring='.$result->tickettype->_id);
-						else
-							redirect('admin/tickets/#/ticket-details='.$result->tickettype->_id);
-					}else{
-						$this->gen_contents['error'] =$result->reason;
-					}
+							curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
+							curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
+							curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+							# Send request.
+							$result_set = curl_exec($ch);
+							curl_close($ch);
+							$result =  json_decode($result_set);
+							
+							if($result->success==true){						 
+								sf('success_message', 'Ticket created successfully');	
+								if($result->tickettype->is_recurring)					 
+									redirect('admin/tickets/#/ticket-recurring='.$result->tickettype->_id);
+								else
+									redirect('admin/tickets/#/ticket-details='.$result->tickettype->_id);
+							}else{
+								$this->gen_contents['error'] =$result->reason;
+							}
                 }
              
             $breadCrumbs = array( 'admin/tickets/'=>'Tickets');
@@ -211,9 +206,9 @@ class Tickets extends CI_Controller {
 		return FALSE;
    		try 
         {
-            if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-                    return FALSE;
-            }
+            // if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            //         return FALSE;
+            // }
             
             $this->mcontents = array();
             
