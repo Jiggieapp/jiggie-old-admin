@@ -21,11 +21,12 @@ class Tickets extends CI_Controller {
       
     public function index()
     {
-      // if(!$this->master_model->checkAccess('view', CHATS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-      //   return FALSE;
-      // } else {
+      if(!$this->master_model->checkAccess('view', TICKETS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions) || 
+      	!$this->master_model->checkAccess('update', TICKETS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+        return FALSE;
+      } else {
         $this->ticket_list();
-      // }
+      }
     }
 	
     public function ticket_list($init=''){     	     
@@ -80,9 +81,9 @@ class Tickets extends CI_Controller {
 	public function create($event_id,$type){	
    		try 
        {
-            // if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-            //         return FALSE;
-            // }
+            if(!$this->master_model->checkAccess('create', TICKETS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+                    return FALSE;
+            }
             
             $this->mcontents = array();
             
@@ -206,9 +207,9 @@ class Tickets extends CI_Controller {
 		return FALSE;
    		try 
         {
-            // if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
-            //         return FALSE;
-            // }
+            if(!$this->master_model->checkAccess('create', TICKETS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+                    return FALSE;
+            }
             
             $this->mcontents = array();
             
@@ -336,12 +337,12 @@ class Tickets extends CI_Controller {
 	}
 	
 	function ticket_details($ticket_id = ""){
-		 $breadCrumbs = array( );
-        $this->gen_contents['breadcrumbs'] = $breadCrumbs; 
+		$breadCrumbs = array( );
+    $this->gen_contents['breadcrumbs'] = $breadCrumbs; 
 		$this->gen_contents["error"] = false; 
         try 
         {
-            if(!$this->master_model->checkAccess('update', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            if(!$this->master_model->checkAccess('update', TICKETS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
                 return FALSE;
             }
             
@@ -370,7 +371,7 @@ class Tickets extends CI_Controller {
 		$this->gen_contents["error"] = false; 
         try 
         {
-            if(!$this->master_model->checkAccess('update', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+            if(!$this->master_model->checkAccess('update', TICKETS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
                 return FALSE;
             }
             
@@ -428,7 +429,10 @@ class Tickets extends CI_Controller {
         exit;
     }
     public function delete( $ticket="",$event='',$is_recurring='') {
-    	 
+			if(!$this->master_model->checkAccess('delete', TICKETS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
+				return FALSE;
+			}
+			
         try {
         	
         	if($is_recurring=='true'){

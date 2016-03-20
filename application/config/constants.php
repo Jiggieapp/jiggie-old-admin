@@ -49,4 +49,5 @@ define("CHATS_MODULE", 4);
 define("BLOCKS_MODULE", 5);
 define("ADMINUSER_MODULE", 6);
 define("EVENTS_MODULE", 7);
+define("TICKETS_MODULE", 8);
 
