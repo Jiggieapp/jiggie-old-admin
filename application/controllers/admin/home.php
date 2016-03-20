@@ -19,20 +19,21 @@ class Home extends CI_Controller {
     public function __construct() {
 
         parent::__construct();
-         $this->gen_contents['current_controller'] = $this->router->fetch_class();
+        $this->gen_contents['current_controller'] = $this->router->fetch_class();
         $this->merror['error'] = '';
         $this->msuccess['msg'] = '';
         $this->load->model(array('admin/admin_model','admin/user_model',
             'admin/hosting_model','admin/chat_model','master_model'));
         $this->gen_contents['title'] = '';
-		
-         
+        $this->access_userid = $this->session->userdata("ADMIN_USERID");
+        $this->access_usertypeid = $this->session->userdata("USER_TYPE_ID");
     }
 
     public function index() {
     	presetpastdaterange();
         $this->mcontents = array();
 				($this->authentication->check_logged_in("admin")) ? redirect('admin/home/dashboard') : '';
+
         if (!empty($_POST)) {
 
 	        $this->load->library('form_validation');
@@ -101,13 +102,16 @@ class Home extends CI_Controller {
 // 		redirect('admin/user');
 
         (!$this->authentication->check_logged_in("admin")) ? redirect('admin') : '';
+
+        ($this->access_usertypeid > 2) ? redirect('admin/events') : '';
+
 				$start_date = $this->session->userdata('startDate') . " 00:00:00";
         $end_date = $this->session->userdata('endDate') . " 23:59:59";
 				$this->config->set_item('site_title', 'Party Host - Administrator DashBoard');
         $this->gen_contents['user_count'] = $this->user_model->getUserCounts($start_date,$end_date);
         $this->gen_contents['hosting_count'] = $this->hosting_model->getHostingCounts($start_date,$end_date);
         $this->gen_contents['chats_count'] = $this->chat_model->getChatCounts($start_date,$end_date);
-		
+
         $this->template->write_view('content', 'admin/dashboard', $this->gen_contents);
         $this->template->render();
     }
