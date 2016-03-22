@@ -141,6 +141,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label col-sm-3"> Summary
+                        
+                        </label>
+                    <div class="controls col-sm-6">
+                        <input type="text" name="summary" class="form-control" placeholder="Summary" rows="4"><?php echo $this->input->post('summary'); ?></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label col-sm-3"> Description
                     	
                     	</label>
