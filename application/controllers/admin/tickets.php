@@ -504,6 +504,9 @@ class Tickets extends CI_Controller {
 					$post_data["total"]             = $this->input->post("total")?$this->input->post("total"):'0'; 
 					$post_data["description"]       = $this->input->post("description"); 
 					$post_data["status"]     				= $this->input->post("ticket_status");	
+
+					$post_data['payment_timelimit'] = $this->input->post("payment_timelimit");
+					$post_data['summary']						= $this->input->post('summary');
 	 				//var_dump($post_data);exit;
 					$purchase_confirmations= array();
 					$confirmations_count = $this->input->post("confirmationscount");
