@@ -110,6 +110,8 @@ class Tickets extends CI_Controller {
 							$post_data["status"]     				= $this->input->post("ticket_status");			  
 							$post_data["payment_timelimit"] = $this->input->post("payment_timelimit");
 							$post_data["summary"]						= $this->input->post("summary");
+
+							$post_data["instruction"]				= $this->input->post("instruction");
 						    //$post_data["chk_fullamt"]       = $this->input->post("chk_fullamt"); 
 							//$post_data["full_amt_box"]      = $this->input->post("full_amt_box"); 
 							//$post_data["chk_matching"]      = $this->input->post("chk_matching"); 
@@ -507,6 +509,8 @@ class Tickets extends CI_Controller {
 
 					$post_data['payment_timelimit'] = $this->input->post("payment_timelimit");
 					$post_data['summary']						= $this->input->post('summary');
+
+					$post_data['instruction']				= $this->input->post("instruction");
 	 				//var_dump($post_data);exit;
 					$purchase_confirmations= array();
 					$confirmations_count = $this->input->post("confirmationscount");

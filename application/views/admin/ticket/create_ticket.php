@@ -156,6 +156,14 @@
                         <textarea name="description" class="form-control autogrow" placeholder="Description" rows="4" style="height: 105px;"><?php echo $this->input->post('description'); ?></textarea>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3"> Instruction to Ticket Holder
+                        
+                        </label>
+                    <div class="controls col-sm-6">
+                        <textarea name="instruction" class="form-control autogrow" placeholder="Instruction to Ticket Holder" rows="4" style="height: 105px;"><?php echo $this->input->post('instruction'); ?></textarea>
+                    </div>
+                </div>
                  <div class="form-group">
                     <label class="control-label col-sm-3">Status <span class="asterisk">*</span></label>
                     <div class="controls col-sm-4">

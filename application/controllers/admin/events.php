@@ -163,6 +163,7 @@ class Events extends CI_Controller {
 	            $post_data["description"] = $this->input->post("description");
 							$post_data["source"] = $this->input->post("featured_event");
 	            $post_data["description"] = $this->input->post("description");
+	            $post_data["instruction"] = $this->input->post("instruction");
 							$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
 				      $post_data["end_datetime_str"]   = $this->input->post("end_time");
 							$post_data["status"] = $this->input->post("event_status");
@@ -185,6 +186,8 @@ class Events extends CI_Controller {
 
 							$post_data["created_by"] = $this->access_userid;
 							$post_data["updated_by"] = $this->access_userid;
+
+							var_dump($post_data);
 
 							$ch = curl_init(APIURL.'admin/admin/events/add'."?".TOKEN );
 							$payload = json_encode( $post_data );
@@ -269,13 +272,13 @@ class Events extends CI_Controller {
         $post_data["description"]        = $this->input->post("description");
 				$post_data["source"]             = $this->input->post("featured_event");
         $post_data["description"]        = $this->input->post("description");
+        $post_data["instruction"]				 = $this->input->post("instruction");
 				$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
 	      $post_data["end_datetime_str"]   = $this->input->post("end_time");
 				$post_data["status"]         	   = $this->input->post("event_status");
 
 				$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
 				$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
-
 
 				$pic_total = $this->input->post("pic_total");
 

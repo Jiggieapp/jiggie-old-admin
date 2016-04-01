@@ -145,6 +145,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label col-sm-3"> Instruction to Customers
+                      <p class="f11">(Please provide some instructions to customers after they are booking a ticket / table)</p>
+                      </label>
+                    <div class="controls col-sm-6">
+                        <textarea name="instruction" class="form-control autogrow" placeholder="Instructions" rows="4" style="height: 105px;"><?php echo $this->input->post('instruction'); ?></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="control-label col-sm-3">Event Featured</label>
                     <div class="col-md-3 col-sm-6">
                       <!--input type="checkbox" name="featured_event" id="featured_event" data-off-color="success" data-off-text="NO"  data-on-text="YES" data-size="small" data-on-color="primary" value ="0"   class="boot-switch"/-->
