@@ -46,14 +46,13 @@ class Events extends CI_Controller {
 		public function ajax_list(){
         $config['base_url'] = base_url().'admin/venue/ajax_list';
 				if ('' != $this->input->post('per_page')) {
-            $config['per_page'] = $this->input->post('per_page');
+            $config['per_page'] = $this->input->post('per_page');            
             $perPage = '';
         }        
         else {
             $config['per_page'] = 10;
         }        
         	
-
 				if('' != $this->input->post ('offset')){
                $offset	= safeInteger($this->input->post ('offset'));			    
           }
@@ -140,7 +139,6 @@ class Events extends CI_Controller {
 	}
    
    public function create_event($date=''){
-
 	   if(!$this->master_model->checkAccess('create', EVENTS_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
 		   return FALSE;
 	   }
@@ -150,7 +148,7 @@ class Events extends CI_Controller {
 	   if(validateDate($date, 'Y-m-d')){
 		   $startdate = date('M d, Y',strtotime($date));
 	   }
-
+   	    
    		try 
         {
             if(!$this->master_model->checkAccess('create', VENUES_MODULE, $this->access_userid, $this->access_usertypeid, $this->access_permissions)) {
@@ -159,13 +157,13 @@ class Events extends CI_Controller {
             
             $this->mcontents = array();
 
-
             if(!empty($_POST)) {
 	            $post_data["title"] = $this->input->post("title");
 							$post_data["event_type"] = $this->input->post("event_type");
 	            $post_data["description"] = $this->input->post("description");
 							$post_data["source"] = $this->input->post("featured_event");
 	            $post_data["description"] = $this->input->post("description");
+	            $post_data["instruction"] = $this->input->post("instruction");
 							$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
 				      $post_data["end_datetime_str"]   = $this->input->post("end_time");
 							$post_data["status"] = $this->input->post("event_status");
@@ -188,6 +186,8 @@ class Events extends CI_Controller {
 
 							$post_data["created_by"] = $this->access_userid;
 							$post_data["updated_by"] = $this->access_userid;
+
+							var_dump($post_data);
 
 							$ch = curl_init(APIURL.'admin/admin/events/add'."?".TOKEN );
 							$payload = json_encode( $post_data );
@@ -272,13 +272,13 @@ class Events extends CI_Controller {
         $post_data["description"]        = $this->input->post("description");
 				$post_data["source"]             = $this->input->post("featured_event");
         $post_data["description"]        = $this->input->post("description");
+        $post_data["instruction"]				 = $this->input->post("instruction");
 				$post_data["start_datetime_str"] = $this->input->post("start_date").' '.$this->input->post("starttime");
 	      $post_data["end_datetime_str"]   = $this->input->post("end_time");
 				$post_data["status"]         	   = $this->input->post("event_status");
 
 				$post_data["fullfillment_type"]         	 = $this->input->post("fullfillment_type");
 				$post_data["fullfillment_value"]         	 = $this->input->post("fullfillment_value");
-
 
 				$pic_total = $this->input->post("pic_total");
 
@@ -391,7 +391,7 @@ class Events extends CI_Controller {
 
 		$ch = curl_init($url);
 		$payload = json_encode( $post_data );
-
+					  					
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));					 
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -490,7 +490,7 @@ class Events extends CI_Controller {
 		 
 		 
 		$post_data["event_id"]          = $event_id;
-		  
+
 		$ch = curl_init($url);					 
 		$payload = json_encode( $post_data );	
 					  					
@@ -555,8 +555,6 @@ class Events extends CI_Controller {
 			    );
 			}
 			
-		    var_dump('here');
-
 		    if ($filedata != '')
 		    {	        	 
 				$request = curl_init($url);			 
