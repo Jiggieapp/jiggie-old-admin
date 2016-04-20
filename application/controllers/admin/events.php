@@ -555,6 +555,8 @@ class Events extends CI_Controller {
 			    );
 			}
 			
+		    var_dump('here');
+
 		    if ($filedata != '')
 		    {	        	 
 				$request = curl_init($url);			 
